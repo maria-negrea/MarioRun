@@ -35,7 +35,7 @@ void Timer(int value)
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }
-// random comm
+
 void reshape(int w, int h)
 {
    glViewport(0, 0, (GLsizei) w, (GLsizei) h);

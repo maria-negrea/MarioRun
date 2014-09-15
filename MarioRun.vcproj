@@ -183,6 +183,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Mesh.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Omi.cpp"
 				>
 			</File>
@@ -214,6 +218,10 @@
 			</File>
 			<File
 				RelativePath=".\Foot.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mesh.h"
 				>
 			</File>
 			<File

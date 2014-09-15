@@ -1,7 +1,8 @@
 #pragma once
-#include "WorldObject.h"
+#include "Mesh.h"
+#include "Updatable.h"
 
-class Foot: public WorldObject, public Updatable
+class Foot: public Mesh, public Updatable
 {
 public:
 	Foot(void);

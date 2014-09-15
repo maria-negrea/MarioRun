@@ -1,8 +1,11 @@
 #include "Scene.h"
 #include "Textures.h"
+#include "Body.h"
 
 Scene *scene;
 Camera* mainCamera;
+Body *body = new Body;
+
 
 void Initialize() 
 {
@@ -10,7 +13,8 @@ void Initialize()
 
 	mainCamera = new Camera();
 	scene->SetMainCamera(mainCamera);
-	
+	scene->AddObject(body);
+	body->Translate(Point3D(0.0, 0.0, 20.0));
 	Textures::GetInstance()->LoadGLTextures();
 
 	glEnable(GL_DEPTH_TEST); 
@@ -47,6 +51,48 @@ void reshape(int w, int h)
 
 void specialKey(int key, int x, int y)
 { 
+	switch(key) 
+	{
+		case GLUT_KEY_RIGHT :
+			body->Rotate(Point3D(0.0, 2.0, 0.0));
+			break;
+
+		case GLUT_KEY_LEFT :
+			body->Rotate(Point3D(0.0, -2.0, 0.0));
+			break;
+
+		case GLUT_KEY_DOWN:
+			body->Rotate(Point3D(2.0, 0.0, 2.0));
+			break;
+		case GLUT_KEY_UP:
+			body->Rotate(Point3D(-2.0, 0.0, -2.0));
+			break;
+		
+		case GLUT_KEY_PAGE_UP:
+			body->Translate(Point3D(0.0, 0.0, 1.0));
+			break;
+
+		case GLUT_KEY_PAGE_DOWN:
+			body->Translate(Point3D(0.0, 0.0, -1.0));
+			break;
+		
+		case GLUT_KEY_HOME:
+			body->Translate(Point3D(1.0, 0.0, 0.0));
+			break;
+		case GLUT_KEY_END:
+			body->Translate(Point3D(-1.0, 0.0, 0.0));
+			break;
+		/*
+		case GLUT_KEY_F1:
+			if(door->GetRotate() > Point3D(0.0, -100.0, 0.0))
+				door->Rotate(Point3D(0.0, -5.0, 0.0));
+			break;
+		case GLUT_KEY_F2:
+			if(door->GetRotate() < Point3D(0.0, 0.0, 0.0))
+				door->Rotate(Point3D(0.0, 5.0, 0.0));
+			break;
+		*/
+	}
 	glutPostRedisplay();
 }
 

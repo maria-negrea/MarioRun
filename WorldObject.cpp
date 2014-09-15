@@ -90,7 +90,7 @@ Point3D WorldObject::GetForward()
 
 Point3D WorldObject::GetRight() 
 {
-	return Point3D(1.0, 0.0, 0.0).RotateY(360-rotate.y);	
+	return Point3D(1.0, 0.0, 0.0).RotateY(360-rotate.y);
 }
 
 Point3D WorldObject::GetRotate() 
@@ -106,4 +106,11 @@ int WorldObject::ChildrenCount()
 WorldObject* WorldObject::GetChild(int i)
 {
 	return children[i];
+}
+
+vector<Point3D> WorldObject::GetBoundingBox(){
+	vector<Point3D> res;
+		res.push_back(Point3D(translate.x - width/2, translate.y, translate.z - length/2));
+		res.push_back(Point3D(translate.x - width/2, translate.y + height, translate.z - length/2));
+	return res;
 }

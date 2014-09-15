@@ -1,10 +1,11 @@
 #include "Scene.h"
 #include "Box.h"
+#include "Mario.h"
 #include "Textures.h"
 
 Scene *scene;
 Camera* mainCamera;
-Box* mario;
+Mario* mario;
 Omi* omi;
 
 void Initialize() 
@@ -12,11 +13,12 @@ void Initialize()
 	scene = new Scene();
 	
 	Box* pelvis = new Box(1,0.5,1);
-	mario = new Box(0,0,0);
+	mario = new Mario();
 	mario->AddChild(pelvis);
 	
 	Box* neck = new Box(0.25,0.25,0.25);
 	Box* head = new Box(1,1,1);
+	head->Rotate(Point3D(0,0,0));
 	Box* body = new Box(1,1,1);
 
 	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,20,0)));

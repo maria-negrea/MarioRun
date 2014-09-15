@@ -2,12 +2,10 @@
 #include "Mesh.h"
 #include "WorldObject.h"
 
-class Mario : public Mesh
+class Mario : public WorldObject
 {
+	void DrawObject();
 public:
 	Mario();
 	~Mario();
-
-	Point3D* MarioPoints();
-	Triangle* MarioTriangles();
 };

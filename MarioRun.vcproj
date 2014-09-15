@@ -179,11 +179,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Body.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Box.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Camera.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Collider.cpp"
 				>
 			</File>
 			<File
@@ -233,11 +241,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Body.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Box.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Camera.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Collider.h"
 				>
 			</File>
 			<File

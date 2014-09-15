@@ -2,6 +2,7 @@
 #include "Box.h"
 #include "Mario.h"
 #include "Textures.h"
+#include "Body.h"
 
 Scene *scene;
 Camera* mainCamera;
@@ -89,7 +90,6 @@ void Initialize()
 	scene->SetMainCamera(mainCamera);
 	scene->AddObject(omi);
 	scene->AddObject(mario);
-
 	Textures::GetInstance()->LoadGLTextures();
 
 	glEnable(GL_TEXTURE_2D);
@@ -127,7 +127,7 @@ void reshape(int w, int h)
 
 
 void specialKey(int key, int x, int y)
-{ 
+{
 
 	switch(key) 
 	{
@@ -144,7 +144,6 @@ void specialKey(int key, int x, int y)
 			mario->Rotate(Point3D(0,0,-10));
 			break;
 	}
-
 	glutPostRedisplay();
 }
 

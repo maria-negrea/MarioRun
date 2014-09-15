@@ -4,6 +4,11 @@
 struct Triangle
 {
 	int p1,p2,p3;
+
+	Triangle(int p1 = 0, int p2 = 0, int p3 = 0)
+		:p1(p1),p2(p2),p3(p3)
+	{
+	}
 };
 
 class Mesh : public WorldObject

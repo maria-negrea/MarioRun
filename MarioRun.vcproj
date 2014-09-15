@@ -171,7 +171,19 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\AnimatedWorldObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\AnimationStep.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Body.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Box.cpp"
 				>
 			</File>
 			<File
@@ -184,6 +196,14 @@
 			</File>
 			<File
 				RelativePath=".\Main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mario.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mesh.cpp"
 				>
 			</File>
 			<File
@@ -213,7 +233,19 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\AnimatedWorldObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\AnimationStep.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Body.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Box.h"
 				>
 			</File>
 			<File
@@ -222,6 +254,14 @@
 			</File>
 			<File
 				RelativePath=".\Collider.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mario.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mesh.h"
 				>
 			</File>
 			<File

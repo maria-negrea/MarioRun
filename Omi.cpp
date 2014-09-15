@@ -13,6 +13,7 @@ Omi::~Omi(void)
 void Omi::Illuminate()
 {
 	ParentPerspective();
+	ModifyPerspective();
 
 	GLfloat mat_shininess[] = { 50.0 };
 	GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
@@ -26,6 +27,7 @@ void Omi::Illuminate()
 	glLightfv(light,GL_SPECULAR, light_specular);
 	glLightfv(light, GL_POSITION, light_position);
 
+	ModifyPerspectiveBack();
 	ParentPerspectiveBack();
 }
 

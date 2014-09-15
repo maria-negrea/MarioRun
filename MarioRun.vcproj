@@ -179,6 +179,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Mario.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mesh.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Omi.cpp"
 				>
 			</File>
@@ -206,6 +214,14 @@
 			>
 			<File
 				RelativePath=".\Camera.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mario.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mesh.h"
 				>
 			</File>
 			<File

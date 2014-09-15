@@ -1,16 +1,21 @@
 #pragma once
-#include <vector.h>
 #include "WorldObject.h"
 
-typedef int Triangle[3];
+struct Triangle
+{
+	int p1,p2,p3;
+};
 
 class Mesh : public WorldObject
 {
-	vector<Point3D> vertices;
-	vector<Triangle> triangles;
+	Point3D* vertices;
+	Triangle* triangles;
+
+	int verticesCount;
+	int trianglesCount;
 
 	void DrawObject();
 public:
-	Mesh( vector<Point3D> vertices, vector<Triangle> triangles);
+	Mesh( Point3D* vertices, Triangle* triangles, int verticesCount,int trianglesCount);
 	~Mesh();
 };

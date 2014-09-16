@@ -195,6 +195,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Ground.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Input.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Main.cpp"
 				>
 			</File>
@@ -203,11 +211,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MarioCamera.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Mesh.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Omi.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PhysicsObject.cpp"
 				>
 			</File>
 			<File
@@ -257,7 +273,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Ground.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Input.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Mario.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MarioCamera.h"
 				>
 			</File>
 			<File
@@ -266,6 +294,10 @@
 			</File>
 			<File
 				RelativePath=".\Omi.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PhysicsObject.h"
 				>
 			</File>
 			<File

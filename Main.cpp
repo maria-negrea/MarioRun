@@ -1,7 +1,9 @@
 #include "Scene.h"
 #include "Box.h"
 #include "Mario.h"
+#include "MarioCamera.h"
 #include "Textures.h"
+#include "Ground.h"
 #include "Body.h"
 
 Scene *scene;
@@ -15,6 +17,7 @@ void Initialize()
 	
 	Box* pelvis = new Box(1,0.5,1);
 	mario = new Mario();
+	pelvis->Translate(Point3D(0,2.5,0));
 	mario->AddChild(pelvis);
 	
 	Box* neck = new Box(0.25,0.25,0.25);
@@ -22,8 +25,8 @@ void Initialize()
 	head->Rotate(Point3D(0,0,0));
 	Box* body = new Box(1,1,1);
 
-	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,20,0)));
-	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,-20,0)));
+	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,200,0)));
+	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,160,0)));
 
 	Box* upperLegRight = new Box(0.4,0.5,0.4);
 	upperLegRight->Rotate(Point3D(180,0,0));
@@ -86,10 +89,12 @@ void Initialize()
 
 	mario->Translate(Point3D(0,0,30));
 
-	mainCamera = new Camera();
+	mainCamera = new MarioCamera(mario);
+	mainCamera->Translate(Point3D(0,10,0));
 	scene->SetMainCamera(mainCamera);
 	scene->AddObject(omi);
 	scene->AddObject(mario);
+	scene->AddObject(new Ground);
 	Textures::GetInstance()->LoadGLTextures();
 
 	glEnable(GL_TEXTURE_2D);
@@ -128,20 +133,16 @@ void reshape(int w, int h)
 
 void specialKey(int key, int x, int y)
 {
-
 	switch(key) 
 	{
 		case GLUT_KEY_RIGHT :
-			mario->Rotate(Point3D(0,10,0));
+			mario->MoveRight();
 			break;
 		case GLUT_KEY_LEFT :
-			mario->Rotate(Point3D(0,-10,0));
+			mario->MoveLeft();
 			break;
-		case GLUT_KEY_UP :
-			mario->Rotate(Point3D(0,0,10));
-			break;
-		case GLUT_KEY_DOWN :
-			mario->Rotate(Point3D(0,0,-10));
+		case GLUT_KEY_F1:
+			mario->Jump();
 			break;
 	}
 	glutPostRedisplay();

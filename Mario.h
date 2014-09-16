@@ -1,11 +1,17 @@
 #pragma once
-#include "Mesh.h"
-#include "WorldObject.h"
+#include "PhysicsObject.h"
+#include "Updatable.h"
 
-class Mario : public WorldObject
+class Mario : public PhysicsObject
 {
 	void DrawObject();
 public:
 	Mario();
 	~Mario();
+
+	void MoveRight();
+	void MoveLeft();
+
+	void Update();
+	void Jump();
 };

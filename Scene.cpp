@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Collider.h"
 
 Scene::Scene()
 {
@@ -80,6 +81,11 @@ void Scene::AddSpecialObject(WorldObject* object)
 		updateObjects.push_back(updatableObject);
 	}
 
+	if(object->HasCollider())
+	{
+		colliders.push_back(object);
+	}
+
 	Omi* omi = dynamic_cast<Omi*>(object);
 
 	if(omi != NULL)
@@ -108,5 +114,13 @@ void Scene::RemoveObject(WorldObject* object)
 	if(updatableObject != NULL)
 	{
 		RemoveUpdatable(updatableObject);
+	}
+}
+
+void Scene::CollisionCheck(WorldObject* object)
+{
+	for(unsigned i=0;i<colliders.size();++i)
+	{
+		object->GetCollider()->Affected(Collider::check(colliders[i]->GetBoundingBox(),object->GetBoundingBox()));
 	}
 }

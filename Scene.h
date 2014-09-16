@@ -21,6 +21,9 @@ class Scene
 	/*!Light sources*/
 	vector<Omi*> lightSources;	
 
+	/*!Objects that have colliders */
+	vector<WorldObject*> colliders;
+
 	/*! Removes an object from the updateObjects list */
 	void RemoveUpdatable(Updatable* object);
 
@@ -40,4 +43,6 @@ public:
 	void AddObject(WorldObject* object);
 	/*! Adds an object from the objects in the sceen if the object is Updatable it also removes it from the updateObjects list*/
 	void RemoveObject(WorldObject* object);
+
+	void CollisionCheck(WorldObject* object);
 };

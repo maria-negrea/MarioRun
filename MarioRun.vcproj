@@ -179,10 +179,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Body.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Box.cpp"
 				>
 			</File>
@@ -227,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Point3D.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Scene.cpp"
 				>
 			</File>
@@ -254,10 +254,6 @@
 			</File>
 			<File
 				RelativePath=".\AnimationStep.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Body.h"
 				>
 			</File>
 			<File
@@ -298,6 +294,10 @@
 			</File>
 			<File
 				RelativePath=".\PhysicsObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Point3D.h"
 				>
 			</File>
 			<File

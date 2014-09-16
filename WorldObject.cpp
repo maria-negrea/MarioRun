@@ -5,7 +5,14 @@ WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
     translate = Point3D(X, Y, Z);
     width = W;
     height = H;
+
 	parent = NULL;
+	collider = NULL;
+}
+
+WorldObject::WorldObject(bool hasCollider)
+{
+	collider = NULL;
 }
 
 WorldObject::~WorldObject(void)
@@ -114,4 +121,19 @@ vector<Point3D> WorldObject::GetBoundingBox()
 		res.push_back(Point3D(translate.x - width/2, translate.y, translate.z - length/2));
 		res.push_back(Point3D(translate.x + width/2, translate.y + height, translate.z + length/2));
 	return res;
+}
+
+bool WorldObject::HasCollider()
+{
+	return collider != NULL;
+}
+
+Collider* WorldObject::GetCollider()
+{
+	return collider;
+}
+
+void WorldObject::SetCollider(Collider* collider)
+{
+	this->collider = collider;
 }

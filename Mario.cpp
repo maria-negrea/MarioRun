@@ -2,6 +2,7 @@
 
 Mario::Mario()
 {
+	collider = new Collider();
 	length = 2;
 	width = 2;
 	height = 4.5;

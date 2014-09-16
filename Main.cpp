@@ -4,7 +4,6 @@
 #include "MarioCamera.h"
 #include "Textures.h"
 #include "Ground.h"
-#include "Body.h"
 
 Scene *scene;
 Camera* mainCamera;
@@ -15,7 +14,7 @@ Box* test1;
 void Initialize() 
 {
 	scene = new Scene();
-	
+
 	Box* pelvis = new Box(1,0.5,1);
 	mario = new Mario();
 	pelvis->Translate(Point3D(0,2.5,0));

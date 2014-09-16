@@ -9,12 +9,9 @@ Collider::~Collider(void)
 {
 }
 
-void Collider::AddPoint(Point3D x) {
-	points.push_back(x);
-}
-
-vector<Point3D> Collider::GetPoints() {
-	return points;
+void Collider::Affected(bool collision)
+{
+	
 }
 
 bool Collider::check(vector<Point3D> a, vector<Point3D> b) {

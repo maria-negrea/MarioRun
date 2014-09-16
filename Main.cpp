@@ -10,6 +10,7 @@ Scene *scene;
 Camera* mainCamera;
 Mario* mario;
 Omi* omi;
+Box* test1;
 
 void Initialize() 
 {
@@ -25,41 +26,46 @@ void Initialize()
 	head->Rotate(Point3D(0,0,0));
 	Box* body = new Box(1,1,1);
 
-	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,200,0)));
-	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,160,0)));
+	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,200,0),pelvis->GetTranslate()));
+	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,160,0),pelvis->GetTranslate()));
 
 	Box* upperLegRight = new Box(0.4,0.5,0.4);
 	upperLegRight->Rotate(Point3D(180,0,0));
+	upperLegRight->Translate(Point3D(0.5,0.0,0));	
 
-	upperLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(290,0,0)));
-	upperLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(80,0,0)));
+	upperLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(290,0,0),upperLegRight->GetTranslate()));
+	upperLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(80,0,0),upperLegRight->GetTranslate()));
 
 	Box* lowerLegRight = new Box(0.4,0.5,0.4);
+	lowerLegRight->Translate(Point3D(0,1.1,0));
 
-	lowerLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(-40,0,0)));
-	lowerLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(0,0,0)));
+	lowerLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(-40,0,0),lowerLegRight->GetTranslate()));
+	lowerLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(0,0,0),lowerLegRight->GetTranslate()));
 
 	Box* rightFoot = new Box(0.4,0.25,0.5);
+	rightFoot->Translate(Point3D(0,1.1,0.125));
 
-	rightFoot->AddAnimationStep(AnimationStep(1.5,Point3D(50,0,0)));
-	rightFoot->AddAnimationStep(AnimationStep(1.5,Point3D(-50,0,0)));
+	rightFoot->AddAnimationStep(AnimationStep(1.5,Point3D(50,0,0),rightFoot->GetTranslate()));
+	rightFoot->AddAnimationStep(AnimationStep(1.5,Point3D(-50,0,0),rightFoot->GetTranslate()));
 
 	Box* upperLegLeft = new Box(0.4,0.5,0.4);
 	upperLegLeft->Rotate(Point3D(180,0,0));
+	upperLegLeft->Translate(Point3D(-0.5,0.0,0));	
 
-
-	upperLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(80,0,0)));
-	upperLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(290,0,0)));
+	upperLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(80,0,0),upperLegLeft->GetTranslate()));
+	upperLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(290,0,0),upperLegLeft->GetTranslate()));
 
 	Box* lowerLegLeft = new Box(0.4,0.5,0.4);
+	lowerLegLeft->Translate(Point3D(0,1.1,0));
 
-	lowerLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(-40,0,0)));
-	lowerLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(0,0,0)));
+	lowerLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(-40,0,0),lowerLegLeft->GetTranslate()));
+	lowerLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(0,0,0),lowerLegLeft->GetTranslate()));
 
 	Box* leftFoot = new Box(0.4,0.25,0.5);
+	leftFoot->Translate(Point3D(0,1.1,0.125));
 
-	leftFoot->AddAnimationStep(AnimationStep(1.5,Point3D(50,0,0)));
-	leftFoot->AddAnimationStep(AnimationStep(1.5,Point3D(-50,0,0)));
+	leftFoot->AddAnimationStep(AnimationStep(1.5,Point3D(50,0,0),leftFoot->GetTranslate()));
+	leftFoot->AddAnimationStep(AnimationStep(1.5,Point3D(-50,0,0),leftFoot->GetTranslate()));
 
 
 	pelvis->AddChild(body);
@@ -70,19 +76,12 @@ void Initialize()
 	head->Translate(Point3D(0,0.5,0));
 
 	pelvis->AddChild(upperLegRight);
-	upperLegRight->Translate(Point3D(0.5,0.0,0));	
 	upperLegRight->AddChild(lowerLegRight);
-	lowerLegRight->Translate(Point3D(0,1.1,0));
 	lowerLegRight->AddChild(rightFoot);
-	rightFoot->Translate(Point3D(0,1.1,0.125));
 
 	pelvis->AddChild(upperLegLeft);
-	upperLegLeft->Translate(Point3D(-0.5,0.0,0));	
 	upperLegLeft->AddChild(lowerLegLeft);
-	lowerLegLeft->Translate(Point3D(0,1.1,0));
 	lowerLegLeft->AddChild(leftFoot);
-	leftFoot->Translate(Point3D(0,1.1,0.125));
-
 
 	omi = new Omi(GL_LIGHT1);
 	mario->AddChild(omi);
@@ -94,25 +93,15 @@ void Initialize()
 	scene->SetMainCamera(mainCamera);
 	scene->AddObject(omi);
 	scene->AddObject(new Ground);
-	//scene->AddObject(mario);
+	scene->AddObject(mario);
 	
-	Box* test1 = new Box(0.4,0.25,0.5);
-	test1->Translate(Point3D(0.0, 0.0, 5.0));
+	test1 = new Box(2,2,10);
+	test1->Translate(Point3D(0.0, 1.0, 90.0));
 	scene->AddObject(test1);
-	Box* test2 = new Box(0.4,0.25,0.5);
-	test2->Translate(Point3D(-0.39, 0.0, 5.0));
-	scene->AddObject(test2);
+	
 	Textures::GetInstance()->LoadGLTextures();
 
-	vector<Point3D> res = test1->GetBoundingBox();
-	vector<Point3D> res2= test2->GetBoundingBox();
 
-	for(int i=0; i < 2; i++) {
-		cout<<"First: "<<res[i].x<<" "<<res[i].y<<" "<<res[i].z<<endl;
-		cout<<"Second: "<<res2[i].x<<" "<<res2[i].y<<" "<<res2[i].z<<endl;
-	}
-
-	cout<<(Collider::check(res, res2) == true ? "true" : "false")<<endl;
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 

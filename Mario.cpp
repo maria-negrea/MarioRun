@@ -2,6 +2,13 @@
 
 Mario::Mario()
 {
+	length = 2;
+	width = 2;
+	height = 4.5;
+
+	forwardSpeed = 0;
+	acceleration = 0.05;
+	maxSpeed = 1;
 }
 
 Mario::~Mario()
@@ -17,7 +24,12 @@ void Mario::DrawObject()
 void Mario::Update()
 {
 	PhysicsObject::Update();
-	Translate(GetForward()*5);
+	
+	forwardSpeed += acceleration;
+	if(forwardSpeed > maxSpeed)
+		forwardSpeed = maxSpeed;
+
+	Translate(GetForward()*forwardSpeed);
 }
 
 void Mario::Jump()
@@ -28,6 +40,10 @@ void Mario::Jump()
 	}
 }
 
+void Mario::Hit()
+{
+	forwardSpeed = -1;
+}
 
 void Mario::MoveRight()
 {

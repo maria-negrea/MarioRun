@@ -58,6 +58,12 @@ void Scene::RemoveUpdatable(Updatable* object)
 void Scene::SetMainCamera(Camera* camera)
 {
 	mainCamera = camera;
+
+	Updatable* updatableObject = dynamic_cast<Updatable*>(camera);
+	if(updatableObject != NULL)
+	{
+		updateObjects.push_back(updatableObject);
+	}
 }
 
 void Scene::AddObject(WorldObject* object)

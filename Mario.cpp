@@ -1,8 +1,14 @@
 #include "Mario.h"
 
 Mario::Mario()
-	:Mesh(MarioPoints(),MarioTriangles(),4,1)
 {
+	length = 2;
+	width = 2;
+	height = 4.5;
+
+	forwardSpeed = 0;
+	acceleration = 0.05;
+	maxSpeed = 1;
 }
 
 Mario::~Mario()
@@ -10,21 +16,41 @@ Mario::~Mario()
 
 }
 
-
-Point3D* Mario::MarioPoints()
+void Mario::DrawObject()
 {
-	Point3D *marioPoints = new Point3D[10];
 
-	marioPoints[0] = Point3D(0,1,1);
-	marioPoints[1] = Point3D(1,1,0.4);
-	marioPoints[2] = Point3D(1,1,-0.4);
-	marioPoints[3] = Point3D(0.4,1,-1);
-
-	return marioPoints;
 }
 
-Triangle* Mario::MarioTriangles()
+void Mario::Update()
 {
-	Triangle* triangles;
-	return triangles;	
+	PhysicsObject::Update();
+	
+	forwardSpeed += acceleration;
+	if(forwardSpeed > maxSpeed)
+		forwardSpeed = maxSpeed;
+
+	Translate(GetForward()*forwardSpeed);
+}
+
+void Mario::Jump()
+{
+	if(IsGrounded())
+	{
+		fallSpeed += 3;
+	}
+}
+
+void Mario::Hit()
+{
+	forwardSpeed = -1;
+}
+
+void Mario::MoveRight()
+{
+	Translate(GetRight()*-1);
+}
+
+void Mario::MoveLeft()
+{
+	Translate(GetRight()*1);
 }

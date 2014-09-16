@@ -1,13 +1,22 @@
 #pragma once
-#include "Mesh.h"
-#include "WorldObject.h"
+#include "PhysicsObject.h"
+#include "Updatable.h"
 
-class Mario : public Mesh
+class Mario : public PhysicsObject
 {
+	void DrawObject();
+	GLfloat forwardSpeed;
+	GLfloat acceleration;
+	GLfloat maxSpeed;
 public:
 	Mario();
 	~Mario();
 
-	Point3D* MarioPoints();
-	Triangle* MarioTriangles();
+	void MoveRight();
+	void MoveLeft();
+
+	void Update();
+	void Jump();
+
+	void Hit();
 };

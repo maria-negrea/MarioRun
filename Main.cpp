@@ -93,17 +93,33 @@ void Initialize()
 	mainCamera->Translate(Point3D(0,10,0));
 	scene->SetMainCamera(mainCamera);
 	scene->AddObject(omi);
-	scene->AddObject(mario);
 	scene->AddObject(new Ground);
+	//scene->AddObject(mario);
+	
+	Box* test1 = new Box(0.4,0.25,0.5);
+	test1->Translate(Point3D(0.0, 0.0, 5.0));
+	scene->AddObject(test1);
+	Box* test2 = new Box(0.4,0.25,0.5);
+	test2->Translate(Point3D(-0.39, 0.0, 5.0));
+	scene->AddObject(test2);
 	Textures::GetInstance()->LoadGLTextures();
 
+	vector<Point3D> res = test1->GetBoundingBox();
+	vector<Point3D> res2= test2->GetBoundingBox();
+
+	for(int i=0; i < 2; i++) {
+		cout<<"First: "<<res[i].x<<" "<<res[i].y<<" "<<res[i].z<<endl;
+		cout<<"Second: "<<res2[i].x<<" "<<res2[i].y<<" "<<res2[i].z<<endl;
+	}
+
+	cout<<(Collider::check(res, res2) == true ? "true" : "false")<<endl;
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glEnable(GL_BLEND);
-
+	
 	//glEnable(GL_LIGHTING);
 
 	glEnable(GL_DEPTH_TEST);

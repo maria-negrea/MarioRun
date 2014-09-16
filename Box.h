@@ -1,15 +1,11 @@
 #pragma once
-#include"WorldObject.h"
-#include"Textures.h"
-#include"Mushroom.h"
-class Box:public WorldObject
+#include "AnimatedWorldObject.h"
+
+class Box : public AnimatedWorldObject
 {
-	GLfloat size;
-	int textureIndex;
-public:
-	Box(GLfloat width, GLfloat heigh, GLfloat size);
-	~Box(void);
+	GLfloat sizeX,sizeY,sizeZ;
 	void DrawObject();
-	void Hit();
-	void SetIndex(int newIndex);
+public:
+	Box(GLfloat sizeX = 1,GLfloat sizeY = 1,GLfloat sizeZ = 1);
+	~Box();
 };

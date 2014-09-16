@@ -104,12 +104,13 @@ protected:
 
 	Point3D rotate;
 	Point3D translate;
-	GLfloat width, height;
-
+	
 	vector<WorldObject*> children;
 	WorldObject* parent;
+
 	Scene *scene;
 public:
+	GLfloat length, width, height; // OZ, OX and OY
 	WorldObject(GLfloat W = 0.0, GLfloat H = 0.0,GLfloat X = 0.0, GLfloat Y = 0.0, GLfloat Z = 0.0);
 	~WorldObject();
 
@@ -121,6 +122,8 @@ public:
 	Point3D GetForward();
 	Point3D GetTranslate();
 	Point3D GetRight();
+
+	vector<Point3D> GetBoundingBox();
 
 	Point3D GetRotate();
 	void SetScene(Scene* scene);

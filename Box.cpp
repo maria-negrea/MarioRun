@@ -1,75 +1,54 @@
 #include "Box.h"
 
-Box::Box(GLfloat width, GLfloat height, GLfloat size)
-{   this->width=width;
-    this->height=height;
-	this->size=size;
-	this->textureIndex=2;
-
-}
-
 Box::~Box(void)
 {
 }
+Box::Box(GLfloat sizeX ,GLfloat sizeY ,GLfloat sizeZ )
+	:sizeX(sizeX),sizeY(sizeY),sizeZ(sizeZ)
+{
+	length = sizeZ;
+	width = sizeX;
+	height = sizeY;
+}
 
-void Box::Hit()
-{ if(textureIndex==2)
-{
-	Mushroom *newMushroom=new Mushroom(0.5,0.5,0.5);
-	
-	newMushroom->Translate(Point3D(width*0.5,size*0.75,2));
-	scene->AddObject(newMushroom);
-	
-		textureIndex=3;
-}
-	else return;
-}
-void Box::SetIndex(int newIndex)
-{
-	this->textureIndex=newIndex;
-}
 void Box::DrawObject()
 {
-glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
-  glBegin(GL_QUADS);
- // front face
-  glTexCoord2f(0, 1);glVertex3f(0. ,size*0.75, 0);
-  glTexCoord2f(1,1);glVertex3f(width ,size*0.75, 0);
-  glTexCoord2f(1,0);glVertex3f(width, 0., 0);
-  glTexCoord2f(0, 0);glVertex3f(0., 0., 0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glBegin(GL_QUADS);
+		glColor3f(1.0,0.0,0.0);
+		glTexCoord2f(1, 1); glVertex3f( sizeX,2*sizeY,sizeZ);
+		glTexCoord2f(0, 1); glVertex3f( -sizeX,2*sizeY,sizeZ);
+		glTexCoord2f(0, 0); glVertex3f( -sizeX,2*sizeY,-sizeZ);
+		glTexCoord2f(1, 0); glVertex3f( sizeX,2*sizeY,-sizeZ);
 
- //right face
-  glTexCoord2f(0, 1);glVertex3f(width, size*0.75,0);
-  glTexCoord2f(1, 1);glVertex3f(width, size*0.75, height);
-  glTexCoord2f(1, 0);glVertex3f(width, 0., height);
-  glTexCoord2f(0, 0);glVertex3f(width, 0., 0);
+		glColor3f(0.0,1.0,0.0);
+		glTexCoord2f(1, 1); glVertex3f( sizeX,0,sizeZ);
+		glTexCoord2f(0, 1); glVertex3f( -sizeX,0,sizeZ);
+		glTexCoord2f(0, 0); glVertex3f( -sizeX,0,-sizeZ);
+		glTexCoord2f(1, 0); glVertex3f( sizeX,0,-sizeZ);
 
- // left face
-  glTexCoord2f(0, 1);glVertex3f(0., size*0.75, 0);
-  glTexCoord2f(1, 1);glVertex3f(0., size*0.75, height);
-  glTexCoord2f(1, 0);glVertex3f(0., 0., height);
-  glTexCoord2f(0, 0);glVertex3f(0., 0., 0);
+		glColor3f(0.0,0.0,1.0);
+		glTexCoord2f(1, 0); glVertex3f( sizeX,2*sizeY,sizeZ);
+		glTexCoord2f(0, 0); glVertex3f( -sizeX,2*sizeY,sizeZ);
+		glTexCoord2f(0, 1); glVertex3f( -sizeX,0,sizeZ);
+		glTexCoord2f(1, 1); glVertex3f( sizeX,0,sizeZ);
 
- // back face
-  glTexCoord2f(0, 1);glVertex3f(0., size*0.75, height);
-  glTexCoord2f(1, 1);glVertex3f(width, size*0.75, height);
-  glTexCoord2f(1, 0);glVertex3f(width, 0., height);
-  glTexCoord2f(0, 0);glVertex3f(0., 0., height);
+		glColor3f(1.0,0.0,1.0);
+		glTexCoord2f(1, 1); glVertex3f( sizeX,2*sizeY,-sizeZ);
+		glTexCoord2f(0, 1); glVertex3f( -sizeX,2*sizeY,-sizeZ);
+		glTexCoord2f(0, 0); glVertex3f( -sizeX,0,-sizeZ);
+		glTexCoord2f(1, 0); glVertex3f( sizeX,0,-sizeZ);
 
-//  top face
-  glTexCoord2f(0, 1);glVertex3f(0., size*0.75, 0);
-  glTexCoord2f(1, 1);glVertex3f(width, size*0.75, 0);
-  glTexCoord2f(1, 0);glVertex3f(width, size*0.75, height);
-  glTexCoord2f(0, 0);glVertex3f(0., size*0.75, height);
+		glColor3f(1.0,1.0,0.0);
+		glTexCoord2f(0, 1); glVertex3f( sizeX,2*sizeY,sizeZ);
+		glTexCoord2f(0, 0); glVertex3f( sizeX,2*sizeY,-sizeZ);
+		glTexCoord2f(1, 0); glVertex3f( sizeX,0,-sizeZ);
+		glTexCoord2f(1, 1); glVertex3f( sizeX,0,sizeZ);
 
- // bottom face
-  glTexCoord2f(0, 1);glVertex3f(0., 0., 0);
-  glTexCoord2f(1, 1);glVertex3f(width ,0., 0);
-  glTexCoord2f(1, 0);glVertex3f(width, 0., height);
-  glTexCoord2f(0, 0);glVertex3f(0., 0., height);
- glEnd();
-
-
-  glEnd();
-  
+		glColor3f(0.0,1.0,1.0);
+		glTexCoord2f(1, 1); glVertex3f( -sizeX,2*sizeY,sizeZ);
+		glTexCoord2f(1, 0); glVertex3f( -sizeX,2*sizeY,-sizeZ);
+		glTexCoord2f(0, 0); glVertex3f( -sizeX,0,-sizeZ);
+		glTexCoord2f(0, 1); glVertex3f( -sizeX,0,sizeZ);
+	glEnd();
 }

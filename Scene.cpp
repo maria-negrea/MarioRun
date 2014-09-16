@@ -63,6 +63,7 @@ void Scene::SetMainCamera(Camera* camera)
 void Scene::AddObject(WorldObject* object)
 {
 	sceneObjects.push_back(object);
+	object->SetScene(this);
 	AddSpecialObject(object);
 }
 

@@ -171,6 +171,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\Box.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Camera.cpp"
 				>
 			</File>
@@ -179,7 +183,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Mushroom.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Omi.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Plant.cpp"
 				>
 			</File>
 			<File
@@ -205,11 +217,23 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\Box.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Camera.h"
 				>
 			</File>
 			<File
+				RelativePath=".\Mushroom.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Omi.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Plant.h"
 				>
 			</File>
 			<File

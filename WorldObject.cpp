@@ -6,6 +6,7 @@ WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
     width = W;
     height = H;
 	parent = NULL;
+	scene = NULL;
 }
 
 WorldObject::~WorldObject(void)
@@ -106,4 +107,9 @@ int WorldObject::ChildrenCount()
 WorldObject* WorldObject::GetChild(int i)
 {
 	return children[i];
+}
+
+void WorldObject::SetScene(Scene* scene)
+{
+	this->scene = scene;
 }

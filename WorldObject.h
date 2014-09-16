@@ -8,6 +8,8 @@
 #include <math.h>
 #include <vector>
 
+class Scene;
+
 using namespace std;
 
 struct Point3D
@@ -106,6 +108,7 @@ protected:
 
 	vector<WorldObject*> children;
 	WorldObject* parent;
+	Scene *scene;
 public:
 	WorldObject(GLfloat W = 0.0, GLfloat H = 0.0,GLfloat X = 0.0, GLfloat Y = 0.0, GLfloat Z = 0.0);
 	~WorldObject();
@@ -120,9 +123,12 @@ public:
 	Point3D GetRight();
 
 	Point3D GetRotate();
+	void SetScene(Scene* scene);
 
 	void AddChild(WorldObject* child);
 
 	int ChildrenCount();
 	WorldObject* GetChild(int i);
 };
+
+#include"Scene.h"

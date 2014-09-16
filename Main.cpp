@@ -1,14 +1,27 @@
 #include "Scene.h"
-#include "Textures.h"
-
+#include"Mushroom.h"
+#include"Textures.h"
+#include"Box.h"
+#include"Plant.h"
+//Textures* Textures::instance = NULL;
 Scene *scene;
 Camera* mainCamera;
+//Mushroom* newMushroom=new Mushroom(0.5,0.5,0.5);
+Box* newBox=new Box(0.5,0.5,0.5);
+Plant *newPlant=new Plant(0.5,0.5,0.5);
+
 
 void Initialize() 
 {
 	scene = new Scene();
+	//scene->AddObject(newBox);
+    //newBox->Translate(Point3D(0,0,2));
+
+	scene->AddObject(newPlant);
+	newPlant->Translate(Point3D(0,0,2));
 
 	mainCamera = new Camera();
+	mainCamera->Translate(Point3D(0,1,0));
 	scene->SetMainCamera(mainCamera);
 	
 	Textures::GetInstance()->LoadGLTextures();
@@ -20,7 +33,7 @@ void Initialize()
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glEnable(GL_BLEND);
-	glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHTING);
 }
 
 void Draw()
@@ -29,9 +42,10 @@ void Draw()
 }
 
 void Timer(int value)
-{
-	scene->Update();
+{//glTranslatef(0,0,-2);
 
+	scene->Update();
+	newPlant->Rotate(Point3D(0,2,0));
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }
@@ -46,7 +60,18 @@ void reshape(int w, int h)
 
 
 void specialKey(int key, int x, int y)
-{ 
+{
+
+	scene->Update();
+	 
+switch(key)
+   {
+     case GLUT_KEY_UP :
+		
+		 newBox->Hit();
+         
+        break;
+    }
 	glutPostRedisplay();
 }
 
@@ -62,7 +87,7 @@ int main(int argc, char** argv)
 	glutDisplayFunc(Draw);
 
 	glutSpecialFunc(specialKey);
-	glutTimerFunc(30, Timer, 0);
+//	glutTimerFunc(30, Timer, 0);
 	glutReshapeFunc(reshape);
 	glutMainLoop();
 

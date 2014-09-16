@@ -1,8 +1,10 @@
 #pragma once
-#include "Camera.h"
 #include "WorldObject.h"
-#include "Omi.h"
+#include "Updatable.h"
 #include <vector>
+
+class Camera;
+class Omi;
 
 using namespace std;
 
@@ -41,3 +43,6 @@ public:
 	/*! Adds an object from the objects in the sceen if the object is Updatable it also removes it from the updateObjects list*/
 	void RemoveObject(WorldObject* object);
 };
+
+#include "Camera.h"
+#include "Omi.h"

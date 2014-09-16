@@ -1,17 +1,31 @@
 #pragma once
 #include <vector>
 #include "WorldObject.h"
+#include "Textures.h"
 
-typedef int Triangle[3];
+#define PI 3.14
+
+struct Triangle
+{
+	int p1,p2,p3;
+
+	Triangle(int p1 = 0, int p2 = 0, int p3 = 0)
+		:p1(p1),p2(p2),p3(p3)
+	{
+
+	}
+};
 
 class Mesh : public WorldObject
 {
-	vector<Point3D> vertices;
-	vector<Triangle> triangles;
+protected:
+	Point3D* vertices;
+	Triangle* triangles;
 
-	void DrawObject();
+	int verticesCount;
+	int trianglesCount;
 public:
 	Mesh();
-	Mesh( vector<Point3D> vertices, vector<Triangle> triangles);
+	Mesh( Point3D* vertices, Triangle* triangles, int verticesCount,int trianglesCount);
 	~Mesh();
 };

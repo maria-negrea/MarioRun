@@ -179,7 +179,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Goomba.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Head.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mario.cpp"
 				>
 			</File>
 			<File
@@ -196,6 +208,10 @@
 			</File>
 			<File
 				RelativePath=".\Textures.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Torso.cpp"
 				>
 			</File>
 			<File
@@ -221,6 +237,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Goomba.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Head.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mario.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Mesh.h"
 				>
 			</File>
@@ -238,6 +266,10 @@
 			</File>
 			<File
 				RelativePath=".\Textures.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Torso.h"
 				>
 			</File>
 			<File

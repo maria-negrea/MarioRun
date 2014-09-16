@@ -6,6 +6,7 @@ class Foot: public Mesh, public Updatable
 {
 public:
 	Foot(void);
+	void DrawObject();
 	void Update();
 	~Foot(void);
 };

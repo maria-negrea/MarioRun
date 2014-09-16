@@ -1,6 +1,7 @@
 #include "Mario.h"
 
 Mario::Mario()
+	:Mesh(MarioPoints(),MarioTriangles(),4,1)
 {
 }
 
@@ -9,17 +10,21 @@ Mario::~Mario()
 
 }
 
-void DrawHead()
+
+Point3D* Mario::MarioPoints()
 {
-	glBegin(GL_QUADS);
-		glTexCoord2f(0, 0); glVertex3f( 0, 1.0, 0);
-		glTexCoord2f(0, 0); glVertex3f( 0, 1.0, 0);
-	glEnd();
+	Point3D *marioPoints = new Point3D[10];
+
+	marioPoints[0] = Point3D(0,1,1);
+	marioPoints[1] = Point3D(1,1,0.4);
+	marioPoints[2] = Point3D(1,1,-0.4);
+	marioPoints[3] = Point3D(0.4,1,-1);
+
+	return marioPoints;
 }
 
-void Mario::DrawObject()
+Triangle* Mario::MarioTriangles()
 {
-
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[2]);
-	DrawHead();
+	Triangle* triangles;
+	return triangles;	
 }

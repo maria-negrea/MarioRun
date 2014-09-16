@@ -109,8 +109,10 @@ WorldObject* WorldObject::GetChild(int i)
 }
 
 vector<Point3D> WorldObject::GetBoundingBox(){
+	cout<<width<<" "<<height<<" "<<length<<endl;
+	cout<<translate.x<<" "<<translate.y<<" "<<translate.z<<endl;
 	vector<Point3D> res;
 		res.push_back(Point3D(translate.x - width/2, translate.y, translate.z - length/2));
-		res.push_back(Point3D(translate.x - width/2, translate.y + height, translate.z - length/2));
+		res.push_back(Point3D(translate.x + width/2, translate.y + height, translate.z + length/2));
 	return res;
 }

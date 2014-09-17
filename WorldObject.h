@@ -9,6 +9,8 @@
 #include "Point3D.h"
 #include "Collider.h"
 
+class Scene;
+
 using namespace std;
 
 
@@ -30,6 +32,7 @@ protected:
 	WorldObject* parent;
 
 	Collider* collider;
+	Scene *scene;
 public:
 	GLfloat length, width, height; // OZ, OX and OY
 	WorldObject(GLfloat W = 0.0, GLfloat H = 0.0,GLfloat X = 0.0, GLfloat Y = 0.0, GLfloat Z = 0.0);
@@ -48,6 +51,7 @@ public:
 	vector<Point3D> GetBoundingBox();
 
 	Point3D GetRotate();
+	void SetScene(Scene* scene);
 
 	void AddChild(WorldObject* child);
 
@@ -57,5 +61,8 @@ public:
 	bool HasCollider();
 
 	Collider* GetCollider();
+	void AddCollider();
 	void SetCollider(Collider* collider);
 };
+
+#include"Scene.h"

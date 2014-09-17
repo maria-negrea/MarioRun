@@ -1,106 +1,52 @@
 #include "Scene.h"
+#include"Plant.h"
+
 #include "Box.h"
 #include "Mario.h"
 #include "MarioCamera.h"
 #include "Textures.h"
+#include "Goomba.h"
+#include "Foot.h"
+#include "Torso.h"
+#include "Head.h"
 #include "Ground.h"
+#include "QuestionBlock.h"
 
 Scene *scene;
 Camera* mainCamera;
 Mario* mario;
-Omi* omi;
 Box* test1;
+QuestionBlock *block;
 
 void Initialize() 
 {
 	scene = new Scene();
 
-	Box* pelvis = new Box(1,0.5,1);
-	mario = new Mario();
-	pelvis->Translate(Point3D(0,2.5,0));
-	mario->AddChild(pelvis);
+	block = new QuestionBlock(2,2,2);
+	block->Rotate(Point3D(0,-90,0));
+	block->Translate(Point3D(0,5,20));
 	
-	Box* neck = new Box(0.25,0.25,0.25);
-	Box* head = new Box(1,1,1);
-	head->Rotate(Point3D(0,0,0));
-	Box* body = new Box(1,1,1);
+	Omi* omi = new Omi(GL_LIGHT1);
+	block->AddChild(omi);
+	omi->Translate(Point3D(0,1,0));
 
-	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,200,0),pelvis->GetTranslate()));
-	pelvis->AddAnimationStep(AnimationStep(1.5,Point3D(0,160,0),pelvis->GetTranslate()));
+	scene->AddObject(block);
 
-	Box* upperLegRight = new Box(0.4,0.5,0.4);
-	upperLegRight->Rotate(Point3D(180,0,0));
-	upperLegRight->Translate(Point3D(0.5,0.0,0));	
-
-	upperLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(290,0,0),upperLegRight->GetTranslate()));
-	upperLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(80,0,0),upperLegRight->GetTranslate()));
-
-	Box* lowerLegRight = new Box(0.4,0.5,0.4);
-	lowerLegRight->Translate(Point3D(0,1.1,0));
-
-	lowerLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(-40,0,0),lowerLegRight->GetTranslate()));
-	lowerLegRight->AddAnimationStep(AnimationStep(1.5,Point3D(0,0,0),lowerLegRight->GetTranslate()));
-
-	Box* rightFoot = new Box(0.4,0.25,0.5);
-	rightFoot->Translate(Point3D(0,1.1,0.125));
-
-	rightFoot->AddAnimationStep(AnimationStep(1.5,Point3D(50,0,0),rightFoot->GetTranslate()));
-	rightFoot->AddAnimationStep(AnimationStep(1.5,Point3D(-50,0,0),rightFoot->GetTranslate()));
-
-	Box* upperLegLeft = new Box(0.4,0.5,0.4);
-	upperLegLeft->Rotate(Point3D(180,0,0));
-	upperLegLeft->Translate(Point3D(-0.5,0.0,0));	
-
-	upperLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(80,0,0),upperLegLeft->GetTranslate()));
-	upperLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(290,0,0),upperLegLeft->GetTranslate()));
-
-	Box* lowerLegLeft = new Box(0.4,0.5,0.4);
-	lowerLegLeft->Translate(Point3D(0,1.1,0));
-
-	lowerLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(-40,0,0),lowerLegLeft->GetTranslate()));
-	lowerLegLeft->AddAnimationStep(AnimationStep(1.5,Point3D(0,0,0),lowerLegLeft->GetTranslate()));
-
-	Box* leftFoot = new Box(0.4,0.25,0.5);
-	leftFoot->Translate(Point3D(0,1.1,0.125));
-
-	leftFoot->AddAnimationStep(AnimationStep(1.5,Point3D(50,0,0),leftFoot->GetTranslate()));
-	leftFoot->AddAnimationStep(AnimationStep(1.5,Point3D(-50,0,0),leftFoot->GetTranslate()));
-
-
-	pelvis->AddChild(body);
-	body->Translate(Point3D(0,1,0));
-	body->AddChild(neck);
-	neck->Translate(Point3D(0,2,0));
-	neck->AddChild(head);
-	head->Translate(Point3D(0,0.5,0));
-
-	pelvis->AddChild(upperLegRight);
-	upperLegRight->AddChild(lowerLegRight);
-	lowerLegRight->AddChild(rightFoot);
-
-	pelvis->AddChild(upperLegLeft);
-	upperLegLeft->AddChild(lowerLegLeft);
-	lowerLegLeft->AddChild(leftFoot);
-
-	omi = new Omi(GL_LIGHT1);
-	mario->AddChild(omi);
-
+	mario = new Mario();
 	mario->Translate(Point3D(0,0,30));
 
 	mainCamera = new MarioCamera(mario);
 	mainCamera->Translate(Point3D(0,10,0));
 	scene->SetMainCamera(mainCamera);
-	scene->AddObject(omi);
 	scene->AddObject(new Ground);
 	scene->AddObject(mario);
 	
 	test1 = new Box(2,2,10);
 	test1->Translate(Point3D(0.0, 1.0, 90.0));
+	test1->AddCollider();
 	scene->AddObject(test1);
 	
 	Textures::GetInstance()->LoadGLTextures();
-
-
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
@@ -108,7 +54,10 @@ void Initialize()
 	glLoadIdentity();
 	glEnable(GL_BLEND);
 	
-	//glEnable(GL_LIGHTING);
+//	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+//	glEnable(GL_LIGHTING);
+
+	Textures::GetInstance()->LoadGLTextures();
 
 	glEnable(GL_DEPTH_TEST);
 }
@@ -121,7 +70,6 @@ void Draw()
 void Timer(int value)
 {
 	scene->Update();
-
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }
@@ -136,16 +84,17 @@ void reshape(int w, int h)
 
 
 void specialKey(int key, int x, int y)
-{
-	switch(key) 
+{ 
+	switch(key)
 	{
-		case GLUT_KEY_RIGHT :
-			mario->MoveRight();
-			break;
-		case GLUT_KEY_LEFT :
+		case GLUT_KEY_LEFT:
 			mario->MoveLeft();
 			break;
+		case GLUT_KEY_RIGHT:
+			mario->MoveRight();
+			break;
 		case GLUT_KEY_F1:
+			block->Hit();
 			mario->Jump();
 			break;
 	}

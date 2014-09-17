@@ -1,5 +1,9 @@
 #pragma once
+#include <vector>
 #include "WorldObject.h"
+#include "Textures.h"
+
+#define PI 3.14
 
 struct Triangle
 {
@@ -13,14 +17,14 @@ struct Triangle
 
 class Mesh : public WorldObject
 {
+protected:
 	Point3D* vertices;
 	Triangle* triangles;
 
 	int verticesCount;
 	int trianglesCount;
-
-	void DrawObject();
 public:
+	Mesh();
 	Mesh( Point3D* vertices, Triangle* triangles, int verticesCount,int trianglesCount);
 	~Mesh();
 };

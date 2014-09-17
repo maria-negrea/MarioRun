@@ -70,6 +70,7 @@ void Scene::SetMainCamera(Camera* camera)
 void Scene::AddObject(WorldObject* object)
 {
 	sceneObjects.push_back(object);
+	object->SetScene(this);
 	AddSpecialObject(object);
 }
 
@@ -117,10 +118,13 @@ void Scene::RemoveObject(WorldObject* object)
 	}
 }
 
-void Scene::CollisionCheck(WorldObject* object)
+void Scene::CollisionCheck(WorldObject* object,Point3D previousPosition)
 {
 	for(unsigned i=0;i<colliders.size();++i)
 	{
-		object->GetCollider()->Affected(Collider::check(colliders[i]->GetBoundingBox(),object->GetBoundingBox()));
+		if(object != colliders[i])
+		{
+			object->GetCollider()->Affected(Collider::check(colliders[i]->GetBoundingBox(),object->GetBoundingBox()));
+		}
 	}
 }

@@ -3,7 +3,6 @@
 Box::~Box(void)
 {
 }
-
 Box::Box(GLfloat sizeX ,GLfloat sizeY ,GLfloat sizeZ )
 	:sizeX(sizeX),sizeY(sizeY),sizeZ(sizeZ)
 {

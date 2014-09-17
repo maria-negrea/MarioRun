@@ -8,11 +8,13 @@ WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
 
 	parent = NULL;
 	collider = NULL;
+	scene = NULL;
 }
 
 WorldObject::WorldObject(bool hasCollider)
 {
 	collider = NULL;
+	scene = NULL;
 }
 
 WorldObject::~WorldObject(void)
@@ -78,6 +80,13 @@ void WorldObject::ParentPerspectiveBack()
 void WorldObject::Translate(Point3D translation)
 {
 	translate += translation;
+	if(HasCollider())
+	{
+		if(scene != NULL)
+		{
+			scene->CollisionCheck(this,Point3D());
+		}
+	}
 }
 
 void WorldObject::Rotate(Point3D rotation)
@@ -115,6 +124,10 @@ WorldObject* WorldObject::GetChild(int i)
 	return children[i];
 }
 
+void WorldObject::SetScene(Scene* scene)
+{
+	this->scene = scene;
+}
 vector<Point3D> WorldObject::GetBoundingBox()
 {
 	vector<Point3D> res;
@@ -136,4 +149,9 @@ Collider* WorldObject::GetCollider()
 void WorldObject::SetCollider(Collider* collider)
 {
 	this->collider = collider;
+}
+
+void WorldObject::AddCollider()
+{
+	this->collider = new Collider();
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "Point3D.h"
+#include "Collision.h"
 #include<vector>
 
 class WorldObject;
@@ -14,8 +15,10 @@ public:
 	Collider(void);
 	~Collider(void);
 
-	void Affected(bool collision);
-	static bool check(vector<Point3D> a, vector<Point3D> b);
+	virtual void Hit(Collision* collision);
+
+	void Affected(Collision* collision);
+	static Collision* check(vector<Point3D> a, vector<Point3D> b);
 };
 
 #include "WorldObject.h"

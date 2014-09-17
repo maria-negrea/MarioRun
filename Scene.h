@@ -39,6 +39,8 @@ public:
 	/*! Updates all the objects that need updating */
 	void Update();
 
+	Camera* GetCamera();
+	
 	void SetMainCamera(Camera* camera);
 
 	/*! Adds an object from the objects in the sceen if the object is Updatable it also adds it from the updateObjects list*/

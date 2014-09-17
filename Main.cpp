@@ -10,15 +10,32 @@
 #include "Torso.h"
 #include "Head.h"
 #include "Ground.h"
+#include "Coin.h"
+#include "Particles.h"
 #include "QuestionBlock.h"
 #include "Input.h"
 
 Scene *scene;
 Camera* mainCamera;
 Mario* mario;
-Box* test1;
+Omi* omi;
+Coin *coin ;
+Particles *particles = new Particles();
+Point3D collision;
+int score = 0;
+Box *test1, *test2;
 QuestionBlock *block;
 Road *newRoad = new Road;
+
+void AddObjectsToScene() {
+	//scene->AddObject(test1);
+	//scene->AddObject(test2);
+	//scene->AddObject(coin);
+	scene->AddObject(particles);
+	//scene->AddObject(new Ground);
+	//scene->AddObject(mario);	
+	
+}
 
 void Initialize() 
 {
@@ -34,27 +51,30 @@ void Initialize()
 	block->AddChild(omi);
 	omi->Translate(Point3D(0,1,0));
 
-	scene->AddObject(block);
-
 	mario = new Mario();
 	mario->Translate(Point3D(0,0,30));
 
 	mainCamera = new MarioCamera(mario);
 	mainCamera->Translate(Point3D(0,10,0));
 	scene->SetMainCamera(mainCamera);
-	scene->AddObject(new Ground);
-	scene->AddObject(mario);
 	
 	test1 = new Box(2,2,30);
 	test1->Translate(Point3D(5.0, 1.0, 90.0));
 	test1->AddCollider();
-	scene->AddObject(test1);
-
-	test1 = new Box(2,4,30);
-	test1->Translate(Point3D(5.0, 1.0, 120.0));
-	test1->AddCollider();
-	scene->AddObject(test1);
 	
+	test2 = new Box(2,4,30);
+	test2->Translate(Point3D(5.0, 1.0, 120.0));
+	test2->AddCollider();
+	
+
+	coin = new Coin();
+	coin->Translate(mario->GetTranslate() + mario->GetForward()*30 + Point3D(0.0, 6.0, 0.0));
+	coin->Scale(Point3D(5.0, 5.0, 5.0));
+	
+	particles->Translate(mario->GetTranslate() + mario->GetForward()*10);
+
+	AddObjectsToScene();
+
 	Textures::GetInstance()->LoadGLTextures();
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -79,6 +99,18 @@ void Draw()
 void Timer(int value)
 {
 	scene->Update();
+	//vector<Point3D> res = coin->GetBoundingBox();
+	//vector<Point3D> res2= mario->GetBoundingBox();
+
+	//collision = res. res2);
+	//if(collision != Point3D(0.0, 0.0, 0.0)) {
+	//	scene->RemoveObject(coin);
+	//	coin = new Coin();
+	//	scene->AddObject(coin);
+	//	coin->Translate(mario->GetTranslate() + mario->GetForward()*30 + Point3D(0.0, 6.0, 0.0));
+	//	coin->Scale(Point3D(5.0, 5.0, 5.0));
+	//	score += 10;
+	//}
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }

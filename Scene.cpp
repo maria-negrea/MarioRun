@@ -118,6 +118,10 @@ void Scene::RemoveObject(WorldObject* object)
 	}
 }
 
+Camera* Scene::GetCamera() {
+	return mainCamera;
+}
+
 void Scene::CollisionCheck(WorldObject* object,Point3D direction)
 {
 	for(unsigned i=0;i<colliders.size();++i)

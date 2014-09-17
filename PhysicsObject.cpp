@@ -1,12 +1,12 @@
 #include "PhysicsObject.h"
 
-PhysicsObject::PhysicsObject(void)
+PhysicsObject::PhysicsObject()
 {
 	fallSpeed = 0;
 	isGrounded = true;
 }
 
-PhysicsObject::~PhysicsObject(void)
+PhysicsObject::~PhysicsObject()
 {
 }
 

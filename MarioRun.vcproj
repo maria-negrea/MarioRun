@@ -187,6 +187,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Coin.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Collider.cpp"
 				>
 			</File>
@@ -243,7 +247,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ParticleObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Particles.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\PhysicsObject.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Pipe.cpp"
 				>
 			</File>
 			<File
@@ -305,6 +321,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Coin.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Collider.h"
 				>
 			</File>
@@ -357,7 +377,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ParticleObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Particles.h"
+				>
+			</File>
+			<File
 				RelativePath=".\PhysicsObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Pipe.h"
 				>
 			</File>
 			<File

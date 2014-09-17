@@ -27,6 +27,7 @@ protected:
 
 	Point3D rotate;
 	Point3D translate;
+	Point3D scale;
 	
 	vector<WorldObject*> children;
 	WorldObject* parent;
@@ -41,12 +42,14 @@ public:
 
 	void Translate(Point3D);
 	void Rotate(Point3D);
+	void Scale(Point3D);
 
 	void Draw();
 
 	Point3D GetForward();
 	Point3D GetTranslate();
 	Point3D GetRight();
+	Point3D GetScale();
 
 	vector<Point3D> GetBoundingBox();
 
@@ -63,6 +66,7 @@ public:
 	Collider* GetCollider();
 	void AddCollider();
 	void SetCollider(Collider* collider);
+	void RemoveChild(WorldObject *child);
 };
 
 #include"Scene.h"

@@ -5,17 +5,24 @@
 #include "Textures.h"
 #include "Ground.h"
 #include "Body.h"
+#include "Coin.h"
+#include "Particles.h"
+
 
 Scene *scene;
 Camera* mainCamera;
 Mario* mario;
 Omi* omi;
-
+Coin *coin ;
+Particles *particles = new Particles();
+bool collision = false;
+int score = 0;
 void Initialize() 
 {
 	scene = new Scene();
 	
 	Box* pelvis = new Box(1,0.5,1);
+	coin = new Coin();
 	mario = new Mario();
 	pelvis->Translate(Point3D(0,2.5,0));
 	mario->AddChild(pelvis);
@@ -93,26 +100,19 @@ void Initialize()
 	mainCamera->Translate(Point3D(0,10,0));
 	scene->SetMainCamera(mainCamera);
 	scene->AddObject(omi);
-	scene->AddObject(new Ground);
+	//scene->AddObject(new Ground);
+	//scene->AddObject(coin);
+	
 	//scene->AddObject(mario);
 	
-	Box* test1 = new Box(0.4,0.25,0.5);
-	test1->Translate(Point3D(0.0, 0.0, 5.0));
-	scene->AddObject(test1);
-	Box* test2 = new Box(0.4,0.25,0.5);
-	test2->Translate(Point3D(-0.39, 0.0, 5.0));
-	scene->AddObject(test2);
 	Textures::GetInstance()->LoadGLTextures();
+	
+	coin->Translate(Point3D(0.0, 6.0, 60.0));
+	coin->Scale(Point3D(5.0, 5.0, 5.0));
+	
+	scene->AddObject(particles);
+	particles->Translate(mario->GetTranslate() + mario->GetForward()*10);
 
-	vector<Point3D> res = test1->GetBoundingBox();
-	vector<Point3D> res2= test2->GetBoundingBox();
-
-	for(int i=0; i < 2; i++) {
-		cout<<"First: "<<res[i].x<<" "<<res[i].y<<" "<<res[i].z<<endl;
-		cout<<"Second: "<<res2[i].x<<" "<<res2[i].y<<" "<<res2[i].z<<endl;
-	}
-
-	cout<<(Collider::check(res, res2) == true ? "true" : "false")<<endl;
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
@@ -133,7 +133,18 @@ void Draw()
 void Timer(int value)
 {
 	scene->Update();
-
+	vector<Point3D> res = coin->GetBoundingBox();
+	vector<Point3D> res2= mario->GetBoundingBox();
+	//cout<<score<<endl;
+	collision = Collider::check(res, res2);
+	if(collision == true) {
+		scene->RemoveObject(coin);
+		coin = new Coin();
+		scene->AddObject(coin);
+		coin->Translate(mario->GetTranslate() + mario->GetForward()*30 + Point3D(0.0, 6.0, 0.0));
+		coin->Scale(Point3D(5.0, 5.0, 5.0));
+		score += 10;
+	}
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }
@@ -152,10 +163,16 @@ void specialKey(int key, int x, int y)
 	switch(key) 
 	{
 		case GLUT_KEY_RIGHT :
-			mario->MoveRight();
+			particles->Rotate(Point3D(0.0, 3.0, 0.0));
 			break;
 		case GLUT_KEY_LEFT :
-			mario->MoveLeft();
+			particles->Rotate(Point3D(0.0, -3.0, 0.0));
+			break;
+		case GLUT_KEY_UP:
+			particles->Rotate(Point3D(0.0, 0.0, 3.0));
+			break;
+		case GLUT_KEY_DOWN:
+			particles->Rotate(Point3D(0.0, 0.0, -3.0));
 			break;
 		case GLUT_KEY_F1:
 			mario->Jump();

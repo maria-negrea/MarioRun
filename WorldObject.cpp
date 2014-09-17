@@ -6,6 +6,9 @@ WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
     width = W;
     height = H;
 	parent = NULL;
+	scale = Point3D(1.f, 1.f, 1.f);
+	children.push_back(NULL);
+	children.clear();
 }
 
 WorldObject::~WorldObject(void)
@@ -39,10 +42,14 @@ void WorldObject::ModifyPerspective()
 	glRotatef(rotate.y,0,1,0);
 	glRotatef(rotate.x,1,0,0);
 	glRotatef(rotate.z,0,0,1);
+	
+	glScalef(scale.x, scale.y, scale.z);
 }
 
 void WorldObject::ModifyPerspectiveBack()
 {
+	glScalef(1/scale.x, 1/scale.y, 1/scale.z);
+
 	glRotatef(-rotate.z,0,0,1);
 	glRotatef(-rotate.x,1,0,0);
 	glRotatef(-rotate.y,0,1,0);
@@ -78,6 +85,10 @@ void WorldObject::Rotate(Point3D rotation)
 	rotate += rotation;
 }
 
+void WorldObject::Scale(Point3D s) {
+	scale += s;
+}
+
 Point3D WorldObject::GetTranslate()
 {
 	return translate;
@@ -98,6 +109,10 @@ Point3D WorldObject::GetRotate()
 	return rotate;
 }
 
+Point3D WorldObject::GetScale() {
+	return scale;
+}
+
 int WorldObject::ChildrenCount()
 {
 	return children.size();
@@ -109,10 +124,8 @@ WorldObject* WorldObject::GetChild(int i)
 }
 
 vector<Point3D> WorldObject::GetBoundingBox(){
-	cout<<width<<" "<<height<<" "<<length<<endl;
-	cout<<translate.x<<" "<<translate.y<<" "<<translate.z<<endl;
 	vector<Point3D> res;
-		res.push_back(Point3D(translate.x - width/2, translate.y, translate.z - length/2));
-		res.push_back(Point3D(translate.x + width/2, translate.y + height, translate.z + length/2));
+		res.push_back(Point3D(translate.x - (width*scale.x)/2, translate.y, translate.z - (length*scale.z)/2));
+		res.push_back(Point3D(translate.x + (width*scale.x)/2, translate.y + height*scale.y, translate.z + (length*scale.z)/2));
 	return res;
 }

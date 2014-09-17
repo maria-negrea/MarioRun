@@ -2,6 +2,9 @@
 
 Mario::Mario()
 {
+	length = 2.0;
+	width = 2.0;
+	height = 9.5;
 }
 
 Mario::~Mario()
@@ -17,7 +20,7 @@ void Mario::DrawObject()
 void Mario::Update()
 {
 	PhysicsObject::Update();
-	Translate(GetForward()*5);
+	Translate(GetForward()*0.5);
 }
 
 void Mario::Jump()

@@ -110,3 +110,7 @@ void Scene::RemoveObject(WorldObject* object)
 		RemoveUpdatable(updatableObject);
 	}
 }
+
+Camera* Scene::GetCamera() {
+	return mainCamera;
+}

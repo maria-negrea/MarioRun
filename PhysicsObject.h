@@ -7,8 +7,8 @@ class PhysicsObject : public WorldObject, public Updatable
 protected:
 	GLfloat fallSpeed;
 public:
-	PhysicsObject(void);
-	~PhysicsObject(void);
+	PhysicsObject();
+	~PhysicsObject();
 
 	bool IsGrounded();
 	virtual void Update();

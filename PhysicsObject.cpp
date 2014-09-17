@@ -1,11 +1,11 @@
 #include "PhysicsObject.h"
 
-PhysicsObject::PhysicsObject(void)
+PhysicsObject::PhysicsObject()
 {
 	fallSpeed = 0;
 }
 
-PhysicsObject::~PhysicsObject(void)
+PhysicsObject::~PhysicsObject()
 {
 }
 

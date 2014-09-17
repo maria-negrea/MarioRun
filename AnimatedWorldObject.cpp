@@ -1,6 +1,7 @@
 #include "AnimatedWorldObject.h"
 
 AnimatedWorldObject::AnimatedWorldObject()
+	:WorldObject()
 {
 	fullTime = 0;
 	stepIndex = 0;

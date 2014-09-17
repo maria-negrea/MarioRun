@@ -153,5 +153,5 @@ void WorldObject::SetCollider(Collider* collider)
 
 void WorldObject::AddCollider()
 {
-	this->collider = new Collider();
+	this->collider = new Collider(this);
 }

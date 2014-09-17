@@ -11,20 +11,24 @@
 #include "Head.h"
 #include "Ground.h"
 #include "QuestionBlock.h"
+#include "Input.h"
 
 Scene *scene;
 Camera* mainCamera;
 Mario* mario;
 Box* test1;
 QuestionBlock *block;
+Road *newRoad = new Road;
 
 void Initialize() 
 {
 	scene = new Scene();
 
-	block = new QuestionBlock(2,2,2);
+	scene->AddObject(newRoad);
+
+	block = new QuestionBlock(4,4,4);
 	block->Rotate(Point3D(0,-90,0));
-	block->Translate(Point3D(0,5,20));
+	block->Translate(Point3D(0,5,70));
 	
 	Omi* omi = new Omi(GL_LIGHT1);
 	block->AddChild(omi);
@@ -88,19 +92,34 @@ void reshape(int w, int h)
 }
 
 
+
 void specialKey(int key, int x, int y)
 { 
 	switch(key)
 	{
 		case GLUT_KEY_LEFT:
-			mario->MoveLeft();
+			Input::SetLeft(true);
 			break;
 		case GLUT_KEY_RIGHT:
-			mario->MoveRight();
+			Input::SetRight(true);
 			break;
 		case GLUT_KEY_F1:
 			block->Hit();
 			mario->Jump();
+			break;
+	}
+	glutPostRedisplay();
+}
+
+void specialUpKey(int key, int x, int y)
+{ 
+	switch(key)
+	{
+		case GLUT_KEY_LEFT:
+			Input::SetLeft(false);
+			break;
+		case GLUT_KEY_RIGHT:
+			Input::SetRight(false);
 			break;
 	}
 	glutPostRedisplay();
@@ -117,6 +136,8 @@ int main(int argc, char** argv)
 	glutDisplayFunc(Draw);
 
 	glutSpecialFunc(specialKey);
+	glutSpecialUpFunc(specialUpKey);
+
 	glutTimerFunc(30, Timer, 0);
 	glutReshapeFunc(reshape);
 	glutMainLoop();

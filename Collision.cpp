@@ -1,7 +1,7 @@
 #include "Collision.h"
 
-Collision::Collision(Point3D direction,Point3D inside)
-	:direction(direction),inside(inside)
+Collision::Collision(Point3D insidePositive,Point3D insideNegative,WorldObject* other)
+	:insidePositive(insidePositive),insideNegative(insideNegative),other(other)
 {
 }
 
@@ -14,7 +14,22 @@ Point3D Collision::GetDirection()
 	return direction;
 }
 
-Point3D Collision::GetInside()
+void Collision::SetDirection(Point3D direction)
 {
-	return inside;
+	this->direction = direction;
+}
+
+Point3D Collision::GetInsidePositive()
+{
+	return insidePositive;
+}
+
+Point3D Collision::GetInsideNegative()
+{
+	return insideNegative;
+}
+
+bool Collision::IsCollision()
+{
+	return other != NULL;
 }

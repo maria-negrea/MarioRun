@@ -1,7 +1,7 @@
 #include "MarioCollider.h"
 
 MarioCollider::MarioCollider(Mario* mario)
-	:mario(mario)
+	:mario(mario),Collider(mario)
 {
 }
 
@@ -11,6 +11,6 @@ MarioCollider::~MarioCollider(void)
 
 void MarioCollider::Hit(Collision collision)
 {
-	mario->Translate(-collision.GetDirection());
+	Collider::Hit(collision);
 	mario->Hit(collision);
 }

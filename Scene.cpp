@@ -120,15 +120,15 @@ void Scene::RemoveObject(WorldObject* object)
 
 void Scene::CollisionCheck(WorldObject* object,Point3D direction)
 {
-	Point3D noCollision = Point3D();
 	for(unsigned i=0;i<colliders.size();++i)
 	{
 		if(object != colliders[i])
 		{
-			Point3D inside = Collider::check(colliders[i]->GetBoundingBox(),object->GetBoundingBox());
-			if(inside != noCollision)
+			Collision collision = colliders[i]->GetCollider()->Check(object);
+			if(collision.IsCollision())
 			{
-				object->GetCollider()->Affected(Collision(direction,inside));
+				collision.SetDirection(direction);
+				object->GetCollider()->Affected(collision);
 			}
 		}
 	}

@@ -103,6 +103,26 @@ void Mario::Update()
 		forwardSpeed = maxSpeed;
 
 	Translate(GetForward()*forwardSpeed);
+
+	if(Input::GetLeft())
+		this->MoveLeft();
+
+	if(Input::GetRight())
+		this->MoveRight();
+
+//	if(road != NULL)
+//	{
+//		if((road->GetRoad()[roadIndex + 1] - this->GetTranslate()).Magnitude() < 2)
+//		{
+//			roadIndex++;
+//			double angle = (road->GetRoad()[roadIndex + 1] - road->GetRoad()[roadIndex]).AngleBetween(Point3D(0,0,1));
+//
+//			if((road->GetRoad()[roadIndex + 1] - road->GetRoad()[roadIndex]).x < 0)
+//				this->rotate.y -= angle;
+//			else
+//				this->rotate.y += angle;
+//		}
+//	}
 }
 
 void Mario::Jump()
@@ -119,7 +139,7 @@ void Mario::Hit(Collision collision)
 
 	if(direction.y > 0.8 || direction.y < -0.8)
 	{
-		isGrounded = true;
+		fallSpeed = 0;
 	}
 	else
 	{
@@ -138,4 +158,10 @@ void Mario::MoveRight()
 void Mario::MoveLeft()
 {
 	Translate(GetRight()*1);
+}
+
+
+void Mario::SetRoad(Road* road)
+{
+	this->road = road;
 }

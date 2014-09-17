@@ -2,13 +2,13 @@
 
 class Input
 {
-	static bool rightPressed;
-	static bool leftPressed;
-	static bool rightRelease;
-	static bool leftReleased;
-	static bool jumpPressed;
-	static bool jumpReleased;
+	static bool right;
+	static bool left;
 public:
 	Input();
 	~Input();
+	static void SetRight(bool flag);
+	static void SetLeft(bool flag);
+	static bool GetRight();
+	static bool GetLeft();
 };

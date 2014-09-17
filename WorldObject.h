@@ -79,13 +79,17 @@ struct Point3D
 		return (*this)/magnitude;
 	}
 
-	GLfloat AngleBetween(Point3D point)
+	float AngleBetween(Point3D point)
 	{
-		GLfloat PI = 3.14159265359;
+		float PI = 3.14159265359;
 
-		GLfloat dotProduct = ((*this)*point);
+		float dotProduct = ((*this)*point);
 		
-		return acos(dotProduct/1.0)*180/PI;
+		float eq = dotProduct/(Magnitude()*point.Magnitude());
+		if(eq > 1.0 || eq < -1.0)
+			return 0.0;
+
+		return acos(eq)*180.0/PI;
 	}
 };
 
@@ -128,4 +132,5 @@ public:
 
 	int ChildrenCount();
 	WorldObject* GetChild(int i);
+	GLfloat AngleBetween(WorldObject* target);
 };

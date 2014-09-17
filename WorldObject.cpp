@@ -115,3 +115,18 @@ vector<Point3D> WorldObject::GetBoundingBox()
 		res.push_back(Point3D(translate.x + width/2, translate.y + height, translate.z + length/2));
 	return res;
 }
+
+GLfloat WorldObject::AngleBetween(WorldObject* target)
+{
+	GLfloat angleToTarget=GetForward().AngleBetween(target->GetTranslate()-GetTranslate());
+	std::cout<<angleToTarget<<endl;
+
+	GLfloat rightDistance = (target->GetTranslate()-GetTranslate()+GetRight()).Magnitude();
+	GLfloat distance = (target->GetTranslate()-GetTranslate()).Magnitude();
+	
+	if(rightDistance < sqrt(1.0+distance*distance))
+	{
+		angleToTarget = 360-angleToTarget;
+	}
+	return angleToTarget;
+}

@@ -2,11 +2,10 @@
 #include "Mesh.h"
 #include "Updatable.h"
 
-class Foot: public Mesh, public Updatable
+class Foot: public Mesh
 {
 public:
 	Foot(void);
 	void DrawObject();
-	void Update();
 	~Foot(void);
 };

@@ -37,10 +37,15 @@ Torso::Torso(void)
 	{
 		triangles[j++]=Triangle(m-i-1, i, i+1);
 		triangles[j++]=Triangle(m-i-1, i+1, m-i-2);
+		triangles[j++]=Triangle(2*m-i-1, m+i, m+i+1);
+		triangles[j++]=Triangle(2*m-i-1, m+i+1, 2*m-i-2);
 	}
 
-	/*triangles[j++]=Triangle(4*m+i, 4*m+m-i-1, 4*m+m-1);
-	triangles[j]=Triangle(4*m+i, 4*m+m-i-1, 4*m);*/
+	triangles[j++]=Triangle(m+i, m-i-1, m-1);
+	triangles[j]=Triangle(m+i, m-i-1, m);
+
+	triangles[j++]=Triangle(2*m+i, 2*m-i-1, 2*m-1);
+	triangles[j]=Triangle(2*m+i, 2*m-i-1, 2*m);
 
 }
 
@@ -57,9 +62,9 @@ void Torso::DrawObject()
 			Point3D v2 = vertices[triangles[i].p3];
 			glTexCoord2f(1, 1); glVertex3f( vertices[triangles[i].p3].x, vertices[triangles[i].p3].y, vertices[triangles[i].p3].z);*/
 
-			glColor3f(1.0, 1.0, 0.0); glVertex3f( vertices[triangles[i].p1].x, vertices[triangles[i].p1].y, vertices[triangles[i].p1].z);
-			glColor3f(1.0, 1.0, 0.0);glVertex3f( vertices[triangles[i].p2].x, vertices[triangles[i].p2].y, vertices[triangles[i].p2].z);
-			glColor3f(1.0, 1.0, 0.0); glVertex3f( vertices[triangles[i].p3].x, vertices[triangles[i].p3].y, vertices[triangles[i].p3].z);
+			glColor3f(150/255.0, 119/255.0, 82/255.0); glVertex3f( vertices[triangles[i].p1].x, vertices[triangles[i].p1].y, vertices[triangles[i].p1].z);
+			glColor3f(150/255.0, 119/255.0, 82/255.0);glVertex3f( vertices[triangles[i].p2].x, vertices[triangles[i].p2].y, vertices[triangles[i].p2].z);
+			glColor3f(150/255.0, 119/255.0, 82/255.0); glVertex3f( vertices[triangles[i].p3].x, vertices[triangles[i].p3].y, vertices[triangles[i].p3].z);
 		}
 	glEnd();
 }

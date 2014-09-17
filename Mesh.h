@@ -2,6 +2,7 @@
 #include <vector>
 #include "WorldObject.h"
 #include "Textures.h"
+#include "AnimatedWorldObject.h"
 
 #define PI 3.14
 
@@ -15,7 +16,7 @@ struct Triangle
 	}
 };
 
-class Mesh : public WorldObject
+class Mesh : public AnimatedWorldObject
 {
 protected:
 	Point3D* vertices;

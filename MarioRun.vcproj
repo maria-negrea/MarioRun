@@ -239,6 +239,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Pivot.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Scene.cpp"
 				>
 			</File>
@@ -326,6 +330,10 @@
 			</File>
 			<File
 				RelativePath=".\PhysicsObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Pivot.h"
 				>
 			</File>
 			<File

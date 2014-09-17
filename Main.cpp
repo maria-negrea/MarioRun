@@ -13,6 +13,8 @@
 Scene *scene;
 Camera* mainCamera;
 Goomba* goomba;
+Goomba* goomba2;
+Goomba* goomba3;
 Mario* mario;
 Omi* omi;
 Box* test1;
@@ -70,8 +72,16 @@ void Initialize()
 	leftFoot->Translate(Point3D(0,1.1,0.125));*/
 
 	mainCamera = new Camera();
+	mainCamera->Translate(Point3D(0,10,0));
+	goomba2=new Goomba();
+	goomba2->Translate(Point3D(-10.0, 0, 50));
+	goomba3=new Goomba();
+	goomba3->Translate(Point3D(10.0, 0, 50));
 	goomba=new Goomba();
-	goomba->Translate(Point3D(0,0,10));
+	goomba3->SetTarget(goomba);
+	goomba2->SetTarget(goomba3);
+	goomba->SetTarget(goomba2);
+	goomba->Translate(Point3D(0,0,30));
 	//foot=new Foot();
 	//torso=new Torso();
 	//head=new Head();
@@ -79,6 +89,8 @@ void Initialize()
 	head->Translate(Point3D(0,0,10));
 	foot->Translate(Point3D(0,0,9));*/
 	scene->SetMainCamera(mainCamera);
+	scene->AddObject(goomba3);
+	scene->AddObject(goomba2);
 	scene->AddObject(goomba);
 
 	Textures::GetInstance()->LoadGLTextures();

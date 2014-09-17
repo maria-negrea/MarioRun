@@ -72,10 +72,6 @@ void Foot::DrawObject()
 	glEnd();
 }
 
-void Foot:: Update()
-{
-}
-
 Foot::~Foot(void)
 {
 }

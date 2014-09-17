@@ -126,7 +126,7 @@ void drawExterior() {
 }
 
 void Body::DrawObject() {
-	glDisable(GL_LIGHTING);
+	//glDisable(GL_LIGHTING);
 	drawExterior();
-	glEnable(GL_LIGHTING);	
+	//glEnable(GL_LIGHTING);	
 }

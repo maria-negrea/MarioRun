@@ -5,10 +5,18 @@ WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
     translate = Point3D(X, Y, Z);
     width = W;
     height = H;
+
 	parent = NULL;
 	scale = Point3D(1.f, 1.f, 1.f);
-	children.push_back(NULL);
-	children.clear();
+	collider = NULL;
+	scene = NULL;
+}
+
+WorldObject::WorldObject(bool hasCollider)
+{
+	scale = Point3D(1.f, 1.f, 1.f);
+	collider = NULL;
+	scene = NULL;
 }
 
 WorldObject::~WorldObject(void)
@@ -31,8 +39,17 @@ void WorldObject::Draw()
 
 void WorldObject::AddChild(WorldObject* child)
 {
-	children.push_back(child);
-	child->parent = this;
+	if(scene != NULL) {
+		scene->AddObject(child);
+		children.push_back(child);
+		child->parent = this;
+	}
+}
+
+void WorldObject::RemoveChild(WorldObject *child) {
+	if(scene != NULL)
+		scene->RemoveObject(child);
+	child->parent = NULL;
 }
 
 void WorldObject::ModifyPerspective()
@@ -78,6 +95,13 @@ void WorldObject::ParentPerspectiveBack()
 void WorldObject::Translate(Point3D translation)
 {
 	translate += translation;
+	if(HasCollider())
+	{
+		if(scene != NULL)
+		{
+			scene->CollisionCheck(this,translation.Normalize());
+		}
+	}
 }
 
 void WorldObject::Rotate(Point3D rotation)
@@ -123,9 +147,34 @@ WorldObject* WorldObject::GetChild(int i)
 	return children[i];
 }
 
-vector<Point3D> WorldObject::GetBoundingBox(){
+void WorldObject::SetScene(Scene* scene)
+{
+	this->scene = scene;
+}
+vector<Point3D> WorldObject::GetBoundingBox()
+{
 	vector<Point3D> res;
 		res.push_back(Point3D(translate.x - (width*scale.x)/2, translate.y, translate.z - (length*scale.z)/2));
 		res.push_back(Point3D(translate.x + (width*scale.x)/2, translate.y + height*scale.y, translate.z + (length*scale.z)/2));
 	return res;
+}
+
+bool WorldObject::HasCollider()
+{
+	return collider != NULL;
+}
+
+Collider* WorldObject::GetCollider()
+{
+	return collider;
+}
+
+void WorldObject::SetCollider(Collider* collider)
+{
+	this->collider = collider;
+}
+
+void WorldObject::AddCollider()
+{
+	this->collider = new Collider();
 }

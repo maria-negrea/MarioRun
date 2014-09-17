@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Collider.h"
 
 Scene::Scene()
 {
@@ -69,6 +70,7 @@ void Scene::SetMainCamera(Camera* camera)
 void Scene::AddObject(WorldObject* object)
 {
 	sceneObjects.push_back(object);
+	object->SetScene(this);
 	AddSpecialObject(object);
 }
 
@@ -78,6 +80,11 @@ void Scene::AddSpecialObject(WorldObject* object)
 	if(updatableObject != NULL)
 	{
 		updateObjects.push_back(updatableObject);
+	}
+
+	if(object->HasCollider())
+	{
+		colliders.push_back(object);
 	}
 
 	Omi* omi = dynamic_cast<Omi*>(object);
@@ -113,4 +120,20 @@ void Scene::RemoveObject(WorldObject* object)
 
 Camera* Scene::GetCamera() {
 	return mainCamera;
+}
+
+void Scene::CollisionCheck(WorldObject* object,Point3D direction)
+{
+	Point3D noCollision = Point3D();
+	for(unsigned i=0;i<colliders.size();++i)
+	{
+		if(object != colliders[i])
+		{
+			Point3D inside = Collider::check(colliders[i]->GetBoundingBox(),object->GetBoundingBox());
+			if(inside != noCollision)
+			{
+				object->GetCollider()->Affected(Collision(direction,inside));
+			}
+		}
+	}
 }

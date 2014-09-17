@@ -4,13 +4,11 @@
 #include "Updatable.h"
 #include "ParticleObject.h"
 
-class Particles : public WorldObject, public Updatable
+class Particles : public WorldObject
 {
 private:
 	void DrawObject();
-	vector<ParticleObject*> particles;
 public:
 	Particles(void);
 	~Particles(void);
-	void Update();
 };

@@ -1,6 +1,11 @@
 #pragma once
-#include "WorldObject.h"
-#include <vector>
+#include "Point3D.h"
+#include "Collision.h"
+#include<vector>
+
+class WorldObject;
+
+using namespace std;
 
 class Collider
 {
@@ -9,7 +14,11 @@ private:
 public:
 	Collider(void);
 	~Collider(void);
-	void AddPoint(Point3D x);
-	vector<Point3D> GetPoints();
-	static bool check(vector<Point3D> a, vector<Point3D> b);
+
+	virtual void Hit(Collision collision);
+
+	void Affected(Collision collision);
+	static Point3D check(vector<Point3D> a, vector<Point3D> b);
 };
+
+#include "WorldObject.h"

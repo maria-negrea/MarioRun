@@ -3,10 +3,6 @@
 
 Particles::Particles(void)
 {
-	particles.push_back(new ParticleObject(GetTranslate()));
-	particles.push_back(new ParticleObject(GetTranslate()));
-	particles.push_back(new ParticleObject(GetTranslate()));
-	particles.push_back(new ParticleObject(GetTranslate()));
 }
 
 Particles::~Particles(void)
@@ -14,17 +10,13 @@ Particles::~Particles(void)
 }
 
 void Particles::DrawObject() {
-	if(rand() % 2 == 0)
-		particles.push_back(new ParticleObject(GetTranslate()));
-	for(int i=0; i < particles.size(); i++) {
-		particles[i]->Draw();
-	}
-	if(particles.size() > 20)
-		particles.erase(particles.begin());
-}
+	
+	ParticleObject* particle = new ParticleObject(GetTranslate());
+	particle->Rotate(Point3D(0,0,rand()%360));
+	AddChild(particle);
 
-void Particles::Update() {
-	for(int i=0; i < particles.size(); i++) {
-		particles[i]->Update();
+	if(children.size() > 10) {
+		RemoveChild(children[0]);
+		children.erase(children.begin());
 	}
 }

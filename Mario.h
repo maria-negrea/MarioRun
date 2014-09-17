@@ -5,6 +5,9 @@
 class Mario : public PhysicsObject
 {
 	void DrawObject();
+	GLfloat forwardSpeed;
+	GLfloat acceleration;
+	GLfloat maxSpeed;
 public:
 	Mario();
 	~Mario();
@@ -14,4 +17,6 @@ public:
 
 	void Update();
 	void Jump();
+
+	void Hit(Collision collision);
 };

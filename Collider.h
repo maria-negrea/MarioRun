@@ -15,10 +15,10 @@ public:
 	Collider(void);
 	~Collider(void);
 
-	virtual void Hit(Collision* collision);
+	virtual void Hit(Collision collision);
 
-	void Affected(Collision* collision);
-	static Collision* check(vector<Point3D> a, vector<Point3D> b);
+	void Affected(Collision collision);
+	static Point3D check(vector<Point3D> a, vector<Point3D> b);
 };
 
 #include "WorldObject.h"

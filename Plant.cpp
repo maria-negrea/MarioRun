@@ -18,7 +18,7 @@ void Plant::DrawObject()
     vector<Point3D>base; 
 	vector<Point3D>head;
     
-   
+ 
 
 	double initialsize=0;
 	double pass=0;

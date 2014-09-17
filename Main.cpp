@@ -41,8 +41,13 @@ void Initialize()
 	scene->AddObject(new Ground);
 	scene->AddObject(mario);
 	
-	test1 = new Box(2,2,10);
-	test1->Translate(Point3D(0.0, 1.0, 90.0));
+	test1 = new Box(2,2,30);
+	test1->Translate(Point3D(5.0, 1.0, 90.0));
+	test1->AddCollider();
+	scene->AddObject(test1);
+
+	test1 = new Box(2,4,30);
+	test1->Translate(Point3D(5.0, 1.0, 120.0));
 	test1->AddCollider();
 	scene->AddObject(test1);
 	

@@ -84,7 +84,7 @@ void WorldObject::Translate(Point3D translation)
 	{
 		if(scene != NULL)
 		{
-			scene->CollisionCheck(this,Point3D());
+			scene->CollisionCheck(this,translation.Normalize());
 		}
 	}
 }

@@ -14,6 +14,11 @@ Point3D Point3D::operator-(Point3D point)
 	return Point3D(x-point.x,y-point.y,z-point.z);
 }
 
+Point3D Point3D::operator-()
+{
+	return Point3D(-x,-y,-z);
+}
+
 void Point3D::operator +=(Point3D point)
 {
 	*this = *this+point;
@@ -32,6 +37,16 @@ Point3D Point3D::operator/(float value)
 float Point3D::operator*(Point3D point)
 {
 	return x*point.x+y*point.y+z*point.z;
+}
+
+bool Point3D::operator==(Point3D point)
+{
+	return point.x == x && point.y == y && point.z == z;
+}
+
+bool Point3D::operator!=(Point3D point)
+{
+	return point.x != x || point.y != y || point.z != z;
 }
 
 float Point3D::Magnitude()

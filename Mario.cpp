@@ -9,7 +9,7 @@ Mario::Mario()
 
 	length = 2;
 	width = 2;
-	height = 4.5;
+	height = 9.5;
 
 	forwardSpeed = 0;
 	acceleration = 0.05;
@@ -115,7 +115,19 @@ void Mario::Jump()
 
 void Mario::Hit(Collision collision)
 {
-	forwardSpeed = -1;
+	Point3D direction = collision.GetDirection();
+
+	if(direction.y > 0.8 || direction.y < -0.8)
+	{
+		isGrounded = true;
+	}
+	else
+	{
+		if(direction.AngleBetween(GetForward()) < 5)
+		{
+			forwardSpeed = -1;
+		}
+	}
 }
 
 void Mario::MoveRight()

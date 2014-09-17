@@ -3,6 +3,7 @@
 PhysicsObject::PhysicsObject(void)
 {
 	fallSpeed = 0;
+	isGrounded = true;
 }
 
 PhysicsObject::~PhysicsObject(void)
@@ -11,7 +12,7 @@ PhysicsObject::~PhysicsObject(void)
 
 bool PhysicsObject::IsGrounded()
 {
-	return translate.y == 0;
+	return isGrounded || translate.y == 0;
 }
 
 void PhysicsObject::Update()

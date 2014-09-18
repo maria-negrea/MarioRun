@@ -72,7 +72,7 @@ void Initialize()
 	coin->Translate(mario->GetTranslate() + mario->GetForward()*30 + Point3D(0.0, 6.0, 0.0));
 	coin->Scale(Point3D(5.0, 5.0, 5.0));
 	
-	particles->Translate(mario->GetTranslate() + mario->GetForward()*20 + Point3D(0.0, 10.0, 0.0));
+	particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));
 
 	AddObjectsToScene();
 

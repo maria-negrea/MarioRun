@@ -179,10 +179,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Body.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Box.cpp"
 				>
 			</File>
@@ -192,6 +188,14 @@
 			</File>
 			<File
 				RelativePath=".\Collider.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Collision.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ColoredPoint3D.cpp"
 				>
 			</File>
 			<File
@@ -227,7 +231,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MarioCollider.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Mesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mushroom.cpp"
 				>
 			</File>
 			<File
@@ -239,7 +251,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Pivot.cpp"
+				RelativePath=".\Plant.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Point3D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\QuestionBlock.cpp"
 				>
 			</File>
 			<File
@@ -252,6 +272,10 @@
 			</File>
 			<File
 				RelativePath=".\Torso.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Tree.cpp"
 				>
 			</File>
 			<File
@@ -277,10 +301,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Body.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Box.h"
 				>
 			</File>
@@ -290,6 +310,14 @@
 			</File>
 			<File
 				RelativePath=".\Collider.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Collision.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ColoredPoint3D.h"
 				>
 			</File>
 			<File
@@ -321,7 +349,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MarioCollider.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Mesh.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mushroom.h"
 				>
 			</File>
 			<File
@@ -333,7 +369,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Pivot.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Pivot.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Plant.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Point3D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\QuestionBlock.h"
 				>
 			</File>
 			<File
@@ -350,6 +402,10 @@
 			</File>
 			<File
 				RelativePath=".\Torso.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tree.h"
 				>
 			</File>
 			<File

@@ -38,8 +38,7 @@ void AnimatedWorldObject::Update()
 		rotate = extra+animations[lastIndex].GetRotation();
 
 		extra = animations[stepIndex].GetTranslate()-animations[lastIndex].GetTranslate();
-		extra = extra.Normalize()*fullTime*extra.Magnitude()/animations[stepIndex].GetTime();
-		
+		extra = extra.Normalize()*fullTime*extra.Magnitude()/animations[stepIndex].GetTime();	
 		translate = extra+animations[lastIndex].GetTranslate();
 	}
 }

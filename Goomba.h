@@ -7,6 +7,7 @@ class Goomba: public WorldObject, public Updatable
 {
 protected:
 	WorldObject* target;
+	GLfloat speed;
 public:
 	Goomba(void);
 	void DrawObject();

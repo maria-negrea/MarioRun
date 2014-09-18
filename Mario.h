@@ -18,5 +18,5 @@ public:
 	void Update();
 	void Jump();
 
-	void Hit();
+	void Hit(Collision collision);
 };

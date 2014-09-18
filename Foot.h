@@ -6,6 +6,6 @@ class Foot: public Mesh
 {
 public:
 	Foot(void);
-	void DrawObject();
+	/*void DrawObject();*/
 	~Foot(void);
 };

@@ -5,7 +5,16 @@ WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
     translate = Point3D(X, Y, Z);
     width = W;
     height = H;
+
 	parent = NULL;
+	collider = NULL;
+	scene = NULL;
+}
+
+WorldObject::WorldObject(bool hasCollider)
+{
+	collider = NULL;
+	scene = NULL;
 }
 
 WorldObject::~WorldObject(void)
@@ -71,6 +80,13 @@ void WorldObject::ParentPerspectiveBack()
 void WorldObject::Translate(Point3D translation)
 {
 	translate += translation;
+	if(HasCollider())
+	{
+		if(scene != NULL)
+		{
+			scene->CollisionCheck(this,Point3D());
+		}
+	}
 }
 
 void WorldObject::Rotate(Point3D rotation)
@@ -108,6 +124,10 @@ WorldObject* WorldObject::GetChild(int i)
 	return children[i];
 }
 
+void WorldObject::SetScene(Scene* scene)
+{
+	this->scene = scene;
+}
 vector<Point3D> WorldObject::GetBoundingBox()
 {
 	vector<Point3D> res;
@@ -116,17 +136,36 @@ vector<Point3D> WorldObject::GetBoundingBox()
 	return res;
 }
 
-GLfloat WorldObject::AngleBetween(WorldObject* target)
+GLfloat WorldObject::AngleBetween(Point3D point)
 {
-	GLfloat angleToTarget=GetForward().AngleBetween(target->GetTranslate()-GetTranslate());
-	std::cout<<angleToTarget<<endl;
+	GLfloat angleToTarget=GetForward().AngleBetween(point);
 
-	GLfloat rightDistance = (target->GetTranslate()-GetTranslate()+GetRight()).Magnitude();
-	GLfloat distance = (target->GetTranslate()-GetTranslate()).Magnitude();
+	GLfloat rightDistance = (point+GetRight()).Magnitude();
+	GLfloat distance = point.Magnitude();
 	
 	if(rightDistance < sqrt(1.0+distance*distance))
 	{
 		angleToTarget = 360-angleToTarget;
 	}
 	return angleToTarget;
+}
+
+bool WorldObject::HasCollider()
+{
+	return collider != NULL;
+}
+
+Collider* WorldObject::GetCollider()
+{
+	return collider;
+}
+
+void WorldObject::SetCollider(Collider* collider)
+{
+	this->collider = collider;
+}
+
+void WorldObject::AddCollider()
+{
+	this->collider = new Collider();
 }

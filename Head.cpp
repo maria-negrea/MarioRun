@@ -7,7 +7,8 @@ Head::Head(void)
 	vertices=new Point3D[verticesCount];
 
 	triangles=new Triangle[trianglesCount];
-	GLfloat bigRadius=1.6, smallRadius=1.2;
+	bigRadius=1.6;
+	smallRadius=1.2;
 	GLfloat heightBetween=0.2;
 
 	int i=0;
@@ -31,64 +32,112 @@ Head::Head(void)
 
 	int m=verticesCount/6;
 	int j=0;
+
+	GLfloat countV, countU=0.0;
+	GLfloat stepV=1.0/5, stepU=1.0/7;
 	for(i=0;i<m-1;i++)
 	{
-		
-		triangles[j++]=Triangle(m+i, i, i+1);
-		triangles[j++]=Triangle(m+i, i+1, m+i+1);
-		triangles[j++]=Triangle(2*m+i, m+i, m+i+1);
-		triangles[j++]=Triangle(2*m+i, m+i+1, 2*m+i+1);
-		triangles[j++]=Triangle(3*m+i, 2*m+i, 2*m+i+1);
-		triangles[j++]=Triangle(3*m+i, 2*m+i+1, 3*m+i+1);
-		triangles[j++]=Triangle(4*m+i, 3*m+i, 3*m+i+1);
-		triangles[j++]=Triangle(4*m+i, 3*m+i+1, 4*m+i+1);
-		triangles[j++]=Triangle(5*m+i, 4*m+i, 4*m+i+1);
-		triangles[j++]=Triangle(5*m+i, 4*m+i+1, 5*m+i+1);
+		countV=0.0;
+		triangles[j++]=Triangle(m+i, i, i+1, 8, countV+stepV, countU, countV, countU, countV, countU+stepU);
+		triangles[j++]=Triangle(m+i, i+1, m+i+1, 8, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
+		countV+=stepV;
+		triangles[j++]=Triangle(2*m+i, m+i, m+i+1, 8, countV+stepV, countU, countV, countU, countV, countU+stepU);
+		triangles[j++]=Triangle(2*m+i, m+i+1, 2*m+i+1, 8, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
+		countV+=stepV;
+		triangles[j++]=Triangle(3*m+i, 2*m+i, 2*m+i+1, 8, countV+stepV, countU, countV, countU, countV, countU+stepU);
+		triangles[j++]=Triangle(3*m+i, 2*m+i+1, 3*m+i+1, 8, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
+		countV+=stepV;
+		triangles[j++]=Triangle(4*m+i, 3*m+i, 3*m+i+1, 8, countV+stepV, countU, countV, countU, countV, countU+stepU);
+		triangles[j++]=Triangle(4*m+i, 3*m+i+1, 4*m+i+1, 8, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
+		countV+=stepV;
+		triangles[j++]=Triangle(5*m+i, 4*m+i, 4*m+i+1, 8, countV+stepV, countU, countV, countU, countV, countU+stepU);
+		triangles[j++]=Triangle(5*m+i, 4*m+i+1, 5*m+i+1, 8, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
+		countU+=stepU;
 	}
+
 	i--;	
-	triangles[j++]=Triangle(m+i+1, i+1, m);
-	triangles[j++]=Triangle(m, i+1, 0);
+	countV-=stepV;
+	countU=0.0;
+	/*triangles[j++]=Triangle(m+i+1, i+1, m, 8, countU+stepU, countV, countU, countV, countU+stepU, 0.0);
+	triangles[j++]=Triangle(m, i+1, 0, 8, countU+stepU, 0.0, countU, countV, countU, 0.0);
 
-	triangles[j++]=Triangle(2*m+i+1, m+i+1, 2*m);
-	triangles[j++]=Triangle(2*m, m+i+1, m);
+	countU+=stepU;
+	triangles[j++]=Triangle(2*m+i+1, m+i+1, 2*m, 8, countU+stepU, countV, countU, countV, countU+stepU, 0.0);
+	triangles[j++]=Triangle(2*m, m+i+1, m, 8, countU+stepU, 0.0, countU, countV, countU, 0.0);
 
-	triangles[j++]=Triangle(3*m+i+1, 2*m+i+1, 3*m);
-	triangles[j++]=Triangle(3*m, 2*m+i+1, 2*m);
+	countU+=stepU;
+	triangles[j++]=Triangle(3*m+i+1, 2*m+i+1, 3*m, 8, countU+stepU, countV, countU, countV, countU+stepU, 0.0);
+	triangles[j++]=Triangle(3*m, 2*m+i+1, 2*m, 8, countU+stepU, 0.0, countU, countV, countU, 0.0);
 
-	triangles[j++]=Triangle(4*m+i+1, 3*m+i+1, 4*m);
-	triangles[j++]=Triangle(4*m, 3*m+i+1, 3*m);
+	countU+=stepU;
+	triangles[j++]=Triangle(4*m+i+1, 3*m+i+1, 4*m, 8, countU+stepU, countV, countU, countV, countU+stepU, 0.0);
+	triangles[j++]=Triangle(4*m, 3*m+i+1, 3*m, 8, countU+stepU, 0.0, countU, countV, countU, 0.0);
 
-	triangles[j++]=Triangle(5*m+i+1, 4*m+i+1, 5*m);
-	triangles[j++]=Triangle(5*m, 4*m+i+1, 4*m);
+	countU+=stepU;
+	triangles[j++]=Triangle(5*m+i+1, 4*m+i+1, 5*m, 8, countU+stepU, countV, countU, countV, countU+stepU, 0.0);
+	triangles[j++]=Triangle(5*m, 4*m+i+1, 4*m, 8, countU+stepU, 0.0, countU, countV, countU, 0.0);*/
 
+	triangles[j++]=Triangle(m+i+1, i+1, m, 8, countU+stepU, countV+stepV, countU, countV, countU+stepU, countV+stepV);
+	triangles[j++]=Triangle(m, i+1, 0, 8, countU+stepU, countV+stepV, countU, countV, countU, countV);
+
+	countV+=stepV;
+	triangles[j++]=Triangle(2*m+i+1, m+i+1, 2*m, 8, countU+stepU, countV+stepV, countU, countV, countU+stepU, countV+stepV);
+	triangles[j++]=Triangle(2*m, m+i+1, m, 8, countU+stepU, 0.0, countU, countV, countU, 0.0);
+
+	countV+=stepV;
+	triangles[j++]=Triangle(3*m+i+1, 2*m+i+1, 3*m, 8, countU+stepU, countV+stepV, countU, countV, countU+stepU, countV+stepV);
+	triangles[j++]=Triangle(3*m, 2*m+i+1, 2*m, 8, countU+stepU, 0.0, countU, countV, countU, 0.0);
+
+	countV+=stepV;
+	triangles[j++]=Triangle(4*m+i+1, 3*m+i+1, 4*m, 8, countU+stepU, countV+stepV, countU, countV, countU+stepU, countV+stepV);
+	triangles[j++]=Triangle(4*m, 3*m+i+1, 3*m, 8, countU+stepU, 0.0, countU, countV, countU, 0.0);
+
+	countV+=stepV;
+	triangles[j++]=Triangle(5*m+i+1, 4*m+i+1, 5*m, 8, countU+stepU, countV+stepV, countU, countV, countU+stepU, countV+stepV);
+	triangles[j++]=Triangle(5*m, 4*m+i+1, 4*m, 8, countU+stepU, 0.0, countU, countV, countU, 0.0);
+
+	stepV*=2;
+	countV=0.0;
 	for(i=0;i<m/2;i++)
 	{
-		triangles[j++]=Triangle(5*m+m-i-1, 5*m+i, 5*m+i+1);
-		triangles[j++]=Triangle(5*m+m-i-1, 5*m+i+1, 5*m+m-i-2);
+		triangles[j++]=Triangle(5*m+m-i-1, 5*m+i, 5*m+i+1, 6, 1.0, countV, 0.0, countV, 0.0, countV+stepV);
+		triangles[j++]=Triangle(5*m+m-i-1, 5*m+i+1, 5*m+m-i-2, 6, countV, 0.0, 0.0, countV+stepV, 1.0, countV+stepV);
 
-		triangles[j++]=Triangle(m-i-1, i, i+1);
-		triangles[j++]=Triangle(m-i-1, i+1, m-i-2);
+		triangles[j++]=Triangle(m-i-1, i, i+1, 6, 1.0, countV, 0.0, countV, 0.0, countV+stepV);
+		triangles[j++]=Triangle(m-i-1, i+1, m-i-2, 6, countV, 0.0, 0.0, countV+stepV, 1.0, countV+stepV);
 	}
 }
 
-void Head::DrawObject()
-{
-	/*glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[0]);*/
-	glBegin(GL_TRIANGLES);
-		for(int i=0;i<trianglesCount;i++)
-		{
-			/*Point3D v = vertices[triangles[i].p1];
-			glTexCoord2f(0.5, 0); glVertex3f( vertices[triangles[i].p1].x, vertices[triangles[i].p1].y, vertices[triangles[i].p1].z);
-			Point3D v1 = vertices[triangles[i].p2];
-			glTexCoord2f(0, 1); glVertex3f( vertices[triangles[i].p2].x, vertices[triangles[i].p2].y, vertices[triangles[i].p2].z);
-			Point3D v2 = vertices[triangles[i].p3];
-			glTexCoord2f(1, 1); glVertex3f( vertices[triangles[i].p3].x, vertices[triangles[i].p3].y, vertices[triangles[i].p3].z);*/
+//void Head::DrawObject()
+//{
+//	/*glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[0]);*/
+//
+//	glBegin(GL_TRIANGLES);
+//		for(int i=0;i<trianglesCount;i++)
+//		{
+//			/*Point3D v = vertices[triangles[i].p1];
+//			glTexCoord2f(0.5, 0); glVertex3f( vertices[triangles[i].p1].x, vertices[triangles[i].p1].y, vertices[triangles[i].p1].z);
+//			Point3D v1 = vertices[triangles[i].p2];
+//			glTexCoord2f(0, 1); glVertex3f( vertices[triangles[i].p2].x, vertices[triangles[i].p2].y, vertices[triangles[i].p2].z);
+//			Point3D v2 = vertices[triangles[i].p3];
+//			glTexCoord2f(1, 1); glVertex3f( vertices[triangles[i].p3].x, vertices[triangles[i].p3].y, vertices[triangles[i].p3].z);*/
+//
+//			glColor3f(1.0, 1.0, 0.0); glVertex3f( vertices[triangles[i].p1].x, vertices[triangles[i].p1].y, vertices[triangles[i].p1].z);
+//			glColor3f(1.0, 1.0, 0.0);glVertex3f( vertices[triangles[i].p2].x, vertices[triangles[i].p2].y, vertices[triangles[i].p2].z);
+//			glColor3f(1.0, 1.0, 0.0); glVertex3f( vertices[triangles[i].p3].x, vertices[triangles[i].p3].y, vertices[triangles[i].p3].z);
+//		}
+//	glEnd();
+//	
+//}
 
-			glColor3f(158/255.0, 84/255.0, 49/255.0); glVertex3f( vertices[triangles[i].p1].x, vertices[triangles[i].p1].y, vertices[triangles[i].p1].z);
-			glColor3f(158/255.0, 84/255.0, 49/255.0); glVertex3f( vertices[triangles[i].p2].x, vertices[triangles[i].p2].y, vertices[triangles[i].p2].z);
-			glColor3f(158/255.0, 84/255.0, 49/255.0); glVertex3f( vertices[triangles[i].p3].x, vertices[triangles[i].p3].y, vertices[triangles[i].p3].z);
-		}
-	glEnd();
+GLfloat Head:: GetBigRadius()
+{
+	return bigRadius;
+}
+
+GLfloat Head:: GetSmallRadius()
+{
+	return smallRadius;
 }
 
 Head::~Head(void)

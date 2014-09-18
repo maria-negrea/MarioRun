@@ -1,8 +1,10 @@
 #pragma once
-#include "Camera.h"
 #include "WorldObject.h"
-#include "Omi.h"
+#include "Updatable.h"
 #include <vector>
+
+class Camera;
+class Omi;
 
 using namespace std;
 
@@ -20,6 +22,9 @@ class Scene
 	vector<Updatable*> updateObjects;
 	/*!Light sources*/
 	vector<Omi*> lightSources;	
+
+	/*!Objects that have colliders */
+	vector<WorldObject*> colliders;
 
 	/*! Removes an object from the updateObjects list */
 	void RemoveUpdatable(Updatable* object);
@@ -40,4 +45,9 @@ public:
 	void AddObject(WorldObject* object);
 	/*! Adds an object from the objects in the sceen if the object is Updatable it also removes it from the updateObjects list*/
 	void RemoveObject(WorldObject* object);
+
+	void CollisionCheck(WorldObject* object,Point3D previousPosition);
 };
+
+#include "Camera.h"
+#include "Omi.h"

@@ -4,8 +4,12 @@
 
 class Head: public Mesh
 {
+protected:
+	GLfloat bigRadius, smallRadius;
 public:
 	Head(void);
-	void DrawObject();
+	/*void DrawObject();*/
+	GLfloat GetBigRadius();
+	GLfloat GetSmallRadius();
 	~Head(void);
 };

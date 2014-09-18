@@ -1,6 +1,5 @@
 #include "Scene.h"
 #include"Plant.h"
-
 #include "Box.h"
 #include "Mario.h"
 #include "MarioCamera.h"
@@ -22,7 +21,8 @@ Scene *scene;
 Camera* mainCamera;
 Mario* mario;
 Omi* omi;
-Particles *particles = new Particles();
+Particles *particles;
+Coin *coin ;
 Point3D collision;
 
 int score = 0;
@@ -37,14 +37,46 @@ PlantTulip *newTulip=new PlantTulip(2,2,2);
 
 vector<Coin*> coins;
 
-void AddObjectsToScene() 
+Point3D AllDirections()
 {
+	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
+	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
+}
+
+Point3D Planar()
+{
+	int a = rand() % 100-50, b = rand() % 100-50;
+	return Point3D(a*1.0, 0.0, b*1.0).Normalize();
+}
+
+Point3D NoDirection()
+{
+	return Point3D(0.0, 0.0, 0.0).Normalize();
+}
+
+Point3D Translation() {
+	return Point3D(rand() % 5, rand() % 5, 0.0);
+}
+
+Point3D BoxPosition() {
+	return Point3D(rand() % 10-5, rand() % 10-5, rand() % 10-5).Normalize()*(rand()%10);
+}
+
+
+Point3D DefaultTranslation() {
+	return Point3D(0.0, 0.0, 0.0);
+}
+
+void AddObjectsToScene() {
+	scene->AddObject(newRoad);
 	//scene->AddObject(test1);
 	//scene->AddObject(test2);
-	scene->AddObject(block);
-	//scene->AddObject(particles);
+	//scene->AddObject(coin);
+	
 	scene->AddObject(new Ground);
-
+	scene->AddObject(particles);
+	scene->AddObject(mario);	
+	
 	for(int i = 0; i < coins.size(); i++)
 		scene->AddObject(coins[i]);
 }
@@ -53,7 +85,7 @@ void Initialize()
 {
 	scene = new Scene();
 
-	scene->AddObject(newRoad);
+	particles = new Particles(AllDirections, BoxPosition);
 
 	block = new QuestionBlock(7, 7, 7);
 	block->Translate(Point3D(0, 12, 70));
@@ -61,8 +93,7 @@ void Initialize()
 	
 	mario = new Mario();
 	mario->Translate(Point3D(0,0,0));
-	scene->AddObject(mario);
-
+	
 	double x = 5;
 
 	for(int i = 0; i < 10; i++)
@@ -100,6 +131,8 @@ void Initialize()
 	test2->Translate(Point3D(5.0, 1.0, 120.0));
 	test2->AddCollider();*/
 	
+	particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));
+
 	AddObjectsToScene();
 
 	Textures::GetInstance()->LoadGLTextures();
@@ -153,7 +186,7 @@ void specialKey(int key, int x, int y)
 			Input::SetRight(true);
 			break;
 		case GLUT_KEY_F1:
-			//block->Hit();
+			block->Hit();
 			mario->Jump();
 			break;
 	}

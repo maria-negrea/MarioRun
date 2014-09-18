@@ -55,9 +55,9 @@ void WorldObject::AddChild(WorldObject* child)
 }
 
 void WorldObject::RemoveChild(WorldObject *child) {
-	if(scene != NULL)
+	if(scene != NULL) {
 		scene->RemoveObject(child);
-	
+	}
 	child->parent = NULL;
 }
 

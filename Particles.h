@@ -4,11 +4,21 @@
 #include "Updatable.h"
 #include "ParticleObject.h"
 
-class Particles : public WorldObject
+typedef Point3D (*DirectionGenerator)();
+typedef Point3D (*TranslationGenerator)();
+
+class Particles : public WorldObject, public Updatable
 {
 private:
 	void DrawObject();
+	vector<ParticleObject*> particles;
+	DirectionGenerator directionGenerator;
+	TranslationGenerator translationGenerator;
 public:
-	Particles(void);
+	Particles(DirectionGenerator directionGenerator, TranslationGenerator translationGenerator);
 	~Particles(void);
+	void Update();
 };
+
+
+

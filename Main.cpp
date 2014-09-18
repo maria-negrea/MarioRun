@@ -1,6 +1,5 @@
 #include "Scene.h"
-#include"Plant.h"
-
+#include "Plant.h"
 #include "Box.h"
 #include "Mario.h"
 #include "MarioCamera.h"
@@ -14,13 +13,17 @@
 #include "Particles.h"
 #include "QuestionBlock.h"
 #include "Input.h"
+#include "PlantTulip.h"
+#include "PlantHead.h"
+#include "PlantLeaf.h"
+#include "Road.h"
 
 Scene *scene;
 Camera* mainCamera;
 Mario* mario;
 Omi* omi;
+Particles *particles;
 Coin *coin ;
-Particles *particles = new Particles();
 Point3D collision;
 
 int score = 0;
@@ -29,47 +32,108 @@ Box *test1, *test2;
 QuestionBlock *block;
 Road *newRoad = new Road;
 
-void AddObjectsToScene() 
+PlantHead *newHead=new PlantHead(2,2,2);
+PlantLeaf *newLeaf=new PlantLeaf(2,2,2);
+PlantTulip *newTulip=new PlantTulip(2,2,2);
+
+vector<Coin*> coins;
+
+Point3D AllDirections()
 {
+	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
+	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
+}
+
+Point3D Planar()
+{
+	int a = rand() % 100-50, b = rand() % 100-50;
+	return Point3D(a*1.0, 0.0, b*1.0).Normalize();
+}
+
+Point3D NoDirection()
+{
+	return Point3D(0.0, 0.0, 0.0).Normalize();
+}
+
+Point3D Translation() {
+	return Point3D(rand() % 5, rand() % 5, 0.0);
+}
+
+Point3D BoxPosition() {
+	return Point3D(rand() % 10-5, rand() % 10-5, rand() % 10-5).Normalize()*(rand()%10);
+}
+
+
+Point3D DefaultTranslation() {
+	return Point3D(0.0, 0.0, 0.0);
+}
+
+void AddObjectsToScene() {
+	scene->AddObject(newRoad);
 	//scene->AddObject(test1);
 	//scene->AddObject(test2);
 	//scene->AddObject(coin);
-	//scene->AddObject(block);
-	//scene->AddObject(particles);
-	scene->AddObject(newRoad);
+	
 	scene->AddObject(new Ground);
+	scene->AddObject(particles);
+	scene->AddObject(mario);	
+	
+	for(int i = 0; i < coins.size(); i++)
+		scene->AddObject(coins[i]);
 }
 
 void Initialize() 
 {
 	scene = new Scene();
 
-	block = new QuestionBlock(4,4,4);
-	block->Rotate(Point3D(0,-90,0));
-	block->Translate(Point3D(0,5,70));
+	particles = new Particles(AllDirections, BoxPosition);
+
+	block = new QuestionBlock(7, 7, 7);
+	block->Translate(Point3D(0, 12, 70));
+	block->AddCollider();
 	
 	mario = new Mario();
-	newRoad->SetRoadObject(mario);
 	mario->Translate(Point3D(0,0,0));
-	scene->AddObject(mario);
+	
+	double x = 5;
+
+	for(int i = 0; i < 10; i++)
+	{
+		Coin *newCoin = new Coin;
+		newCoin->Translate(newRoad->GetCoinPoint(x, 0, 0));
+		newCoin->Scale(Point3D(5.0, 5.0, 5.0));
+		newCoin->AddCollider();
+
+		coins.push_back(newCoin);
+		x += 2;
+	}
+
+	newTulip->AddChild(newHead);
+	newTulip->AddChild(newLeaf);
+	newHead->Rotate(Point3D(180,0,0));
+
+	newHead->Translate(Point3D(0.4,3.2,0.4));
+	newLeaf->Translate(Point3D(0,0,-0.4));
+	newTulip->Translate(Point3D(-10,0.5,20));
+
+	newTulip->SetTarget(mario);
+	newTulip->Scale(Point3D(1,1,1));
+	scene->AddObject(newTulip);
 
 	mainCamera = new MarioCamera(mario);
 	mainCamera->Translate(Point3D(0,10,0));
 	scene->SetMainCamera(mainCamera);
 	
-	test1 = new Box(2,2,30);
+	/*test1 = new Box(2,2,30);
 	test1->Translate(Point3D(5.0, 1.0, 90.0));
 	test1->AddCollider();
 	
 	test2 = new Box(2,4,30);
 	test2->Translate(Point3D(5.0, 1.0, 120.0));
-	test2->AddCollider();
-
-	coin = new Coin();
-	coin->Translate(mario->GetTranslate() + mario->GetForward()*30 + Point3D(0.0, 6.0, 0.0));
-	coin->Scale(Point3D(5.0, 5.0, 5.0));
-	coin->AddCollider();
+	test2->AddCollider();*/
 	
+	particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));
+
 	AddObjectsToScene();
 
 	Textures::GetInstance()->LoadGLTextures();

@@ -14,7 +14,7 @@ Coin::~Coin(void)
 void Coin::DrawObject()
 {
 	glColor4f(1, 1, 1, 1);
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[0]);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[6]);
 
 	vector<Point3D> coin;
 	for(double t = 0; t <= 2 * 3.14; t += 0.1)
@@ -46,4 +46,11 @@ void Coin::DrawObject()
 
 void Coin::Update() {
 	Rotate(Point3D(0.0, 10.0, 0.0));
+}
+
+void Coin::Function(Mario *mario)
+{
+	scene->RemoveObject(this);
+	if(mario->GetBleep() == false)
+		mario->SetSize();
 }

@@ -199,6 +199,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FireBall.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Foot.cpp"
 				>
 			</File>
@@ -216,6 +220,10 @@
 			</File>
 			<File
 				RelativePath=".\Input.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Item.cpp"
 				>
 			</File>
 			<File
@@ -268,6 +276,18 @@
 			</File>
 			<File
 				RelativePath=".\Plant.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantHead.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantLeaf.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantTulip.cpp"
 				>
 			</File>
 			<File
@@ -345,6 +365,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FireBall.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Foot.h"
 				>
 			</File>
@@ -362,6 +386,10 @@
 			</File>
 			<File
 				RelativePath=".\Input.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Item.h"
 				>
 			</File>
 			<File
@@ -410,6 +438,18 @@
 			</File>
 			<File
 				RelativePath=".\Plant.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantHead.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantLeaf.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantTulip.h"
 				>
 			</File>
 			<File

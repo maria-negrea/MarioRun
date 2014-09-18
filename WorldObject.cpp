@@ -37,10 +37,8 @@ void WorldObject::Draw()
 		{
 			children[i]->Draw();
 		}
-
 		DrawObject();
 	}
-	
 	ModifyPerspectiveBack();
 }
 
@@ -55,9 +53,9 @@ void WorldObject::AddChild(WorldObject* child)
 }
 
 void WorldObject::RemoveChild(WorldObject *child) {
-	if(scene != NULL)
+	if(scene != NULL) {
 		scene->RemoveObject(child);
-	
+	}
 	child->parent = NULL;
 }
 
@@ -196,4 +194,19 @@ void WorldObject::SetVisibility(bool visibility)
 bool WorldObject::GetVisibility()
 {
 	return visible;
+}
+
+GLfloat WorldObject::AngleBetween(Point3D point)
+{
+  GLfloat angleToTarget=GetForward().AngleBetween(point);
+
+  GLfloat rightDistance = (point+GetRight()).Magnitude();
+  GLfloat distance = point.Magnitude();
+ 
+  if(rightDistance < sqrt(1.0+distance*distance))
+  {
+   angleToTarget = 360-angleToTarget;
+  }
+
+  return angleToTarget;
 }

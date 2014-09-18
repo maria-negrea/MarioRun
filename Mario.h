@@ -1,9 +1,9 @@
 #pragma once
 #include "PhysicsObject.h"
 #include "Updatable.h"
-#include "Road.h"
 #include "Input.h"
 #include "Box.h"
+#include "QuestionBlock.h"
 
 class Mario : public PhysicsObject
 {
@@ -12,6 +12,10 @@ class Mario : public PhysicsObject
 	GLfloat forwardSpeed;
 	GLfloat acceleration;
 	GLfloat maxSpeed;
+	bool isBig;
+	bool bleep;
+
+	double time;
 public:
 	Mario();
 	~Mario();
@@ -23,4 +27,9 @@ public:
 	void Jump();
 
 	void Hit(Collision collision);
+
+	void SetSize();
+	bool GetBleep();
+
+	bool IsBig();
 };

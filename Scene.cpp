@@ -56,6 +56,19 @@ void Scene::RemoveUpdatable(Updatable* object)
 	}
 }
 
+void Scene::RemoveCollider(WorldObject* object)
+{
+	for (unsigned i=0; i<colliders.size(); ++i)
+	{
+		if(colliders[i] == object)
+		{
+			colliders.erase(colliders.begin()+i);
+			break;
+		}
+	}
+}
+
+
 void Scene::SetMainCamera(Camera* camera)
 {
 	mainCamera = camera;
@@ -107,6 +120,8 @@ void Scene::RemoveObject(WorldObject* object)
 		if(sceneObjects[i] == object)
 		{
 			sceneObjects.erase(sceneObjects.begin()+i);
+			
+		cout<<"Removed"<<endl;
 			break;
 		}
 	}
@@ -115,6 +130,11 @@ void Scene::RemoveObject(WorldObject* object)
 	if(updatableObject != NULL)
 	{
 		RemoveUpdatable(updatableObject);
+	}
+
+	if(object->HasCollider())
+	{
+		RemoveCollider(object);
 	}
 }
 

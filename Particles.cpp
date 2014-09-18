@@ -17,6 +17,5 @@ void Particles::DrawObject() {
 
 	if(children.size() > 10) {
 		RemoveChild(children[0]);
-		children.erase(children.begin());
 	}
 }

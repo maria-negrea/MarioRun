@@ -11,5 +11,5 @@ MarioCamera::~MarioCamera(void)
 
 void MarioCamera::Update()
 {
-	//translate.z = (follow->GetTranslate()-follow->GetForward()*30).z;
+	translate.z = (follow->GetTranslate()-follow->GetForward()*30).z;
 }

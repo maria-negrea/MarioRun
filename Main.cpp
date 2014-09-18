@@ -28,11 +28,13 @@ QuestionBlock *block;
 Road *newRoad = new Road;
 
 void AddObjectsToScene() {
+	//scene->AddObject(newRoad);
 	//scene->AddObject(test1);
 	//scene->AddObject(test2);
 	//scene->AddObject(coin);
+	
+	scene->AddObject(new Ground);
 	scene->AddObject(particles);
-	//scene->AddObject(new Ground);
 	//scene->AddObject(mario);	
 	
 }
@@ -41,8 +43,7 @@ void Initialize()
 {
 	scene = new Scene();
 
-	scene->AddObject(newRoad);
-
+	
 	block = new QuestionBlock(4,4,4);
 	block->Rotate(Point3D(0,-90,0));
 	block->Translate(Point3D(0,5,70));
@@ -71,7 +72,7 @@ void Initialize()
 	coin->Translate(mario->GetTranslate() + mario->GetForward()*30 + Point3D(0.0, 6.0, 0.0));
 	coin->Scale(Point3D(5.0, 5.0, 5.0));
 	
-	particles->Translate(mario->GetTranslate() + mario->GetForward()*10);
+	particles->Translate(mario->GetTranslate() + mario->GetForward()*20 + Point3D(0.0, 10.0, 0.0));
 
 	AddObjectsToScene();
 
@@ -129,11 +130,17 @@ void specialKey(int key, int x, int y)
 { 
 	switch(key)
 	{
+		case GLUT_KEY_UP:
+			particles->Rotate(Point3D(2.0, 0.0, 0.0));
+			break;
+		case GLUT_KEY_DOWN:
+			particles->Rotate(Point3D(-2.0, 0.0, 0.0));
+			break;
 		case GLUT_KEY_LEFT:
-			Input::SetLeft(true);
+			particles->Rotate(Point3D(0.0, 0.0, 2.0));
 			break;
 		case GLUT_KEY_RIGHT:
-			Input::SetRight(true);
+			particles->Rotate(Point3D(0.0, 0.0, -2.0));
 			break;
 		case GLUT_KEY_F1:
 			block->Hit();

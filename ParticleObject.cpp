@@ -5,10 +5,11 @@
 ParticleObject::ParticleObject(Point3D emitterPosition)
 {
 	//srand(time(0));
-	//Translate(emitterPosition + Point3D(0.0, rand() % 2, 0.0));
+	Translate(emitterPosition + Point3D(0.0, rand() % 2, 0.0));
 	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
 	direction = Point3D(a*1.0, b*1.0, c*1.0).Normalize()*50;
 	alpha = rand() % 10 / 10 + 1.6;
+	//fallSpeed = rand() % 3;
 }
 
 ParticleObject::~ParticleObject(void)
@@ -33,10 +34,9 @@ void ParticleObject::DrawObject() {
 	glEnable(GL_DEPTH_TEST);
 }
 
-//int count = 0;
-
 void ParticleObject::Update() {
-	Translate(direction / 100);
+	//PhysicsObject::Update();
+	Translate(direction / 200);
 	
 	if(scene != NULL)
 	{

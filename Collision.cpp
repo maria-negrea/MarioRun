@@ -33,3 +33,8 @@ bool Collision::IsCollision()
 {
 	return other != NULL;
 }
+
+WorldObject* Collision::GetHitObject()
+{
+	return other;
+}

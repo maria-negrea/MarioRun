@@ -5,7 +5,6 @@
 
 class QuestionBlock : public WorldObject
 {
-	GLfloat size;
 	int textureIndex;
 public:
 	QuestionBlock(GLfloat width, GLfloat heigh, GLfloat size);

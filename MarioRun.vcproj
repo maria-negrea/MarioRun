@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="MarioRun"
 	ProjectGUID="{C5637012-B966-4629-B823-326131B0A9BC}"
 	RootNamespace="MarioRun"
@@ -199,6 +199,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FireBall.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Foot.cpp"
 				>
 			</File>
@@ -216,6 +220,10 @@
 			</File>
 			<File
 				RelativePath=".\Input.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Item.cpp"
 				>
 			</File>
 			<File
@@ -264,6 +272,18 @@
 			</File>
 			<File
 				RelativePath=".\Plant.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantHead.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantLeaf.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantTulip.cpp"
 				>
 			</File>
 			<File
@@ -333,6 +353,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FireBall.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Foot.h"
 				>
 			</File>
@@ -350,6 +374,10 @@
 			</File>
 			<File
 				RelativePath=".\Input.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Item.h"
 				>
 			</File>
 			<File
@@ -394,6 +422,18 @@
 			</File>
 			<File
 				RelativePath=".\Plant.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantHead.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantLeaf.h"
+				>
+			</File>
+			<File
+				RelativePath=".\PlantTulip.h"
 				>
 			</File>
 			<File

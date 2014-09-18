@@ -15,6 +15,9 @@ Mario::Mario()
 	acceleration = 0.05;
 	maxSpeed = 1;
 
+	bleep = false;
+	isBig = false;
+	time = 0;
 
 	Box* pelvis = new Box(1,0.5,1);
 
@@ -110,19 +113,20 @@ void Mario::Update()
 	if(Input::GetRight())
 		this->MoveRight();
 
-//	if(road != NULL)
-//	{
-//		if((road->GetRoad()[roadIndex + 1] - this->GetTranslate()).Magnitude() < 2)
-//		{
-//			roadIndex++;
-//			double angle = (road->GetRoad()[roadIndex + 1] - road->GetRoad()[roadIndex]).AngleBetween(Point3D(0,0,1));
-//
-//			if((road->GetRoad()[roadIndex + 1] - road->GetRoad()[roadIndex]).x < 0)
-//				this->rotate.y -= angle;
-//			else
-//				this->rotate.y += angle;
-//		}
-//	}
+	if(bleep == true)
+	{
+		if(time < 3)
+		{
+			visible = !visible;
+			time += 0.05;
+		}
+		else
+		{
+			visible = true;
+			time = 0;
+			bleep = false;
+		}
+	}
 }
 
 void Mario::Jump()
@@ -137,7 +141,13 @@ void Mario::Hit(Collision collision)
 {
 	Point3D direction = collision.GetDirection();
 
-	if(direction.y > 0.8 || direction.y < -0.8)
+	if(direction.y > 0.8)
+	{
+		QuestionBlock *block = dynamic_cast<QuestionBlock*>(collision.GetHitObject());
+		if(block != NULL)
+				block->Hit();
+	}
+	if(direction.y < -0.8)
 	{
 		fallSpeed = 0;
 	}
@@ -164,4 +174,27 @@ void Mario::MoveLeft()
 void Mario::SetRoad(Road* road)
 {
 	this->road = road;
+}
+
+void Mario::SetSize()
+{
+	this->isBig = !this->isBig;
+
+	if(isBig)
+		this->Scale(Point3D(0.2, 0.2, 0.2));
+	else
+	{
+		this->Scale(Point3D(-0.2, -0.2, -0.2));
+		bleep = true;
+	}
+}
+
+bool Mario::GetBleep()
+{
+	return bleep;
+}
+
+bool Mario::IsBig()
+{
+	return isBig;
 }

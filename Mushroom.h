@@ -6,6 +6,7 @@ class Mushroom:public PhysicsObject
 {
 private:
 	GLfloat size;
+	GLfloat speed;
 	
 public:
 	Mushroom(GLfloat width, GLfloat height, GLfloat size);

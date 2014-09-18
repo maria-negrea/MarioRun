@@ -18,6 +18,7 @@ public:
 
 	Point3D GetInsidePositive();
 	Point3D GetInsideNegative();
+	WorldObject* GetHitObject();
 
 	bool IsCollision();
 };

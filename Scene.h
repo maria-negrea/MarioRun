@@ -28,6 +28,7 @@ class Scene
 
 	/*! Removes an object from the updateObjects list */
 	void RemoveUpdatable(Updatable* object);
+	void RemoveCollider(WorldObject* object);
 
 	void AddSpecialObject(WorldObject* object);
 public:

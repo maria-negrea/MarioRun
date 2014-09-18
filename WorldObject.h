@@ -34,6 +34,7 @@ protected:
 
 	Collider* collider;
 	Scene *scene;
+	bool visible;
 public:
 	GLfloat length, width, height; // OZ, OX and OY
 	WorldObject(GLfloat W = 0.0, GLfloat H = 0.0,GLfloat X = 0.0, GLfloat Y = 0.0, GLfloat Z = 0.0);
@@ -67,6 +68,11 @@ public:
 	void AddCollider();
 	void SetCollider(Collider* collider);
 	void RemoveChild(WorldObject *child);
+
+	void WorldObject::SetVisibility(bool visibility);
+	bool WorldObject::GetVisibility();
+
+	GLfloat AngleBetween(Point3D point);
 };
 
 #include"Scene.h"

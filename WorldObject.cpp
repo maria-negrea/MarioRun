@@ -10,6 +10,8 @@ WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
 	scale = Point3D(1.f, 1.f, 1.f);
 	collider = NULL;
 	scene = NULL;
+
+	visible = true;
 }
 
 WorldObject::WorldObject(bool hasCollider)
@@ -17,6 +19,8 @@ WorldObject::WorldObject(bool hasCollider)
 	scale = Point3D(1.f, 1.f, 1.f);
 	collider = NULL;
 	scene = NULL;
+
+	visible = true;
 }
 
 WorldObject::~WorldObject(void)
@@ -27,28 +31,33 @@ void WorldObject::Draw()
 {
 	ModifyPerspective();
 
-	for(int i=0;i<children.size();i++)
+	if(visible)
 	{
-		children[i]->Draw();
+		for(int i=0;i<children.size();i++)
+		{
+			children[i]->Draw();
+		}
+
+		DrawObject();
 	}
 
-	DrawObject();
-	
 	ModifyPerspectiveBack();
 }
 
 void WorldObject::AddChild(WorldObject* child)
 {
-	if(scene != NULL) {
+	if(scene != NULL) 
+	{
 		scene->AddObject(child);
-		children.push_back(child);
-		child->parent = this;
 	}
+	children.push_back(child);
+	child->parent = this;
 }
 
 void WorldObject::RemoveChild(WorldObject *child) {
 	if(scene != NULL)
 		scene->RemoveObject(child);
+	
 	child->parent = NULL;
 }
 
@@ -177,4 +186,29 @@ void WorldObject::SetCollider(Collider* collider)
 void WorldObject::AddCollider()
 {
 	this->collider = new Collider(this);
+}
+
+void WorldObject::SetVisibility(bool visibility)
+{
+	this->visible = visibility;
+}
+
+bool WorldObject::GetVisibility()
+{
+	return visible;
+}
+
+GLfloat WorldObject::AngleBetween(Point3D point)
+{
+  GLfloat angleToTarget=GetForward().AngleBetween(point);
+
+  GLfloat rightDistance = (point+GetRight()).Magnitude();
+  GLfloat distance = point.Magnitude();
+ 
+  if(rightDistance < sqrt(1.0+distance*distance))
+  {
+   angleToTarget = 360-angleToTarget;
+  }
+
+  return angleToTarget;
 }

@@ -14,27 +14,39 @@
 #include "Particles.h"
 #include "QuestionBlock.h"
 #include "Input.h"
+#include "PlantTulip.h"
+#include "PlantHead.h"
+#include "PlantLeaf.h"
 
 Scene *scene;
 Camera* mainCamera;
 Mario* mario;
 Omi* omi;
-Coin *coin ;
 Particles *particles = new Particles();
 Point3D collision;
+
 int score = 0;
+
 Box *test1, *test2;
 QuestionBlock *block;
 Road *newRoad = new Road;
 
-void AddObjectsToScene() {
+PlantHead *newHead=new PlantHead(2,2,2);
+PlantLeaf *newLeaf=new PlantLeaf(2,2,2);
+PlantTulip *newTulip=new PlantTulip(2,2,2);
+
+vector<Coin*> coins;
+
+void AddObjectsToScene() 
+{
 	//scene->AddObject(test1);
 	//scene->AddObject(test2);
-	//scene->AddObject(coin);
-	scene->AddObject(particles);
-	//scene->AddObject(new Ground);
-	//scene->AddObject(mario);	
-	
+	scene->AddObject(block);
+	//scene->AddObject(particles);
+	scene->AddObject(new Ground);
+
+	for(int i = 0; i < coins.size(); i++)
+		scene->AddObject(coins[i]);
 }
 
 void Initialize() 
@@ -43,36 +55,51 @@ void Initialize()
 
 	scene->AddObject(newRoad);
 
-	block = new QuestionBlock(4,4,4);
-	block->Rotate(Point3D(0,-90,0));
-	block->Translate(Point3D(0,5,70));
+	block = new QuestionBlock(7, 7, 7);
+	block->Translate(Point3D(0, 12, 70));
+	block->AddCollider();
 	
-	Omi* omi = new Omi(GL_LIGHT1);
-	block->AddChild(omi);
-	omi->Translate(Point3D(0,1,0));
-
 	mario = new Mario();
-	mario->Translate(Point3D(0,0,30));
+	mario->Translate(Point3D(0,0,0));
+	scene->AddObject(mario);
+
+	double x = 5;
+
+	for(int i = 0; i < 10; i++)
+	{
+		Coin *newCoin = new Coin;
+		newCoin->Translate(newRoad->GetCoinPoint(x, 0, 0));
+		newCoin->Scale(Point3D(5.0, 5.0, 5.0));
+		newCoin->AddCollider();
+
+		coins.push_back(newCoin);
+		x += 2;
+	}
+
+	newTulip->AddChild(newHead);
+	newTulip->AddChild(newLeaf);
+	newHead->Rotate(Point3D(180,0,0));
+
+	newHead->Translate(Point3D(0.4,3.2,0.4));
+	newLeaf->Translate(Point3D(0,0,-0.4));
+	newTulip->Translate(Point3D(-10,0.5,20));
+
+	newTulip->SetTarget(mario);
+	newTulip->Scale(Point3D(1,1,1));
+	scene->AddObject(newTulip);
 
 	mainCamera = new MarioCamera(mario);
 	mainCamera->Translate(Point3D(0,10,0));
 	scene->SetMainCamera(mainCamera);
 	
-	test1 = new Box(2,2,30);
+	/*test1 = new Box(2,2,30);
 	test1->Translate(Point3D(5.0, 1.0, 90.0));
 	test1->AddCollider();
 	
 	test2 = new Box(2,4,30);
 	test2->Translate(Point3D(5.0, 1.0, 120.0));
-	test2->AddCollider();
+	test2->AddCollider();*/
 	
-
-	coin = new Coin();
-	coin->Translate(mario->GetTranslate() + mario->GetForward()*30 + Point3D(0.0, 6.0, 0.0));
-	coin->Scale(Point3D(5.0, 5.0, 5.0));
-	
-	particles->Translate(mario->GetTranslate() + mario->GetForward()*10);
-
 	AddObjectsToScene();
 
 	Textures::GetInstance()->LoadGLTextures();
@@ -99,18 +126,8 @@ void Draw()
 void Timer(int value)
 {
 	scene->Update();
-	//vector<Point3D> res = coin->GetBoundingBox();
-	//vector<Point3D> res2= mario->GetBoundingBox();
+	particles->Translate(-particles->GetTranslate()+mario->GetTranslate());
 
-	//collision = res. res2);
-	//if(collision != Point3D(0.0, 0.0, 0.0)) {
-	//	scene->RemoveObject(coin);
-	//	coin = new Coin();
-	//	scene->AddObject(coin);
-	//	coin->Translate(mario->GetTranslate() + mario->GetForward()*30 + Point3D(0.0, 6.0, 0.0));
-	//	coin->Scale(Point3D(5.0, 5.0, 5.0));
-	//	score += 10;
-	//}
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }
@@ -136,7 +153,7 @@ void specialKey(int key, int x, int y)
 			Input::SetRight(true);
 			break;
 		case GLUT_KEY_F1:
-			block->Hit();
+			//block->Hit();
 			mario->Jump();
 			break;
 	}

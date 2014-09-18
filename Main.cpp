@@ -48,6 +48,11 @@ Point3D Translation() {
 	return Point3D(rand() % 5, rand() % 5, 0.0);
 }
 
+Point3D BoxPosition() {
+	return Point3D(rand() % 10-5, rand() % 10-5, rand() % 10-5).Normalize()*(rand()%10);
+}
+
+
 Point3D DefaultTranslation() {
 	return Point3D(0.0, 0.0, 0.0);
 }
@@ -68,7 +73,7 @@ void Initialize()
 {
 	scene = new Scene();
 
-	particles = new Particles(AllDirections, Translation);
+	particles = new Particles(AllDirections, BoxPosition);
 
 	block = new QuestionBlock(4,4,4);
 	block->Rotate(Point3D(0,-90,0));

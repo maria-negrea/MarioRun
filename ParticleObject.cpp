@@ -8,7 +8,7 @@ ParticleObject::ParticleObject(Point3D direction,Point3D position, Point3D emitt
 	this->direction = direction;
 	alpha = rand() % 10 / 10 + 0.6;
 	
-	this->step = 0.05;//(rand()%10) / 100.0 + 0.01;
+	this->step = (rand()%10) / 100.0 + 0.01;
 	life = 0.0;
 
 	this->initialScale = initialScale;
@@ -45,7 +45,6 @@ void ParticleObject::DrawObject() {
 void ParticleObject::Update() {
 	life += step;
 	float currentSpeed = speed + (0.0 - speed)*life;
-	cout<<currentSpeed<<endl;
 	Translate(direction*currentSpeed);
 	
 	if(scene != NULL)

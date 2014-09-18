@@ -20,12 +20,37 @@ Camera* mainCamera;
 Mario* mario;
 Omi* omi;
 Coin *coin ;
-Particles *particles = new Particles();
+Particles *particles;
 Point3D collision;
 int score = 0;
 Box *test1, *test2;
 QuestionBlock *block;
 Road *newRoad = new Road;
+
+Point3D AllDirections()
+{
+	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
+	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
+}
+
+Point3D Planar()
+{
+	int a = rand() % 100-50, b = rand() % 100-50;
+	return Point3D(a*1.0, 0.0, b*1.0).Normalize();
+}
+
+Point3D NoDirection()
+{
+	return Point3D(0.0, 0.0, 0.0).Normalize();
+}
+
+Point3D Translation() {
+	return Point3D(rand() % 5, rand() % 5, 0.0);
+}
+
+Point3D DefaultTranslation() {
+	return Point3D(0.0, 0.0, 0.0);
+}
 
 void AddObjectsToScene() {
 	//scene->AddObject(newRoad);
@@ -43,7 +68,8 @@ void Initialize()
 {
 	scene = new Scene();
 
-	
+	particles = new Particles(AllDirections, Translation);
+
 	block = new QuestionBlock(4,4,4);
 	block->Rotate(Point3D(0,-90,0));
 	block->Translate(Point3D(0,5,70));
@@ -131,16 +157,16 @@ void specialKey(int key, int x, int y)
 	switch(key)
 	{
 		case GLUT_KEY_UP:
-			particles->Rotate(Point3D(2.0, 0.0, 0.0));
+			particles->Translate(Point3D(0.0, 0.0, 2.0));
 			break;
 		case GLUT_KEY_DOWN:
-			particles->Rotate(Point3D(-2.0, 0.0, 0.0));
+			particles->Translate(Point3D(0.0, 0.0, -2.0));
 			break;
 		case GLUT_KEY_LEFT:
-			particles->Rotate(Point3D(0.0, 0.0, 2.0));
+			particles->Translate(Point3D(2.0, 0.0, 0.0));
 			break;
 		case GLUT_KEY_RIGHT:
-			particles->Rotate(Point3D(0.0, 0.0, -2.0));
+			particles->Translate(Point3D(-2.0, 0.0, 0.0));
 			break;
 		case GLUT_KEY_F1:
 			block->Hit();

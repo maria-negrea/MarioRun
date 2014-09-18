@@ -2,21 +2,21 @@
 #include <time.h>
 #include "Textures.h"
 
-ParticleObject::ParticleObject(Point3D emitterPosition, Point3D initialScale, Point3D finalScale)
+ParticleObject::ParticleObject(Point3D direction,Point3D position, Point3D emitterPosition, Point3D initialScale, Point3D finalScale)
 {
-	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
-	
-	Translate(emitterPosition + Point3D(0.0, rand() % 2, 0.0));
-	direction = Point3D(a*1.0, b*1.0, c*1.0).Normalize()*50;
+	Translate(emitterPosition+position);
+	this->direction = direction;
 	alpha = rand() % 10 / 10 + 0.6;
 	
-	this->step = (rand()%10) / 100.0 + 0.01;
+	this->step = 0.05;//(rand()%10) / 100.0 + 0.01;
 	life = 0.0;
 
 	this->initialScale = initialScale;
 	this->finalScale = finalScale;
+
+	this->angle = rand() % 100 + 10;
 	
-	//fallSpeed = rand() % 3;
+	this->speed = ((rand()%50)+30) / 40;
 }
 
 ParticleObject::~ParticleObject(void)
@@ -44,7 +44,9 @@ void ParticleObject::DrawObject() {
 
 void ParticleObject::Update() {
 	life += step;
-	Translate(direction / 100);
+	float currentSpeed = speed + (0.0 - speed)*life;
+	cout<<currentSpeed<<endl;
+	Translate(direction*currentSpeed);
 	
 	if(scene != NULL)
 	{
@@ -55,6 +57,7 @@ void ParticleObject::Update() {
 	scale.x = initialScale.x + (finalScale.x - initialScale.x)*life;
 	scale.y = initialScale.y + (finalScale.y - initialScale.y)*life;
 	scale.z = initialScale.z + (finalScale.z - initialScale.z)*life;
+	rotate = Point3D(0.0, 0.0, 0.0) + (Point3D(0.0, 0.0, angle) - Point3D(0.0, 0.0, 0.0))*life;
 }
 
 double ParticleObject::GetLife() {

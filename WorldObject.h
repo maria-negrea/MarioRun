@@ -63,6 +63,7 @@ public:
 
 	int ChildrenCount();
 	WorldObject* GetChild(int i);
+	GLfloat AngleBetween(Point3D point);
 
 	bool HasCollider();
 
@@ -73,8 +74,6 @@ public:
 
 	void SetVisibility(bool visibility);
 	bool GetVisibility();
-
-	GLfloat AngleBetween(Point3D point);
 };
 
 #include"Scene.h"

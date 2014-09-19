@@ -2,11 +2,14 @@
 #include "Mesh.h"
 #include "Updatable.h"
 
-class Head: public Mesh, public Updatable
+class Head: public Mesh
 {
+protected:
+	GLfloat bigRadius, smallRadius;
 public:
 	Head(void);
-	void Update();
-	void DrawObject();
+	/*void DrawObject();*/
+	GLfloat GetBigRadius();
+	GLfloat GetSmallRadius();
 	~Head(void);
 };

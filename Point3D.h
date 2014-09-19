@@ -1,5 +1,8 @@
 #pragma once
 #include <math.h>
+#include<iostream>
+
+using namespace std;
 
 class Point3D
 {
@@ -27,4 +30,5 @@ public:
 
 	Point3D Normalize();
 	float AngleBetween(Point3D point);
+	friend istream& operator>>(istream& in, Point3D& point);
 };

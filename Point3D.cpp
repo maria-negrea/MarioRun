@@ -93,3 +93,8 @@ float Point3D::AngleBetween(Point3D point)
 
 	return acos(eq)*180/PI;
 }
+
+istream& operator>>(istream& in, Point3D& point)
+{
+	return in>>point.x>>point.y>>point.z;
+}

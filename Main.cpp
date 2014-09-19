@@ -12,6 +12,7 @@
 #include "Coin.h"
 #include "Particles.h"
 #include "QuestionBlock.h"
+#include "Tree.h"
 #include "Input.h"
 #include "PlantTulip.h"
 #include "PlantHead.h"
@@ -22,7 +23,15 @@
 
 Scene *scene;
 Camera* mainCamera;
+Goomba* goomba;
+Goomba* goomba2;
+Goomba* goomba3;
 Mario* mario;
+
+//Box* test1;
+
+Tree* tree;
+
 Omi* omi;
 Particles *particles;
 Coin *coin ;
@@ -31,6 +40,7 @@ Point3D collision;
 int score = 0;
 
 Box *test1, *test2;
+
 QuestionBlock *block;
 Road *newRoad;
 
@@ -73,6 +83,7 @@ Point3D DefaultTranslation() {
 void AddObjectsToScene() 
 {
 	scene->AddObject(newRoad);
+
 	//scene->AddObject(test1);
 	//scene->AddObject(test2);
 	//scene->AddObject(coin);
@@ -85,15 +96,27 @@ void AddObjectsToScene()
 //		scene->AddObject(coins[i]);
 }
 
+Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
+{
+	GLfloat complementAngle=90.0-angle;
+	Point3D outside;
+	GLfloat l1=pointIn.x*sin(angle*PI/180), l2=pointIn.z*cos(complementAngle*PI/180);
+	outside.x=l1+l2;
+	outside.z=pointIn.z*sin(complementAngle*PI/180)+pointIn.x*cos(angle*PI/180);
+	outside.y=0;
+
+	return outside;
+}
+
 void Initialize() 
 {
 	scene = new Scene();
 
-	particles = new Particles(AllDirections, BoxPosition);
+	//particles = new Particles(AllDirections, BoxPosition);
 
-	block = new QuestionBlock(7, 7, 7);
-	block->Translate(Point3D(0, 12, 70));
-	block->AddCollider();
+	//block = new QuestionBlock(7, 7, 7);
+	//block->Translate(Point3D(0, 12, 70));
+	//block->AddCollider();
 	
 	mario = new Mario();
 	mario->Translate(Point3D(0.1,0.0,0.0));
@@ -101,7 +124,8 @@ void Initialize()
 	newRoad = new Road();
 	newRoad->SetRoadObject(mario);
 	
-	double x = 5;
+	//double x = 5;
+	///*scene->AddObject(block);*/
 
 	//for(int i = 0; i < 10; i++)
 	//{
@@ -114,20 +138,34 @@ void Initialize()
 	//	x += 2;
 	//}
 
-	newTulip->AddChild(newHead);
-	newTulip->AddChild(newLeaf);
-	newHead->Rotate(Point3D(180,0,0));
+	//newTulip->AddChild(newHead);
+	//newTulip->AddChild(newLeaf);
+	//newHead->Rotate(Point3D(180,0,0));
 
-	newHead->Translate(Point3D(0.4,3.2,0.4));
-	newLeaf->Translate(Point3D(0,0,-0.4));
-	newTulip->Translate(Point3D(-10,0.5,20));
+	//newHead->Translate(Point3D(0.4,3.2,0.4));
+	//newLeaf->Translate(Point3D(0,0,-0.4));
+	//newTulip->Translate(Point3D(-10,0.5,20));
 
-	newTulip->SetTarget(mario);
-	newTulip->Scale(Point3D(1,1,1));
+	//newTulip->SetTarget(mario);
+	//newTulip->Scale(Point3D(1,1,1));
+	//scene->AddObject(newTulip);*/
 
 	mainCamera = new MarioCamera(mario);
 	mainCamera->Translate(Point3D(0,10,0));
 	scene->SetMainCamera(mainCamera);
+
+	/*scene->AddObject(new Ground);*/
+	/*scene->AddObject(mario);*/
+	//goomba=new Goomba();
+	/*goomba->SetTarget(mario);*/
+	//goomba->Translate(Point3D(-5, 0, 20));
+	//tree=new Tree();
+	//tree->Translate(Point3D(-5, 0, 40));
+	
+	/*test1 = new Box(2,2,10);
+	test1->Translate(Point3D(0.0, 1.0, 90.0));
+	test1->AddCollider();
+	scene->AddObject(test1);*/
 	
 	/*test1 = new Box(2,2,30);
 	test1->Translate(Point3D(5.0, 1.0, 90.0));
@@ -137,7 +175,7 @@ void Initialize()
 	test2->Translate(Point3D(5.0, 1.0, 120.0));
 	test2->AddCollider();*/
 	
-	particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));
+	/*particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));*/
 
 	AddObjectsToScene();
 
@@ -151,24 +189,6 @@ void Initialize()
 
 	Textures::GetInstance()->LoadGLTextures();
 
-	Line line1(Point2D(1,1),Point2D(-1,-1));
-	Line line2(Point2D(1,-1),Point2D(-1,1));
-
-	Segment2D seg(Point2D(1,1),Point2D(-1,-1));
-
-	Point2D p1 = line1.Intersection(line2);
-	cout<<p1.x<<" "<<p1.y<<endl;
-
-	if(seg.IsOnSegment(line1.Intersection(line2)))
-	{
-		cout<<"T";	
-	}
-	else
-	{
-		cout<<"F";
-	}
-
-
 	glEnable(GL_DEPTH_TEST);
 }
 
@@ -180,7 +200,7 @@ void Draw()
 void Timer(int value)
 {
 	scene->Update();
-	particles->Translate(-particles->GetTranslate()+mario->GetTranslate());
+	//particles->Translate(-particles->GetTranslate()+mario->GetTranslate());
 
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
@@ -194,22 +214,18 @@ void reshape(int w, int h)
    gluPerspective(60.0, (GLfloat) w/(GLfloat) h, 0.1, 1000.0);
 }
 
-
-
 void specialKey(int key, int x, int y)
 { 
 	switch(key)
 	{
 		case GLUT_KEY_LEFT:
 			Input::SetLeft(true);
-			//mainCamera->Rotate(Point3D(0,1,0));
 			break;
 		case GLUT_KEY_RIGHT:
 			Input::SetRight(true);
-			//mainCamera->Rotate(Point3D(0,-1,0));
 			break;
 		case GLUT_KEY_F1:
-			block->Hit();
+			//block->Hit();
 			mario->Jump();
 			break;
 	}
@@ -239,6 +255,9 @@ int main(int argc, char** argv)
 	glutCreateWindow("Mario");
 	Initialize();
 	glutDisplayFunc(Draw);
+
+	cout<<GetSquareOutside(Point3D(1, 1, 1), 45).x<<" "<<GetSquareOutside(Point3D(1, 1, 1), 45).y<<" "<<
+		GetSquareOutside(Point3D(1, 1, 1), 30).z<<endl;
 
 	glutSpecialFunc(specialKey);
 	glutSpecialUpFunc(specialUpKey);

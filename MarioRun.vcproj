@@ -199,7 +199,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\FireBall.cpp"
+				RelativePath=".\ColoredPoint3D.cpp"
 				>
 			</File>
 			<File
@@ -323,6 +323,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Tree.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Updatable.cpp"
 				>
 			</File>
@@ -362,6 +366,14 @@
 			</File>
 			<File
 				RelativePath=".\Collision.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ColoredPoint3D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FireBall.cpp"
 				>
 			</File>
 			<File
@@ -437,6 +449,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Pivot.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Pivot.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Plant.h"
 				>
 			</File>
@@ -486,6 +506,10 @@
 			</File>
 			<File
 				RelativePath=".\Torso.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Tree.h"
 				>
 			</File>
 			<File

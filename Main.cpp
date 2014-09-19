@@ -43,10 +43,7 @@ Box *test1, *test2;
 
 QuestionBlock *block;
 Road *newRoad;
-
-PlantHead *newHead=new PlantHead(2,2,2);
-PlantLeaf *newLeaf=new PlantLeaf(2,2,2);
-PlantTulip *newTulip=new PlantTulip(2,2,2);
+PlantTulip *newTulip;
 
 vector<Coin*> coins;
 
@@ -88,14 +85,13 @@ void AddObjectsToScene()
 	//scene->AddObject(test2);
 	//scene->AddObject(coin);
 	scene->AddObject(new Ground);
-//	scene->AddObject(newTulip);
+	scene->AddObject(newTulip);
+//	scene->AddObject(particles);
 	scene->AddObject(mario);
-
-	//scene->AddObject(goomba);
+	scene->AddObject(block);
 	
 	for(int i = 0; i < coins.size(); i++)
 		scene->AddObject(coins[i]);
-	scene->AddObject(particles);
 }
 
 Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
@@ -127,8 +123,6 @@ void Initialize()
 	newRoad->SetRoadObject(mario);
 	
 	double x = 5;
-	scene->AddObject(block);
-
 	for(int i = 0; i < 10; i++)
 	{
 		Coin *newCoin = new Coin;
@@ -138,20 +132,14 @@ void Initialize()
 
 		coins.push_back(newCoin);
 		x += 0.1;
-
 	}
 
-	//newTulip->AddChild(newHead);
-	//newTulip->AddChild(newLeaf);
-	//newHead->Rotate(Point3D(180,0,0));
 
-	//newHead->Translate(Point3D(0.4,3.2,0.4));
-	//newLeaf->Translate(Point3D(0,0,-0.4));
-	//newTulip->Translate(Point3D(-10,0.5,20));
+	newTulip = new PlantTulip(2,2,2);
+	newTulip->Translate(Point3D(-10,0.5,100));
 
-	//newTulip->SetTarget(mario);
-	//newTulip->Scale(Point3D(1,1,1));
-	//scene->AddObject(newTulip);*/
+	newTulip->SetTarget(mario);
+	newTulip->Scale(Point3D(1,1,1));
 
 	mainCamera = new MarioCamera(mario);
 	mainCamera->Translate(Point3D(0,10,0));
@@ -164,17 +152,9 @@ void Initialize()
 	//tree->Translate(Point3D(-5, 0, 40));
 	
 	test1 = new Box(2,2,10);
-	test1->Translate(Point3D(0.0, 1.0, 90.0));
+	test1->Translate(Point3D(0.0, 1.0, 110.0));
 	test1->AddCollider();
 	scene->AddObject(test1);
-	
-	test1 = new Box(2,2,30);
-	test1->Translate(Point3D(5.0, 1.0, 90.0));
-	test1->AddCollider();
-	
-	test2 = new Box(2,4,30);
-	test2->Translate(Point3D(5.0, 1.0, 120.0));
-	test2->AddCollider();
 	
 	/*particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));*/
 
@@ -202,8 +182,6 @@ void Timer(int value)
 {
 	scene->Update();
 	particles->Translate(-particles->GetTranslate()+mario->GetTranslate());
-	cout<<particles->GetTranslate().x<<" "<<particles->GetTranslate().y<<" "<<particles->GetTranslate().z<<endl;
-	cout<<mario->GetTranslate().x<<" "<<mario->GetTranslate().y<<" "<<mario->GetTranslate().z<<endl<<endl;
 
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
@@ -259,8 +237,8 @@ int main(int argc, char** argv)
 	Initialize();
 	glutDisplayFunc(Draw);
 
-	cout<<GetSquareOutside(Point3D(1, 1, 1), 45).x<<" "<<GetSquareOutside(Point3D(1, 1, 1), 45).y<<" "<<
-		GetSquareOutside(Point3D(1, 1, 1), 30).z<<endl;
+	//cout<<GetSquareOutside(Point3D(1, 1, 1), 45).x<<" "<<GetSquareOutside(Point3D(1, 1, 1), 45).y<<" "<<
+	//	GetSquareOutside(Point3D(1, 1, 1), 30).z<<endl;
 
 	glutSpecialFunc(specialKey);
 	glutSpecialUpFunc(specialUpKey);

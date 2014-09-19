@@ -121,54 +121,39 @@ bool Road::IsOnIndex()
 	lines[2] = Segment2D(check,p3);
 	lines[3] = Segment2D(check,p4);
 
-	//cout<<"POS "<<check.x<<" "<<check.y<<endl;
-	//cout<<"p1X "<<p1.x<<" "<<p1.y<<endl;
-	//cout<<"p2X "<<p2.x<<" "<<p2.y<<endl;
-	//cout<<"p3X "<<p3.x<<" "<<p3.y<<endl;
-	//cout<<"p4X "<<p4.x<<" "<<p4.y<<endl;
-
 	if(lines[0].Intersects(polySegments[1]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[0].Intersects(polySegments[2]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[1].Intersects(polySegments[2]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[1].Intersects(polySegments[3]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[2].Intersects(polySegments[3]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[2].Intersects(polySegments[0]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[3].Intersects(polySegments[0]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[3].Intersects(polySegments[1]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 
-	//cout<<"TRUE"<<endl;
 	return true;
 }
 

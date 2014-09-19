@@ -8,5 +8,6 @@ private:
 public:
 	PlantHead(GLfloat width, GLfloat height, GLfloat size);
 	~PlantHead(void);
+	void DrawPlantHead();
 	void DrawObject();
 };

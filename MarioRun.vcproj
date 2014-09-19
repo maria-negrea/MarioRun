@@ -203,6 +203,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FireBall.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Foot.cpp"
 				>
 			</File>
@@ -370,10 +374,6 @@
 			</File>
 			<File
 				RelativePath=".\ColoredPoint3D.h"
-				>
-			</File>
-			<File
-				RelativePath=".\FireBall.cpp"
 				>
 			</File>
 			<File

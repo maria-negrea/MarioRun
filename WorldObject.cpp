@@ -113,7 +113,6 @@ void WorldObject::Translate(Point3D translation)
 
 void WorldObject::Rotate(Point3D rotation)
 {
-	cout<<"Q";
 	rotate += rotation;
 }
 

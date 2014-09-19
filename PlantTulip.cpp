@@ -8,11 +8,20 @@ PlantTulip::PlantTulip(GLfloat width, GLfloat height, GLfloat size)
 	this->size=size;
 	this->target=NULL;
 	contor=0;
+	head=new PlantHead(width, height, size);
+	leaf=new PlantLeaf(width, height, size);
+	head->Translate(Point3D(0.5, 3.3, 0.4));
+	head->Rotate(Point3D(180, -20, 0));
+	leaf->Translate(Point3D(0, 0, -0.4));
+	this->AddChild(head);
+	this->AddChild(leaf);
+	
 }
 
 PlantTulip::~PlantTulip(void)
 {
 }
+
 void PlantTulip::SetTarget(WorldObject *newtarget)
 {
 	if(newtarget!=NULL)
@@ -20,14 +29,11 @@ void PlantTulip::SetTarget(WorldObject *newtarget)
 		this->target=newtarget;
 	}
 }
-void PlantTulip::DrawObject()
+void PlantTulip::DrawTulip()
 {
-GLfloat radius=sqrt(width*width+height*height)/8;
+	GLfloat radius=sqrt(width*width+height*height)/8;
     vector<Point3D>base; 
-	vector<Point3D>head;
-	vector<Point3D>top;
-    
-   
+	
 
 	double initialsize=0;
 	
@@ -39,11 +45,11 @@ GLfloat radius=sqrt(width*width+height*height)/8;
 
 
 	for (double t = 0; t < 2 * PI; t = t + 0.1)
-		  base.push_back(Point3D(radius*0.5*cos(t), initialsize,  radius*0.5*sin(t)));
-	    
+		base.push_back(Point3D(radius*0.5*cos(t), initialsize,  radius*0.5*sin(t)));
+	    base.push_back(Point3D(radius*0.5*cos(0.),initialsize, 0));
 	
 	double pass=0;
-	double sizepass=0.5*size;
+    double sizepass=0.5*size;
 	for(int i=0;i<2;i++)
 	{
 
@@ -69,6 +75,10 @@ GLfloat radius=sqrt(width*width+height*height)/8;
 		//	glTexCoord2f(j, 0.0f);
 			glVertex3f(base[k].x, base[k].y+initialsize, base[k].z);
 		glEnd();
+
+     
+
+
 	}
 
     if(i%2==0)
@@ -78,10 +88,16 @@ GLfloat radius=sqrt(width*width+height*height)/8;
    
 	initialsize+=sizepass;
 	}
+}
+
+void PlantTulip::DrawObject()
+{	
+	
+	PlantTulip::DrawTulip();
 
 }
 void PlantTulip::Update()
-{	//scene->AddObject(fireBall);
+{	
 	
 	if(target != NULL)
 	 {  
@@ -90,7 +106,7 @@ void PlantTulip::Update()
 		  GLfloat angleToTarget = AngleBetween(point);
 		  Rotate(Point3D(0.0,angleToTarget, 0.0));
 
-		  if(contor==10)
+		  if(contor==30)
 		  {
 			  FireBall *fireBall=new FireBall(0.5);
 			  fireBall->AddCollider();

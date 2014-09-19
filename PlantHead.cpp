@@ -12,7 +12,8 @@ PlantHead::~PlantHead(void)
 {
 }
 void PlantHead::DrawObject()
-{   glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[4]); 
+{
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[4]); 
     glColor3f(1,1,1);
 	
 	GLfloat radius=sqrt(width*width+height*height)/3;
@@ -22,17 +23,17 @@ void PlantHead::DrawObject()
 	vector<Point3D> lips;
 	vector<Point3D>lipdown;
    
-	for(double t=0;t<PI;t+=0.1)
+	for(double t=0;t<PI;t+=0.5)
 
 		mouth.push_back(Point3D(radius*0.75* cos(t), size*0.4, radius*0.75 * sin(t)));
         mouth.push_back(Point3D(radius *0.75* cos(0.0), size*0.4, radius*0.75 * sin(0.0)));
  
-	 for(double t=PI;t<2*PI;t+=0.1)
+	 for(double t=PI;t<2*PI;t+=0.5)
 		
 		lipdown.push_back(Point3D(radius*0.75* cos(t), size*0.4, radius*0.75 * sin(t)));
         lipdown.push_back(Point3D(radius *0.75* cos(0.0), size*0.4, radius*0.75 * sin(0.0)));
  
-    for(double t=PI;t<2*PI;t+=0.1)
+    for(double t=PI;t<2*PI;t+=0.5)
 		
 		lips.push_back(Point3D(radius*0.9* cos(t), size*0.4-size*0.05, radius*0.9 * sin(t)));
         lips.push_back(Point3D(radius *0.9* cos(0.0), size*0.4-size*0.05, radius*0.9 * sin(0.0)));

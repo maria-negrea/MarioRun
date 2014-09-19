@@ -1,8 +1,8 @@
 #pragma once
+
 #include "Collider.h"
 #include "Mario.h"
-#include "Coin.h"
-#include "FireBall.h"
+#include "Item.h"
 
 class MarioCollider : public Collider
 {

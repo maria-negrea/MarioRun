@@ -2,17 +2,18 @@
 
 #include"PhysicsObject.h"
 #include"Textures.h"
-class Mushroom:public PhysicsObject
+#include "Item.h"
+
+class Mushroom : public PhysicsObject, public Item
 {
 private:
-	GLfloat size;
-	GLfloat speed;
-	
+	GLfloat speed;	
 public:
 	Mushroom(GLfloat width, GLfloat height, GLfloat size);
 	~Mushroom(void);
 	void DrawObject();
 	void DrawMushroom();
 	void Update();
-	//void Box(int textureIndex);
+	void Function(Mario *mario);
 };
+

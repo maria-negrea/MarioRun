@@ -56,6 +56,19 @@ void Scene::RemoveUpdatable(Updatable* object)
 	}
 }
 
+void Scene::RemoveCollider(WorldObject* object)
+{
+	for (unsigned i=0; i<colliders.size(); ++i)
+	{
+		if(colliders[i] == object)
+		{
+			colliders.erase(colliders.begin()+i);
+			break;
+		}
+	}
+}
+
+
 void Scene::SetMainCamera(Camera* camera)
 {
 	mainCamera = camera;
@@ -107,6 +120,8 @@ void Scene::RemoveObject(WorldObject* object)
 		if(sceneObjects[i] == object)
 		{
 			sceneObjects.erase(sceneObjects.begin()+i);
+			
+		cout<<"Removed"<<endl;
 			break;
 		}
 	}
@@ -116,15 +131,29 @@ void Scene::RemoveObject(WorldObject* object)
 	{
 		RemoveUpdatable(updatableObject);
 	}
+
+	if(object->HasCollider())
+	{
+		RemoveCollider(object);
+	}
 }
 
-void Scene::CollisionCheck(WorldObject* object,Point3D previousPosition)
+Camera* Scene::GetCamera() {
+	return mainCamera;
+}
+
+void Scene::CollisionCheck(WorldObject* object,Point3D direction)
 {
 	for(unsigned i=0;i<colliders.size();++i)
 	{
 		if(object != colliders[i])
 		{
-			object->GetCollider()->Affected(Collider::check(colliders[i]->GetBoundingBox(),object->GetBoundingBox()));
+			Collision collision = colliders[i]->GetCollider()->Check(object);
+			if(collision.IsCollision())
+			{
+				collision.SetDirection(direction);
+				object->GetCollider()->Affected(collision);
+			}
 		}
 	}
 }

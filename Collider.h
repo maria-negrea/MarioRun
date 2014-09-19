@@ -1,24 +1,26 @@
 #pragma once
 #include "Point3D.h"
-#include "Collision.h"
 #include<vector>
 
+class Collision;
 class WorldObject;
 
 using namespace std;
 
 class Collider
 {
-private:
-	vector<Point3D> points;	
+	float Min(float x,float y);
+
+	WorldObject* object;
 public:
-	Collider(void);
+	Collider(WorldObject* object);
 	~Collider(void);
 
-	virtual void Hit(Collision* collision);
+	virtual void Hit(Collision collision);
 
-	void Affected(Collision* collision);
-	static Collision* check(vector<Point3D> a, vector<Point3D> b);
+	void Affected(Collision collision);
+	Collision Check(WorldObject* other);
 };
 
 #include "WorldObject.h"
+#include "Collision.h"

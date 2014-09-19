@@ -27,12 +27,14 @@ protected:
 
 	Point3D rotate;
 	Point3D translate;
+	Point3D scale;
 	
 	vector<WorldObject*> children;
 	WorldObject* parent;
 
 	Collider* collider;
 	Scene *scene;
+	bool visible;
 public:
 	GLfloat length, width, height; // OZ, OX and OY
 	WorldObject(GLfloat W = 0.0, GLfloat H = 0.0,GLfloat X = 0.0, GLfloat Y = 0.0, GLfloat Z = 0.0);
@@ -41,12 +43,14 @@ public:
 
 	void Translate(Point3D);
 	void Rotate(Point3D);
+	void Scale(Point3D);
 
 	void Draw();
 
 	Point3D GetForward();
 	Point3D GetTranslate();
 	Point3D GetRight();
+	Point3D GetScale();
 
 	vector<Point3D> GetBoundingBox();
 
@@ -64,6 +68,10 @@ public:
 	Collider* GetCollider();
 	void AddCollider();
 	void SetCollider(Collider* collider);
+	void RemoveChild(WorldObject *child);
+
+	void SetVisibility(bool visibility);
+	bool GetVisibility();
 };
 
 #include"Scene.h"

@@ -28,6 +28,7 @@ class Scene
 
 	/*! Removes an object from the updateObjects list */
 	void RemoveUpdatable(Updatable* object);
+	void RemoveCollider(WorldObject* object);
 
 	void AddSpecialObject(WorldObject* object);
 public:
@@ -39,6 +40,8 @@ public:
 	/*! Updates all the objects that need updating */
 	void Update();
 
+	Camera* GetCamera();
+	
 	void SetMainCamera(Camera* camera);
 
 	/*! Adds an object from the objects in the sceen if the object is Updatable it also adds it from the updateObjects list*/

@@ -7,14 +7,20 @@ WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
     height = H;
 
 	parent = NULL;
+	scale = Point3D(1.f, 1.f, 1.f);
 	collider = NULL;
 	scene = NULL;
+
+	visible = true;
 }
 
 WorldObject::WorldObject(bool hasCollider)
 {
+	scale = Point3D(1.f, 1.f, 1.f);
 	collider = NULL;
 	scene = NULL;
+
+	visible = true;
 }
 
 WorldObject::~WorldObject(void)
@@ -25,20 +31,32 @@ void WorldObject::Draw()
 {
 	ModifyPerspective();
 
-	for(int i=0;i<children.size();i++)
+	if(visible)
 	{
-		children[i]->Draw();
+		for(int i=0;i<children.size();i++)
+		{
+			children[i]->Draw();
+		}
+		DrawObject();
 	}
-
-	DrawObject();
-	
 	ModifyPerspectiveBack();
 }
 
 void WorldObject::AddChild(WorldObject* child)
 {
+	if(scene != NULL) 
+	{
+		scene->AddObject(child);
+	}
 	children.push_back(child);
 	child->parent = this;
+}
+
+void WorldObject::RemoveChild(WorldObject *child) {
+	if(scene != NULL) {
+		scene->RemoveObject(child);
+	}
+	child->parent = NULL;
 }
 
 void WorldObject::ModifyPerspective()
@@ -48,10 +66,14 @@ void WorldObject::ModifyPerspective()
 	glRotatef(rotate.y,0,1,0);
 	glRotatef(rotate.x,1,0,0);
 	glRotatef(rotate.z,0,0,1);
+	
+	glScalef(scale.x, scale.y, scale.z);
 }
 
 void WorldObject::ModifyPerspectiveBack()
 {
+	glScalef(1/scale.x, 1/scale.y, 1/scale.z);
+
 	glRotatef(-rotate.z,0,0,1);
 	glRotatef(-rotate.x,1,0,0);
 	glRotatef(-rotate.y,0,1,0);
@@ -84,7 +106,7 @@ void WorldObject::Translate(Point3D translation)
 	{
 		if(scene != NULL)
 		{
-			scene->CollisionCheck(this,Point3D());
+			scene->CollisionCheck(this,translation.Normalize());
 		}
 	}
 }
@@ -92,6 +114,10 @@ void WorldObject::Translate(Point3D translation)
 void WorldObject::Rotate(Point3D rotation)
 {
 	rotate += rotation;
+}
+
+void WorldObject::Scale(Point3D s) {
+	scale += s;
 }
 
 Point3D WorldObject::GetTranslate()
@@ -114,6 +140,10 @@ Point3D WorldObject::GetRotate()
 	return rotate;
 }
 
+Point3D WorldObject::GetScale() {
+	return scale;
+}
+
 int WorldObject::ChildrenCount()
 {
 	return children.size();
@@ -131,23 +161,9 @@ void WorldObject::SetScene(Scene* scene)
 vector<Point3D> WorldObject::GetBoundingBox()
 {
 	vector<Point3D> res;
-		res.push_back(Point3D(translate.x - width/2, translate.y, translate.z - length/2));
-		res.push_back(Point3D(translate.x + width/2, translate.y + height, translate.z + length/2));
+		res.push_back(Point3D(translate.x - (width*scale.x)/2, translate.y, translate.z - (length*scale.z)/2));
+		res.push_back(Point3D(translate.x + (width*scale.x)/2, translate.y + height*scale.y, translate.z + (length*scale.z)/2));
 	return res;
-}
-
-GLfloat WorldObject::AngleBetween(Point3D point)
-{
-	GLfloat angleToTarget=GetForward().AngleBetween(point);
-
-	GLfloat rightDistance = (point+GetRight()).Magnitude();
-	GLfloat distance = point.Magnitude();
-	
-	if(rightDistance < sqrt(1.0+distance*distance))
-	{
-		angleToTarget = 360-angleToTarget;
-	}
-	return angleToTarget;
 }
 
 bool WorldObject::HasCollider()
@@ -167,5 +183,28 @@ void WorldObject::SetCollider(Collider* collider)
 
 void WorldObject::AddCollider()
 {
-	this->collider = new Collider();
+	this->collider = new Collider(this);
+}
+
+void WorldObject::SetVisibility(bool visibility)
+{
+	this->visible = visibility;
+}
+
+bool WorldObject::GetVisibility()
+{
+	return visible;
+}
+
+GLfloat WorldObject::AngleBetween(Point3D point)
+{
+    GLfloat angleToTarget=GetForward().AngleBetween(point);
+	GLfloat rightDistance = (point+GetRight()).Magnitude();
+	GLfloat distance = point.Magnitude();
+
+	if(rightDistance < sqrt(1.0+distance*distance))
+	{
+		angleToTarget = 360-angleToTarget;
+	}
+	return angleToTarget;
 }

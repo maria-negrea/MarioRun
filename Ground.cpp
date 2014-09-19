@@ -18,4 +18,5 @@ void Ground::DrawObject()
 		glTexCoord2f(0, 0); glVertex3f( -10000,0,-10000);
 		glTexCoord2f(1, 0); glVertex3f( -10000,0,10000);
 	glEnd();
+	glColor4f(1,1,1,1);
 }

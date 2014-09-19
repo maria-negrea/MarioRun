@@ -14,6 +14,11 @@ Point3D Point3D::operator-(Point3D point)
 	return Point3D(x-point.x,y-point.y,z-point.z);
 }
 
+Point3D Point3D::operator-()
+{
+	return Point3D(-x,-y,-z);
+}
+
 void Point3D::operator +=(Point3D point)
 {
 	*this = *this+point;
@@ -32,6 +37,16 @@ Point3D Point3D::operator/(float value)
 float Point3D::operator*(Point3D point)
 {
 	return x*point.x+y*point.y+z*point.z;
+}
+
+bool Point3D::operator==(Point3D point)
+{
+	return point.x == x && point.y == y && point.z == z;
+}
+
+bool Point3D::operator!=(Point3D point)
+{
+	return point.x != x || point.y != y || point.z != z;
 }
 
 float Point3D::Magnitude()
@@ -70,9 +85,10 @@ float Point3D::AngleBetween(Point3D point)
 	float PI = 3.14159265359;
 
 	float dotProduct = ((*this)*point);
-	
+
 	float eq = dotProduct/((*this).Magnitude()*point.Magnitude());
-	if(eq > 1.0 || eq < -1.0)
+
+	if(eq > 1 || eq < -1)
 		return 0;
 
 	return acos(eq)*180/PI;
@@ -82,3 +98,4 @@ istream& operator>>(istream& in, Point3D& point)
 {
 	return in>>point.x>>point.y>>point.z;
 }
+

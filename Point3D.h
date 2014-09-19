@@ -13,10 +13,14 @@ public:
 
 	Point3D operator+(Point3D point);
 	Point3D operator-(Point3D point);
+	Point3D operator-();
 	void operator +=(Point3D point);
 	Point3D operator*(float value);
 	Point3D operator/(float value);
 	float operator*(Point3D point);
+
+	bool operator==(Point3D point);
+	bool operator!=(Point3D point);
 
 	float Magnitude();
 

@@ -89,11 +89,13 @@ void AddObjectsToScene()
 	//scene->AddObject(coin);
 	scene->AddObject(new Ground);
 //	scene->AddObject(newTulip);
-//	scene->AddObject(particles);
-	scene->AddObject(mario);	
+	scene->AddObject(mario);
+
+	//scene->AddObject(goomba);
 	
-//	for(int i = 0; i < coins.size(); i++)
-//		scene->AddObject(coins[i]);
+	for(int i = 0; i < coins.size(); i++)
+		scene->AddObject(coins[i]);
+	scene->AddObject(particles);
 }
 
 Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
@@ -112,11 +114,11 @@ void Initialize()
 {
 	scene = new Scene();
 
-	//particles = new Particles(AllDirections, BoxPosition);
+	particles = new Particles(AllDirections, DefaultTranslation);
 
-	//block = new QuestionBlock(7, 7, 7);
-	//block->Translate(Point3D(0, 12, 70));
-	//block->AddCollider();
+	block = new QuestionBlock(7, 7, 7);
+	block->Translate(Point3D(0, 12, 70));
+	block->AddCollider();
 	
 	mario = new Mario();
 	mario->Translate(Point3D(0.1,0.0,0.0));
@@ -124,19 +126,20 @@ void Initialize()
 	newRoad = new Road();
 	newRoad->SetRoadObject(mario);
 	
-	//double x = 5;
-	///*scene->AddObject(block);*/
+	double x = 5;
+	scene->AddObject(block);
 
-	//for(int i = 0; i < 10; i++)
-	//{
-	//	Coin *newCoin = new Coin;
-	//	newCoin->Translate(newRoad->GetCoinPoint(x, 0, 0));
-	//	newCoin->Scale(Point3D(5.0, 5.0, 5.0));
-	//	newCoin->AddCollider();
+	for(int i = 0; i < 10; i++)
+	{
+		Coin *newCoin = new Coin;
+		newCoin->Translate(newRoad->GetCoinPoint(x, 0, 0));
+		newCoin->Scale(Point3D(5.0, 5.0, 5.0));
+		newCoin->AddCollider();
 
-	//	coins.push_back(newCoin);
-	//	x += 2;
-	//}
+		coins.push_back(newCoin);
+		x += 0.1;
+
+	}
 
 	//newTulip->AddChild(newHead);
 	//newTulip->AddChild(newLeaf);
@@ -154,26 +157,24 @@ void Initialize()
 	mainCamera->Translate(Point3D(0,10,0));
 	scene->SetMainCamera(mainCamera);
 
-	/*scene->AddObject(new Ground);*/
-	/*scene->AddObject(mario);*/
-	//goomba=new Goomba();
-	/*goomba->SetTarget(mario);*/
-	//goomba->Translate(Point3D(-5, 0, 20));
+	goomba=new Goomba();
+	goomba->SetTarget(mario);
+	goomba->Translate(Point3D(-5, 0, 20));
 	//tree=new Tree();
 	//tree->Translate(Point3D(-5, 0, 40));
 	
-	/*test1 = new Box(2,2,10);
+	test1 = new Box(2,2,10);
 	test1->Translate(Point3D(0.0, 1.0, 90.0));
 	test1->AddCollider();
-	scene->AddObject(test1);*/
+	scene->AddObject(test1);
 	
-	/*test1 = new Box(2,2,30);
+	test1 = new Box(2,2,30);
 	test1->Translate(Point3D(5.0, 1.0, 90.0));
 	test1->AddCollider();
 	
 	test2 = new Box(2,4,30);
 	test2->Translate(Point3D(5.0, 1.0, 120.0));
-	test2->AddCollider();*/
+	test2->AddCollider();
 	
 	/*particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));*/
 
@@ -200,7 +201,9 @@ void Draw()
 void Timer(int value)
 {
 	scene->Update();
-	//particles->Translate(-particles->GetTranslate()+mario->GetTranslate());
+	particles->Translate(-particles->GetTranslate()+mario->GetTranslate());
+	cout<<particles->GetTranslate().x<<" "<<particles->GetTranslate().y<<" "<<particles->GetTranslate().z<<endl;
+	cout<<mario->GetTranslate().x<<" "<<mario->GetTranslate().y<<" "<<mario->GetTranslate().z<<endl<<endl;
 
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
@@ -219,7 +222,7 @@ void specialKey(int key, int x, int y)
 	switch(key)
 	{
 		case GLUT_KEY_LEFT:
-			Input::SetLeft(true);
+			Input::SetLeft(true);			
 			break;
 		case GLUT_KEY_RIGHT:
 			Input::SetRight(true);

@@ -27,8 +27,8 @@ ParticleObject::~ParticleObject(void)
 void ParticleObject::DrawObject() {
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDisable(GL_DEPTH_TEST);
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[4]);
+	//glDisable(GL_DEPTH_TEST);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[11]);
 	glColor4f ( 1.0, 1.0, 1.0, alpha);
 	glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);glVertex3f(-1.5, 1.5,  0.0);
@@ -39,7 +39,7 @@ void ParticleObject::DrawObject() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glColor4f ( 1.0, 1.0, 1.0, 1.0);
 	glDisable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_DEPTH_TEST);
 }
 
 void ParticleObject::Update() {
@@ -49,14 +49,14 @@ void ParticleObject::Update() {
 	
 	if(scene != NULL)
 	{
-		rotate.y = -parent->GetRotate().y+scene->GetCamera()->GetRotate().y;
-		rotate.x = -parent->GetRotate().x+scene->GetCamera()->GetRotate().x;
+		rotate.y = scene->GetCamera()->GetRotate().y;
+		rotate.x = scene->GetCamera()->GetRotate().x;
 	}
 
 	scale.x = initialScale.x + (finalScale.x - initialScale.x)*life;
 	scale.y = initialScale.y + (finalScale.y - initialScale.y)*life;
 	scale.z = initialScale.z + (finalScale.z - initialScale.z)*life;
-	rotate = Point3D(0.0, 0.0, 0.0) + (Point3D(0.0, 0.0, angle) - Point3D(0.0, 0.0, 0.0))*life;
+	rotate.z = 0.0 + (angle - 0.0)*life;
 }
 
 double ParticleObject::GetLife() {

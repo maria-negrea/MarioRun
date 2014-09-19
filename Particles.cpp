@@ -12,18 +12,12 @@ Particles::~Particles(void)
 }
 
 void Particles::DrawObject() 
-{
-	
-	for(int i=0; i < rand() % 4 + 1; i++) {
-		ParticleObject* particle = new ParticleObject(directionGenerator(), translationGenerator(),GetTranslate(), Point3D(3.0, 3.0, 3.0), Point3D(0.0, 0.0, 0.0));
-		particle->Rotate(Point3D(0,0,rand()%360));
-		particles.push_back(particle);
-	}
+{	
 	/*AddChild(particle);*/
 	
-	for(int i=0; i < particles.size(); i++) {
-		particles[i]->Draw();
-	}
+	//for(int i=0; i < particles.size(); i++) {
+	//	particles[i]->Draw();
+	//}
 	//if(particles.size() > 50) {
 	//	/*RemoveChild(children[0]);
 	//	children.erase(children.begin());*/
@@ -32,11 +26,21 @@ void Particles::DrawObject()
 }
 
 void Particles::Update() {
+	
+	for(int i=0; i < rand() % 4 + 1; i++) {
+		ParticleObject* particle = new ParticleObject(directionGenerator(), translationGenerator(),translate, Point3D(3.0, 3.0, 3.0), Point3D(0.0, 0.0, 0.0));
+		particle->Rotate(Point3D(0,0,rand()%360));
+		particles.push_back(particle);
+
+		scene->AddObject(particle);
+	}
+
 	for(int i=0; i < particles.size(); i++) {
 		particles[i]->Update();
 	}
 	for(int i=0; i < particles.size(); i++) {
 		if(particles[i]->GetLife() > 1.0) {
+			scene->RemoveObject(particles[i]);
 			particles.erase(particles.begin() + i);
 		}
 	}

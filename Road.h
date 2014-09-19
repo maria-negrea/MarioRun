@@ -21,6 +21,8 @@ public:
 
 	Point3D GetCoinPoint(double index, double gradient, int side);
 
+	Point3D GetOnRoadPosition();
+
 	vector<Point3D> GetRoad();
 	vector<Point3D> GetLeft();
 	vector<Point3D> GetRight();

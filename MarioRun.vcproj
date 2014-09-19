@@ -315,6 +315,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SnowMan.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Textures.cpp"
 				>
 			</File>
@@ -494,6 +498,10 @@
 			</File>
 			<File
 				RelativePath=".\Segment2D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SnowMan.h"
 				>
 			</File>
 			<File

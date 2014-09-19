@@ -1,8 +1,9 @@
 #include "Foot.h"
 #include "Textures.h"
 
-Foot::Foot()
+Foot::Foot(int mainTextureIndex)
 {
+	this->mainTextureIndex=mainTextureIndex;
 	verticesCount=16;
 	trianglesCount=(verticesCount/2+1)*4;
 	vertices=new Point3D[verticesCount];
@@ -24,8 +25,8 @@ Foot::Foot()
 	GLfloat countU=0.0, countV=0.0;
 	for(i=0;i<m-1;i++)
 	{
-		triangles[j++]=Triangle(m+i, i, i+1, 6, 1.0, countV, 0.0, countV, 0.0, countV+stepV);		
-		triangles[j++]=Triangle(m+i, i+1, m+i+1, 6, 1.0, countV, 0.0, countV+stepV, 1.0, countV+stepV);
+		triangles[j++]=Triangle(m+i, i, i+1, mainTextureIndex, 1.0, countV, 0.0, countV, 0.0, countV+stepV);		
+		triangles[j++]=Triangle(m+i, i+1, m+i+1, mainTextureIndex, 1.0, countV, 0.0, countV+stepV, 1.0, countV+stepV);
 		countV+=stepV;
 	}
 
@@ -37,8 +38,8 @@ Foot::Foot()
 	triangles[j]=Triangle(2*m, m+i+1, m);*/
 
 
-	triangles[j++]=Triangle(m+i, i+1, 0, 6, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0);
-	triangles[j++]=Triangle(m+i, 0, m, 6, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
+	triangles[j++]=Triangle(m+i, i+1, 0, mainTextureIndex, 1.0, 1.0, 0.0, 1.0, 0.0, 0.0);
+	triangles[j++]=Triangle(m+i, 0, m, mainTextureIndex, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0);
 	/*triangles[j++]=Triangle(m, m-1, 0, 4);*/
 
 	countV=0.0;

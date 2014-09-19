@@ -18,12 +18,14 @@
 #include "PlantHead.h"
 #include "PlantLeaf.h"
 #include "Road.h"
+#include "SnowMan.h"
 Scene *scene;
 Camera* mainCamera;
 Goomba* goomba;
 Goomba* goomba2;
 Goomba* goomba3;
 Mario* mario;
+SnowMan* snowMan;
 
 //Box* test1;
 
@@ -83,12 +85,13 @@ void AddObjectsToScene() {
 	////scene->AddObject(test2);
 	////scene->AddObject(coin);
 	//
-	//scene->AddObject(new Ground);
+	scene->AddObject(new Ground);
 	//scene->AddObject(particles);
 	scene->AddObject(mario);	
+	//scene->AddObject(snowMan);
 	//
-	//for(int i = 0; i < coins.size(); i++)
-	//	scene->AddObject(coins[i]);
+	for(int i = 0; i < coins.size(); i++)
+		scene->AddObject(coins[i]);
 
 	//scene->AddObject(tree);
 	//scene->AddObject(goomba);
@@ -118,14 +121,16 @@ void Initialize()
 	
 	mario = new Mario();
 	mario->Translate(Point3D(0,0,10));
+	snowMan=new SnowMan();
+	snowMan->Translate(Point3D(0, 0, 10));
 	
-	//double x = 5;
-	///*scene->AddObject(block);*/
+	double x = 5;
+	/*scene->AddObject(block);*/
 
-	/*for(int i = 0; i < 10; i++)
+	for(int i = 0; i < 10; i++)
 	{
 		Coin *newCoin = new Coin;
-		newCoin->Translate(newRoad->GetCoinPoint(x, 0, 0));
+		newCoin->Translate(newRoad->GetCoinPoint(x, 0, 1));
 		newCoin->Scale(Point3D(5.0, 5.0, 5.0));
 		newCoin->AddCollider();
 
@@ -133,7 +138,7 @@ void Initialize()
 		x += 2;
 	}
 
-	newTulip->AddChild(newHead);
+	/*newTulip->AddChild(newHead);
 	newTulip->AddChild(newLeaf);
 	newHead->Rotate(Point3D(180,0,0));
 
@@ -213,32 +218,28 @@ void specialKey(int key, int x, int y)
 { 
 	switch(key)
 	{
-		/*case GLUT_KEY_LEFT:
-			mario->MoveLeft();
 		case GLUT_KEY_LEFT:
 			Input::SetLeft(true);
-			mainCamera->Rotate(Point3D(0,1,0));
 			break;
 		case GLUT_KEY_RIGHT:
 			Input::SetRight(true);
-			mainCamera->Rotate(Point3D(0,-1,0));
 			break;
 		case GLUT_KEY_F1:
 			block->Hit();
 			mario->Jump();
-			break;*/
+			break;
 
-		case GLUT_KEY_RIGHT :
-			goomba->Rotate(Point3D(0,10,0));
+		/*case GLUT_KEY_RIGHT :
+			snowMan->Rotate(Point3D(0,10,0));
 		break;
 		case GLUT_KEY_LEFT :
-			goomba->Rotate(Point3D(0,-10,0));
+			snowMan->Rotate(Point3D(0,-10,0));
 		break;
 		case GLUT_KEY_UP :
-			goomba->Rotate(Point3D(10,0,0));
+			snowMan->Rotate(Point3D(10,0,0));
 		break;
 		case GLUT_KEY_DOWN :
-			goomba->Rotate(Point3D(-10,0,0));
+			snowMan->Rotate(Point3D(-10,0,0));
 		break;
 		case GLUT_KEY_F1 :
 			mainCamera->Translate(Point3D(0.0, 0.0, -1.0));
@@ -251,7 +252,7 @@ void specialKey(int key, int x, int y)
 		break;
 		case GLUT_KEY_F4:
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); 
-		break;
+		break;*/
 	}
 	glutPostRedisplay();
 }

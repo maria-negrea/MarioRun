@@ -4,8 +4,10 @@
 
 class Foot: public Mesh
 {
+protected:
+	int mainTextureIndex;
 public:
-	Foot(void);
+	Foot(int mainTextureIndex);
 	/*void DrawObject();*/
 	~Foot(void);
 };

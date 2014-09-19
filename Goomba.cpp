@@ -5,8 +5,8 @@ Goomba::Goomba(void)
 {
 	Head *head = new Head();
 	Torso *torso = new Torso();
-	Foot *leftFoot = new Foot();
-	Foot *rightFoot = new Foot();
+	Foot *leftFoot = new Foot(6);
+	Foot *rightFoot = new Foot(6);
 	speed=1.1;
 
 	width=head->GetBigRadius()*2;

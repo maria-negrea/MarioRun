@@ -157,10 +157,15 @@ Point3D Road::GetCoinPoint(double index, double gradient, int side)
 	}
 }
 
+
+Point3D Road::GetOnRoadPosition()
+{
+	return NULL;
+}
 void Road::SetRoadObject(WorldObject* object)
 {
 	onRoadObject = object;
-	roadIndex = 0;
+	roadIndex = 1;
 }
 
 vector<Point3D> Road::GetRoad()

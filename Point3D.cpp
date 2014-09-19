@@ -82,14 +82,19 @@ Point3D Point3D::Normalize()
 
 float Point3D::AngleBetween(Point3D point)
 {
- float PI = 3.14159265359;
+	float PI = 3.14159265359;
 
- float dotProduct = ((*this)*point);
- 
- float eq = dotProduct/((*this).Magnitude()*point.Magnitude());
+	float dotProduct = ((*this)*point);
 
- if(eq > 1 || eq < -1)
-  return 0;
+	float eq = dotProduct/((*this).Magnitude()*point.Magnitude());
 
- return acos(eq)*180/PI;
+	if(eq > 1 || eq < -1)
+		return 0;
+
+	return acos(eq)*180/PI;
+}
+
+istream& operator>>(istream& in, Point3D& point)
+{
+	return in>>point.x>>point.y>>point.z;
 }

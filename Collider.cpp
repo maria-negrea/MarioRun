@@ -14,9 +14,6 @@ Collider::~Collider(void)
 
 void Collider::Affected(Collision collision)
 {
-	cout<<"pos "<<collision.GetInsidePositive().x<<" "<<collision.GetInsidePositive().y<<" "<<collision.GetInsidePositive().z<<endl;
-	cout<<"neg "<<collision.GetInsideNegative().x<<" "<<collision.GetInsideNegative().y<<" "<<collision.GetInsideNegative().z<<endl;
-	cout<<"hit "<<collision.GetDirection().x<<" "<<collision.GetDirection().y<<" "<<collision.GetDirection().z<<endl;
 	Hit(collision);
 }
 
@@ -80,12 +77,7 @@ void Collider::Hit(Collision collision)
 		}
 	}
 
-	cout<<endl<<endl;
-
-	cout<<direction.x<<" "<<direction.y<<" "<<direction.z<<endl;
 	direction = direction*Min(moves.x,Min(moves.y,moves.z));
-	cout<<direction.x<<" "<<direction.y<<" "<<direction.z<<endl;
-	cout<<endl<<endl;
 
 	object->Translate(-direction);
 }

@@ -11,6 +11,7 @@ PlantLeaf::~PlantLeaf(void)
 }
 void PlantLeaf::DrawObject()
 {
+	
 	glEnable(GL_BLEND);
 	//glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glDisable(GL_DEPTH_TEST);
@@ -49,5 +50,4 @@ void PlantLeaf::DrawObject()
 
   glDisable(GL_BLEND);
  glEnable(GL_DEPTH_TEST);
-
 }

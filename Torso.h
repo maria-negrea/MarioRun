@@ -8,6 +8,6 @@ class Torso: public Mesh, public Updatable
 public:
 	Torso(void);
 	void Update();
-	void DrawObject();
+	/*void DrawObject();*/
 	~Torso(void);
 };

@@ -21,9 +21,7 @@ FireBall::FireBall(GLfloat radius)
 	length = 1;
 	this->radius=radius;
 	particles = NULL;
-	//AddChild(particles);
-	
-	//particles->Rotate(rotate);*/
+	distanceTravelled = 0;
 }
 
 FireBall::~FireBall(void)
@@ -49,6 +47,10 @@ void FireBall::Update()
 	}
   Translate(GetForward()*5);
   particles->Translate(Point3D(-particles->GetTranslate().x+translate.x, 0.0, -particles->GetTranslate().z+translate.z));
+  if(this->distanceTravelled > 5)
+	  scene->RemoveObject(this);
+  else 
+	  distanceTravelled += 0.1;
 }
 
 void FireBall::Function(Mario *mario)

@@ -55,12 +55,15 @@ public:
 	vector<Point3D> GetBoundingBox();
 
 	Point3D GetRotate();
+	void SetRotateY(GLfloat rotateY);
+
 	void SetScene(Scene* scene);
 
 	void AddChild(WorldObject* child);
 
 	int ChildrenCount();
 	WorldObject* GetChild(int i);
+	GLfloat AngleBetween(Point3D point);
 
 	bool HasCollider();
 
@@ -71,8 +74,6 @@ public:
 
 	void SetVisibility(bool visibility);
 	bool GetVisibility();
-
-	GLfloat AngleBetween(Point3D point);
 };
 
 #include"Scene.h"

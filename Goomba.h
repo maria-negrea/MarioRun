@@ -6,13 +6,12 @@
 class Goomba: public WorldObject, public Updatable
 {
 protected:
-	Head* head;
-	Torso* torso;
-	Foot* leftFoot;
-	Foot* rightFoot;
+	WorldObject* target;
+	GLfloat speed;
 public:
 	Goomba(void);
 	void DrawObject();
 	void Update();
+	void SetTarget(WorldObject* target);
 	~Goomba(void);
 };

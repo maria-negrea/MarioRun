@@ -17,6 +17,7 @@
 #include "PlantHead.h"
 #include "PlantLeaf.h"
 #include "Road.h"
+#include "Omi.h"
 
 Scene *scene;
 Camera* mainCamera;
@@ -38,17 +39,17 @@ PlantTulip *newTulip=new PlantTulip(2,2,2);
 
 vector<Coin*> coins;
 
-Point3D AllDirections()
-{
-	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
-	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
-}
-
-Point3D Planar()
-{
-	int a = rand() % 100-50, b = rand() % 100-50;
-	return Point3D(a*1.0, 0.0, b*1.0).Normalize();
-}
+//Point3D AllDirections()
+//{
+//	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
+//	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
+//}
+//
+//Point3D Planar()
+//{
+//	int a = rand() % 100-50, b = rand() % 100-50;
+//	return Point3D(a*1.0, 0.0, b*1.0).Normalize();
+//}
 
 Point3D NoDirection()
 {
@@ -70,13 +71,14 @@ Point3D DefaultTranslation() {
 
 void AddObjectsToScene() {
 	scene->AddObject(newRoad);
-	//scene->AddObject(test1);
+	scene->AddObject(test1);
 	//scene->AddObject(test2);
 	//scene->AddObject(coin);
 	
-	scene->AddObject(new Ground);
-	scene->AddObject(particles);
-	scene->AddObject(mario);	
+	//scene->AddObject(new Ground);
+	//scene->AddObject(particles);
+	//scene->AddObject(mario);
+	//scene->AddObject(newTulip);
 	
 	for(int i = 0; i < coins.size(); i++)
 		scene->AddObject(coins[i]);
@@ -86,7 +88,7 @@ void Initialize()
 {
 	scene = new Scene();
 
-	particles = new Particles(AllDirections, BoxPosition);
+	//particles = new Particles(Planar, BoxPosition);
 
 	block = new QuestionBlock(7, 7, 7);
 	block->Translate(Point3D(0, 12, 70));
@@ -114,25 +116,24 @@ void Initialize()
 
 	newHead->Translate(Point3D(0.4,3.2,0.4));
 	newLeaf->Translate(Point3D(0,0,-0.4));
-	newTulip->Translate(Point3D(-10,0.5,20));
+	newTulip->Translate(Point3D(-10,0.5,10));
 
 	newTulip->SetTarget(mario);
 	newTulip->Scale(Point3D(1,1,1));
-	scene->AddObject(newTulip);
 
 	mainCamera = new MarioCamera(mario);
 	mainCamera->Translate(Point3D(0,10,0));
 	scene->SetMainCamera(mainCamera);
 	
-	/*test1 = new Box(2,2,30);
-	test1->Translate(Point3D(5.0, 1.0, 90.0));
+	test1 = new Box(3,3,3);
+	test1->Translate(Point3D(5.0, 1.0, 10.0));
 	test1->AddCollider();
-	
+	/*
 	test2 = new Box(2,4,30);
 	test2->Translate(Point3D(5.0, 1.0, 120.0));
 	test2->AddCollider();*/
 	
-	particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));
+	//particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));
 
 	AddObjectsToScene();
 
@@ -142,11 +143,37 @@ void Initialize()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glEnable(GL_BLEND);
-
+	
 	Textures::GetInstance()->LoadGLTextures();
 
+	// LIGHTING TEST
+
+	GLfloat light_position[] = { 1.0, 0.0, 1.0};
+		
+	GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat spec[] = {1, 1, 1, 1};
+	GLfloat em[] = {0, 0, 0, 1};
+
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+	
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
+
+	// /LIGHTING TEST
+
+	glEnable(GL_BLEND);
+	glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
+	glEnable ( GL_COLOR_MATERIAL ) ;
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+	//glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, em);
 }
 
 void Draw()
@@ -157,8 +184,6 @@ void Draw()
 void Timer(int value)
 {
 	scene->Update();
-	particles->Translate(-particles->GetTranslate()+mario->GetTranslate());
-
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }
@@ -179,11 +204,11 @@ void specialKey(int key, int x, int y)
 	{
 		case GLUT_KEY_LEFT:
 			Input::SetLeft(true);
-			mainCamera->Rotate(Point3D(0,1,0));
+			test1->Rotate(Point3D(0.0, 2.0, 0.0));
 			break;
 		case GLUT_KEY_RIGHT:
 			Input::SetRight(true);
-			mainCamera->Rotate(Point3D(0,-1,0));
+			test1->Rotate(Point3D(0.0, -2.0, 0.0));
 			break;
 		case GLUT_KEY_F1:
 			block->Hit();

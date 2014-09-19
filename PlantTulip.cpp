@@ -1,4 +1,5 @@
 #include "PlantTulip.h"
+#include "Particles.h"
 
 #define PI 3.14
 PlantTulip::PlantTulip(GLfloat width, GLfloat height, GLfloat size)
@@ -80,6 +81,7 @@ GLfloat radius=sqrt(width*width+height*height)/8;
 	}
 
 }
+
 void PlantTulip::Update()
 {	//scene->AddObject(fireBall);
 	
@@ -98,6 +100,8 @@ void PlantTulip::Update()
 			  fireBall->Translate(GetRight()*0.5+GetForward()*1);
 			  fireBall->Rotate(rotate);
 			  fireBall->Translate(translate);
+			 
+			  
 			  contor=0;
 		  }
 		  contor++;

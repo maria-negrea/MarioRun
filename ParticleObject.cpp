@@ -28,7 +28,7 @@ void ParticleObject::DrawObject() {
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_DEPTH_TEST);
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[4]);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[5]);
 	glColor4f ( 1.0, 1.0, 1.0, alpha);
 	glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);glVertex3f(-1.5, 1.5,  0.0);

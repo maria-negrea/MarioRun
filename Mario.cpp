@@ -104,7 +104,7 @@ void Mario::Update()
 	if(forwardSpeed > maxSpeed)
 		forwardSpeed = maxSpeed;
 
-	Translate(GetForward()*forwardSpeed);
+	//Translate(GetForward()*forwardSpeed);
 
 	if(Input::GetLeft())
 		this->MoveLeft();

@@ -19,19 +19,14 @@ void Particles::DrawObject()
 		particle->Rotate(Point3D(0,0,rand()%360));
 		particles.push_back(particle);
 	}
-	/*AddChild(particle);*/
 	
 	for(int i=0; i < particles.size(); i++) {
 		particles[i]->Draw();
 	}
-	//if(particles.size() > 50) {
-	//	/*RemoveChild(children[0]);
-	//	children.erase(children.begin());*/
-	//	particles.erase(particles.begin());
-	//}
 }
 
 void Particles::Update() {
+	Translate(GetForward()*5);
 	for(int i=0; i < particles.size(); i++) {
 		particles[i]->Update();
 	}

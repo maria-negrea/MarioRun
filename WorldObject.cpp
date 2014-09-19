@@ -113,6 +113,7 @@ void WorldObject::Translate(Point3D translation)
 
 void WorldObject::Rotate(Point3D rotation)
 {
+	cout<<"Q";
 	rotate += rotation;
 }
 
@@ -198,15 +199,20 @@ bool WorldObject::GetVisibility()
 
 GLfloat WorldObject::AngleBetween(Point3D point)
 {
-  GLfloat angleToTarget=GetForward().AngleBetween(point);
+	GLfloat angleToTarget=GetForward().AngleBetween(point);
 
-  GLfloat rightDistance = (point+GetRight()).Magnitude();
-  GLfloat distance = point.Magnitude();
- 
-  if(rightDistance < sqrt(1.0+distance*distance))
-  {
-   angleToTarget = 360-angleToTarget;
-  }
+	GLfloat rightDistance = (point+GetRight()).Magnitude();
+	GLfloat distance = point.Magnitude();
 
-  return angleToTarget;
+	if(rightDistance < sqrt(1.0+distance*distance))
+	{
+		angleToTarget = 360-angleToTarget;
+	}
+
+	return angleToTarget;
+}
+
+void WorldObject::SetRotateY(GLfloat rotateY)
+{
+	rotate.y = rotateY;
 }

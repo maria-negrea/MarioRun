@@ -7,7 +7,6 @@ Road::Road(void)
 {
 	srand(time(NULL));
 	onRoadObject = NULL;
-	roadIndex = 1;
 
 	GLfloat width = 20;
 	GLfloat length = 40;
@@ -16,7 +15,7 @@ Road::Road(void)
 
 	Point3D lastCurve = Point3D(0,0,1);
 
-	double angle = 0;
+	double angle = 10;
 
 	for(int i = 0; i < 100; i++)
 	{
@@ -43,9 +42,12 @@ Road::~Road(void)
 void Road::DrawObject()
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glColor3f(1.0,1.0,1.0);
 	for(int i = 0; i < rightVector.size() - 1; i++)
 	{
+		glColor3f(1.0,1.0,1.0);
+		if(i == roadIndex)
+			glColor3f(1.0,0.0,0.0);
+
 		glBegin(GL_QUADS);
 			glVertex3f(leftVector[i].x, 0.1, leftVector[i].z);
 			glVertex3f(rightVector[i].x, 0.1, rightVector[i].z);
@@ -62,26 +64,44 @@ void Road::Update()
 {
 	if(onRoadObject != NULL)
 	{
-		if(IsOnIndex())
+		if(!IsOnIndex())
 		{
-
+			roadIndex++;			
 		}
-		/*if((road[roadIndex + 1] - this->GetTranslate()).Magnitude() < 2)
-		{
-			roadIndex++;
-			double angle = (road->GetRoad()[roadIndex + 1] - road->GetRoad()[roadIndex]).AngleBetween(Point3D(0,0,1));
-
-			if((road->GetRoad()[roadIndex + 1] - road->GetRoad()[roadIndex]).x < 0)
-				this->rotate.y -= angle;
-			else
-				this->rotate.y += angle;
-		}*/
+		SetOnRoadAngle();
 	}
 }
 
+void Road::SetOnRoadAngle()
+{
+	Point3D rotationDirection = (roadVector[roadIndex+1] - roadVector[roadIndex]);	
+	Point3D relativObjPosition = (onRoadObject->GetTranslate()-roadVector[roadIndex]);
+
+	double angle = (rotationDirection).AngleBetween(Point3D(0,0,1));
+
+	if((rotationDirection).x < 0)
+	{
+		angle = -angle;
+	}
+
+	relativObjPosition = relativObjPosition.RotateY(angle);
+
+	Point3D nextRotationDirection = (roadVector[roadIndex+2] - roadVector[roadIndex+1]);
+	rotationDirection = rotationDirection + (nextRotationDirection-rotationDirection)*relativObjPosition.z/rotationDirection.Magnitude();
+
+	angle = (rotationDirection).AngleBetween(Point3D(0,0,1));
+
+	if((rotationDirection).x < 0)
+	{
+		angle = -angle;
+	}
+
+	onRoadObject->SetRotateY(angle);
+}
 
 bool Road::IsOnIndex()
 {
+	//cout<<roadIndex<<"X"<<endl;
 	Point2D p1 = Point2D(rightVector[roadIndex],View::Up);
 	Point2D p2 = Point2D(leftVector[roadIndex],View::Up);
 	Point2D p3 = Point2D(leftVector[roadIndex+1],View::Up);
@@ -101,24 +121,54 @@ bool Road::IsOnIndex()
 	lines[2] = Segment2D(check,p3);
 	lines[3] = Segment2D(check,p4);
 
-	cout<<p1.x<<" "<<p1.y<<endl;
-	cout<<p2.x<<" "<<p2.y<<endl;
-	cout<<p3.x<<" "<<p3.y<<endl;
-	cout<<p4.x<<" "<<p4.y<<endl;
+	//cout<<"POS "<<check.x<<" "<<check.y<<endl;
+	//cout<<"p1X "<<p1.x<<" "<<p1.y<<endl;
+	//cout<<"p2X "<<p2.x<<" "<<p2.y<<endl;
+	//cout<<"p3X "<<p3.x<<" "<<p3.y<<endl;
+	//cout<<"p4X "<<p4.x<<" "<<p4.y<<endl;
 
-	for(int i=0;i<4;i++)
+	if(lines[0].Intersects(polySegments[1]))
 	{
-		for(int j=0;j<4;j++)
-		{
-			if(lines[i].Intersects(polySegments[j]))
-			{
-				cout<<"FALSE"<<endl;
-				return false;
-			}
-		}
+		//cout<<"FALSE"<<endl;
+		return false;
+	}
+	if(lines[0].Intersects(polySegments[2]))
+	{
+		//cout<<"FALSE"<<endl;
+		return false;
+	}
+	if(lines[1].Intersects(polySegments[2]))
+	{
+		//cout<<"FALSE"<<endl;
+		return false;
+	}
+	if(lines[1].Intersects(polySegments[3]))
+	{
+		//cout<<"FALSE"<<endl;
+		return false;
+	}
+	if(lines[2].Intersects(polySegments[3]))
+	{
+		//cout<<"FALSE"<<endl;
+		return false;
+	}
+	if(lines[2].Intersects(polySegments[0]))
+	{
+		//cout<<"FALSE"<<endl;
+		return false;
+	}
+	if(lines[3].Intersects(polySegments[0]))
+	{
+		//cout<<"FALSE"<<endl;
+		return false;
+	}
+	if(lines[3].Intersects(polySegments[1]))
+	{
+		//cout<<"FALSE"<<endl;
+		return false;
 	}
 
-	cout<<"TRUE"<<endl;
+	//cout<<"TRUE"<<endl;
 	return true;
 }
 

@@ -17,6 +17,8 @@
 #include "PlantHead.h"
 #include "PlantLeaf.h"
 #include "Road.h"
+#include "Line.h"
+#include "Segment2D.h"
 
 Scene *scene;
 Camera* mainCamera;
@@ -30,7 +32,7 @@ int score = 0;
 
 Box *test1, *test2;
 QuestionBlock *block;
-Road *newRoad = new Road;
+Road *newRoad;
 
 PlantHead *newHead=new PlantHead(2,2,2);
 PlantLeaf *newLeaf=new PlantLeaf(2,2,2);
@@ -68,18 +70,19 @@ Point3D DefaultTranslation() {
 	return Point3D(0.0, 0.0, 0.0);
 }
 
-void AddObjectsToScene() {
+void AddObjectsToScene() 
+{
 	scene->AddObject(newRoad);
 	//scene->AddObject(test1);
 	//scene->AddObject(test2);
 	//scene->AddObject(coin);
-	
 	scene->AddObject(new Ground);
-	scene->AddObject(particles);
+//	scene->AddObject(newTulip);
+//	scene->AddObject(particles);
 	scene->AddObject(mario);	
 	
-	for(int i = 0; i < coins.size(); i++)
-		scene->AddObject(coins[i]);
+//	for(int i = 0; i < coins.size(); i++)
+//		scene->AddObject(coins[i]);
 }
 
 void Initialize() 
@@ -93,20 +96,23 @@ void Initialize()
 	block->AddCollider();
 	
 	mario = new Mario();
-	mario->Translate(Point3D(0,0,0));
+	mario->Translate(Point3D(0.1,0.0,0.0));
+
+	newRoad = new Road();
+	newRoad->SetRoadObject(mario);
 	
 	double x = 5;
 
-	for(int i = 0; i < 10; i++)
-	{
-		Coin *newCoin = new Coin;
-		newCoin->Translate(newRoad->GetCoinPoint(x, 0, 0));
-		newCoin->Scale(Point3D(5.0, 5.0, 5.0));
-		newCoin->AddCollider();
+	//for(int i = 0; i < 10; i++)
+	//{
+	//	Coin *newCoin = new Coin;
+	//	newCoin->Translate(newRoad->GetCoinPoint(x, 0, 0));
+	//	newCoin->Scale(Point3D(5.0, 5.0, 5.0));
+	//	newCoin->AddCollider();
 
-		coins.push_back(newCoin);
-		x += 2;
-	}
+	//	coins.push_back(newCoin);
+	//	x += 2;
+	//}
 
 	newTulip->AddChild(newHead);
 	newTulip->AddChild(newLeaf);
@@ -118,7 +124,6 @@ void Initialize()
 
 	newTulip->SetTarget(mario);
 	newTulip->Scale(Point3D(1,1,1));
-	scene->AddObject(newTulip);
 
 	mainCamera = new MarioCamera(mario);
 	mainCamera->Translate(Point3D(0,10,0));
@@ -145,6 +150,24 @@ void Initialize()
 	glEnable(GL_BLEND);
 
 	Textures::GetInstance()->LoadGLTextures();
+
+	Line line1(Point2D(1,1),Point2D(-1,-1));
+	Line line2(Point2D(1,-1),Point2D(-1,1));
+
+	Segment2D seg(Point2D(1,1),Point2D(-1,-1));
+
+	Point2D p1 = line1.Intersection(line2);
+	cout<<p1.x<<" "<<p1.y<<endl;
+
+	if(seg.IsOnSegment(line1.Intersection(line2)))
+	{
+		cout<<"T";	
+	}
+	else
+	{
+		cout<<"F";
+	}
+
 
 	glEnable(GL_DEPTH_TEST);
 }
@@ -179,11 +202,11 @@ void specialKey(int key, int x, int y)
 	{
 		case GLUT_KEY_LEFT:
 			Input::SetLeft(true);
-			mainCamera->Rotate(Point3D(0,1,0));
+			//mainCamera->Rotate(Point3D(0,1,0));
 			break;
 		case GLUT_KEY_RIGHT:
 			Input::SetRight(true);
-			mainCamera->Rotate(Point3D(0,-1,0));
+			//mainCamera->Rotate(Point3D(0,-1,0));
 			break;
 		case GLUT_KEY_F1:
 			block->Hit();

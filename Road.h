@@ -14,6 +14,7 @@ private:
 	int roadIndex;
 
 	bool IsOnIndex();
+	void SetOnRoadAngle();
 public:
 	Road(void);
 	~Road(void);

@@ -83,7 +83,7 @@ GLfloat radius=sqrt(width*width+height*height)/8;
 void PlantTulip::Update()
 {	//scene->AddObject(fireBall);
 	
-	if(target != NULL)
+	if((target->GetTranslate() - this->GetTranslate()).Magnitude() < 50)
 	 {  
 		  Point3D point = target->GetTranslate()-GetTranslate();
 		  point.y = 0;

@@ -1,6 +1,6 @@
 #include "Mushroom.h"
 #define PI 3.14
-#include<vector>
+
 Mushroom::Mushroom(GLfloat width, GLfloat height, GLfloat size)
 {
 	this->size=size;
@@ -174,4 +174,10 @@ void Mushroom::Update()
 	this->Translate(Point3D(0,0,speed));
 	if(speed > 0.3)
 		this->speed -= 0.01;
+}
+
+void Mushroom::Function(Mario *mario)
+{
+	scene->RemoveObject(this);
+	mario->SetSize();
 }

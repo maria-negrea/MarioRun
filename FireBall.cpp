@@ -7,6 +7,7 @@ FireBall::FireBall(GLfloat radius)
 	height = 1;
 	length = 1;
 	this->radius=radius;
+	distanceTravelled = 0;
 }
 
 FireBall::~FireBall(void)
@@ -25,6 +26,11 @@ void FireBall::DrawObject()
 void FireBall::Update()
 {
   Translate(GetForward()*5);
+
+  if(this->distanceTravelled > 5)
+	  scene->RemoveObject(this);
+  else 
+	  distanceTravelled += 0.1;
 }
 
 void FireBall::Function(Mario *mario)

@@ -90,10 +90,11 @@ void AddObjectsToScene()
 	scene->AddObject(new Ground);
 //	scene->AddObject(newTulip);
 //	scene->AddObject(particles);
-	scene->AddObject(mario);	
+	scene->AddObject(mario);
+	scene->AddObject(block);
 	
-//	for(int i = 0; i < coins.size(); i++)
-//		scene->AddObject(coins[i]);
+	for(int i = 0; i < coins.size(); i++)
+		scene->AddObject(coins[i]);
 }
 
 Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
@@ -114,41 +115,41 @@ void Initialize()
 
 	//particles = new Particles(AllDirections, BoxPosition);
 
-	//block = new QuestionBlock(7, 7, 7);
-	//block->Translate(Point3D(0, 12, 70));
-	//block->AddCollider();
+	block = new QuestionBlock(7, 7, 7);
+	block->Translate(Point3D(0, 12, 70));
+	block->AddCollider();
 	
 	mario = new Mario();
 	mario->Translate(Point3D(0.1,0.0,0.0));
 
 	newRoad = new Road();
-	newRoad->SetRoadObject(mario);
+	//newRoad->SetRoadObject(mario);
 	
-	//double x = 5;
+	double x = 5;
 	///*scene->AddObject(block);*/
 
-	//for(int i = 0; i < 10; i++)
-	//{
-	//	Coin *newCoin = new Coin;
-	//	newCoin->Translate(newRoad->GetCoinPoint(x, 0, 0));
-	//	newCoin->Scale(Point3D(5.0, 5.0, 5.0));
-	//	newCoin->AddCollider();
+	for(int i = 0; i < 10; i++)
+	{
+		Coin *newCoin = new Coin;
+		newCoin->Translate(newRoad->GetCoinPoint(x, 0, 0));
+		newCoin->Scale(Point3D(5.0, 5.0, 5.0));
+		newCoin->AddCollider();
 
-	//	coins.push_back(newCoin);
-	//	x += 2;
-	//}
+		coins.push_back(newCoin);
+		x += 2;
+	}
 
-	//newTulip->AddChild(newHead);
-	//newTulip->AddChild(newLeaf);
-	//newHead->Rotate(Point3D(180,0,0));
+	newTulip->AddChild(newHead);
+	newTulip->AddChild(newLeaf);
+	newHead->Rotate(Point3D(180,0,0));
 
-	//newHead->Translate(Point3D(0.4,3.2,0.4));
-	//newLeaf->Translate(Point3D(0,0,-0.4));
-	//newTulip->Translate(Point3D(-10,0.5,20));
+	newHead->Translate(Point3D(0.4,3.2,0.4));
+	newLeaf->Translate(Point3D(0,0,-0.4));
+	newTulip->Translate(Point3D(-10,0.5,100));
 
-	//newTulip->SetTarget(mario);
-	//newTulip->Scale(Point3D(1,1,1));
-	//scene->AddObject(newTulip);*/
+	newTulip->SetTarget(mario);
+	newTulip->Scale(Point3D(1,1,1));
+	scene->AddObject(newTulip);
 
 	mainCamera = new MarioCamera(mario);
 	mainCamera->Translate(Point3D(0,10,0));

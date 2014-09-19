@@ -146,15 +146,18 @@ void Mario::Hit(Collision collision)
 		if(block != NULL)
 				block->Hit();
 	}
-	if(direction.y < -0.8)
-	{
-		fallSpeed = 0;
-	}
 	else
 	{
-		if(direction.AngleBetween(GetForward()) < 5)
+		if(direction.y < -0.8)
 		{
-			forwardSpeed = -1;
+			fallSpeed = 0;
+		}
+		else
+		{
+			if(direction.AngleBetween(GetForward()) < 5)
+			{
+				forwardSpeed = -1;
+			}
 		}
 	}
 }

@@ -21,7 +21,10 @@ void MarioCollider::Hit(Collision collision)
 
 	else
 	{
-		Collider::Hit(collision);
-		mario->Hit(collision);
+		if(mario->GetInvulnerable() == false)
+		{
+			Collider::Hit(collision);
+			mario->Hit(collision);
+		}
 	}
 }

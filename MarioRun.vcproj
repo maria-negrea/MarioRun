@@ -219,6 +219,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GlobalScore.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Goomba.cpp"
 				>
 			</File>
@@ -331,7 +335,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SmallBox.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SnowMan.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SplitBox.cpp"
 				>
 			</File>
 			<File
@@ -406,6 +418,10 @@
 			</File>
 			<File
 				RelativePath=".\Foot.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GlobalScore.h"
 				>
 			</File>
 			<File
@@ -521,7 +537,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Score.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Score.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Segment2D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SmallBox.h"
 				>
 			</File>
 			<File
@@ -530,6 +558,10 @@
 			</File>
 			<File
 				RelativePath=".\SOIL.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SplitBox.h"
 				>
 			</File>
 			<File

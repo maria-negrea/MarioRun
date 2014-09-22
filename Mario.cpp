@@ -1,10 +1,12 @@
 #include "Mario.h"
 #include "MarioCollider.h"
+#include "Box.h"
+
 
 Mario::Mario()
 {
 	collider = new MarioCollider(this);
-	hardCollider = true;
+	hardCollider=true;
 
 	length = 2;
 	width = 2;
@@ -17,6 +19,7 @@ Mario::Mario()
 	bleep = false;
 	isBig = false;
 	time = 0;
+	invulnerable = false;
 
 	pelvis = new Box(1,0.5,1);
 
@@ -69,6 +72,83 @@ Mario::Mario()
 Mario::~Mario()
 {
 
+}
+
+void Mario::DrawObject()
+{
+}
+
+void Mario::Update()
+{
+	PhysicsObject::Update();
+	
+	forwardSpeed += acceleration;
+	if(forwardSpeed > maxSpeed)
+		forwardSpeed = maxSpeed;
+
+	Translate(GetForward()*forwardSpeed);
+
+	if(Input::GetLeft())
+		this->MoveLeft();
+
+	if(Input::GetRight())
+		this->MoveRight();
+
+	if(bleep == true)
+	{
+		if(invulnerable == false && time < 3)
+		{
+			visible = !visible;
+			time += 0.05;
+		}
+		else if(invulnerable == true && time <	10)
+		{
+			visible = !visible;
+			time += 0.05;
+		}
+		else
+		{
+			visible = true;
+			time = 0;
+			bleep = false;
+			invulnerable = false;
+		}
+	}
+
+}
+
+void Mario::Jump()
+{
+	if(IsGrounded())
+	{
+		fallSpeed += 1.5;
+	}
+}
+
+void Mario::Hit(Collision collision)
+{
+	Point3D direction = collision.GetDirection();
+
+	if(direction.y > 0.8)
+	{
+		QuestionBlock *block = dynamic_cast<QuestionBlock*>(collision.GetHitObject());
+		if(block != NULL)
+			block->Hit();
+	}
+	else
+	{
+		if(direction.y < -0.8)
+		{
+			fallSpeed = 0;
+		}
+		else
+		{
+			if(direction.AngleBetween(GetForward()) < 3)
+			{
+				forwardSpeed = -1;
+			}
+		}
+	}
 }
 
 void Mario::RunAnimation()
@@ -147,84 +227,14 @@ void Mario::JumpAnimation()
 	leftFoot->SetAnimation(leftFootAnimation);
 }
 
-void Mario::DrawObject()
-{
-}
-
-void Mario::Update()
-{
-	PhysicsObject::Update();
-	
-	forwardSpeed += acceleration;
-	if(forwardSpeed > maxSpeed)
-		forwardSpeed = maxSpeed;
-
-	Translate(GetForward()*forwardSpeed);
-
-	if(Input::GetLeft())
-		this->MoveLeft();
-
-	if(Input::GetRight())
-		this->MoveRight();
-
-	if(bleep == true)
-	{
-		if(time < 3)
-		{
-			visible = !visible;
-			time += 0.05;
-		}
-		else
-		{
-			visible = true;
-			time = 0;
-			bleep = false;
-		}
-	}
-}
-
-void Mario::Jump()
-{
-	if(IsGrounded())
-	{
-		fallSpeed += 1.5;
-	}
-}
-
-void Mario::Hit(Collision collision)
-{
-	Point3D direction = collision.GetDirection();
-
-	if(direction.y > 0.8)
-	{
-		QuestionBlock *block = dynamic_cast<QuestionBlock*>(collision.GetHitObject());
-		if(block != NULL)
-			block->Hit();
-	}
-	else
-	{
-		if(direction.y < -0.8)
-		{
-			fallSpeed = 0;
-		}
-		else
-		{
-			if(direction.AngleBetween(GetForward()) < 3)
-			{
-				forwardSpeed = -1;
-			}
-		}
-	}
-}
-
 void Mario::MoveRight()
 {
-	Rotate(Point3D(0,1,0)*-1);
+	Translate(GetRight()*-1);
 }
 
 void Mario::MoveLeft()
 {
-	Rotate(Point3D(0,1,0)*1);
+	Translate(GetRight()*1);
 }
 
 
@@ -249,4 +259,15 @@ bool Mario::GetBleep()
 bool Mario::IsBig()
 {
 	return isBig;
+}
+
+void Mario::SetInvulnerable()
+{
+	invulnerable = true;
+	bleep = true;
+}
+
+bool Mario::GetInvulnerable()
+{
+	return invulnerable;
 }

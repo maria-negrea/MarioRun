@@ -2,6 +2,7 @@
 
 Environment::Environment(void)
 {
+	score=new Score();
 	mario = new Mario();
 	mario->Translate(Point3D(0.1,0.0,0.0));
 
@@ -20,7 +21,7 @@ Environment::Environment(void)
 	scene->SetMainCamera(mainCamera);
 
 	InitializeObstacles();
-
+	InitializeOffRoadObjects();
 }
 
 void Environment:: InitializeCoins(double& lastZ)
@@ -104,6 +105,44 @@ void Environment:: InitializeObstacles()
 	}
 }
 
+void Environment:: InitializeOffRoadObjects()
+{
+	GLfloat i=0;
+	double lastZ=0.0;
+	while(i<road->GetRoadSize()-2)
+	{
+		int type=rand()%2;
+		cout<<type<<endl;
+		Point3D initialPoint; 
+		initialPoint.x=GetRandomGLfloat(1.0, 3.0);
+		initialPoint.z=lastZ+rand()%3;
+		switch(type)
+		{
+			case 0:
+			{
+				Tree*tree=new Tree();
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 2.0);
+				tree->Translate(currentPosition);
+				lastZ=initialPoint.z;
+				offRoadObjects.push_back(tree);
+				break;
+			}
+			case 1:
+			{
+				PlantTulip* plant=new PlantTulip(1,1,1);
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 2.0);
+				plant->Translate(currentPosition);
+				lastZ=initialPoint.z;
+				offRoadObjects.push_back(plant);
+				break;
+			}
+		}
+
+		i=lastZ;
+
+	}
+}
+
 vector<WorldObject*> Environment:: GetObstacles()
 {
 	return obstacles;
@@ -116,6 +155,7 @@ vector<Coin*> Environment:: GetCoins()
 
 void Environment:: AddObjectsToScene()
 {
+	scene->AddObject(score);
 	scene->AddObject(road);
 	scene->AddObject(new Ground);
 	//scene->AddObject(particles);
@@ -124,11 +164,8 @@ void Environment:: AddObjectsToScene()
 
 	for(int i = 0; i < obstacles.size(); i++)
 		scene->AddObject(obstacles[i]);
-}
-
-void Environment:: GetOffRoadPosition()
-{
-
+	for(int i = 0; i < offRoadObjects.size(); i++)
+		scene->AddObject(offRoadObjects[i]);
 }
 
 Mario* Environment:: GetMario()

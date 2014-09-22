@@ -15,6 +15,8 @@
 #include "SnowMan.h"
 #include "Scene.h"
 #include <cmath>
+#include "PlantTulip.h"
+#include "Score.h"
 
 class Environment: public Updatable
 {
@@ -28,7 +30,9 @@ protected:
 	Scene *scene;
 	vector<Coin*> coins;
 	vector<WorldObject*> obstacles;
+	vector<WorldObject*> offRoadObjects;
 	Camera* mainCamera;
+	Score* score;
 
 public:
 	Environment(void);
@@ -36,7 +40,7 @@ public:
 	vector<WorldObject*> GetObstacles();
 	void InitializeCoins(double& lastZ);
 	void InitializeObstacles();
-	void GetOffRoadPosition();
+	void InitializeOffRoadObjects();
 	void AddObjectsToScene();
 	Mario* GetMario();
 	Scene* GetScene();

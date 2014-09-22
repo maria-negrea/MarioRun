@@ -14,6 +14,7 @@ class Mario : public PhysicsObject
 	GLfloat maxSpeed;
 	bool isBig;
 	bool bleep;
+	bool invulnerable;
 
 	double time;
 
@@ -46,4 +47,7 @@ public:
 	bool GetBleep();
 
 	bool IsBig();
+
+	bool GetInvulnerable();
+	void SetInvulnerable();
 };

@@ -18,6 +18,7 @@
 #include "PlantHead.h"
 #include "PlantLeaf.h"
 #include "Road.h"
+#include "Omi.h"
 #include "Line.h"
 #include "Segment2D.h"
 
@@ -47,17 +48,17 @@ PlantTulip *newTulip;
 
 vector<Coin*> coins;
 
-Point3D AllDirections()
-{
-	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
-	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
-}
-
-Point3D Planar()
-{
-	int a = rand() % 100-50, b = rand() % 100-50;
-	return Point3D(a*1.0, 0.0, b*1.0).Normalize();
-}
+//Point3D AllDirections()
+//{
+//	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
+//	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
+//}
+//
+//Point3D Planar()
+//{
+//	int a = rand() % 100-50, b = rand() % 100-50;
+//	return Point3D(a*1.0, 0.0, b*1.0).Normalize();
+//}
 
 Point3D NoDirection()
 {
@@ -80,21 +81,21 @@ Point3D DefaultTranslation() {
 void AddObjectsToScene() 
 {
 	scene->AddObject(newRoad);
-
-	//scene->AddObject(test1);
+	scene->AddObject(test1);
 	//scene->AddObject(test2);
 	//scene->AddObject(coin);
 	scene->AddObject(new Ground);
 //	scene->AddObject(newTulip);
 //	scene->AddObject(particles);
 	scene->AddObject(mario);
+	scene->AddObject(newTulip);
 	scene->AddObject(block);
-
-	newRoad->AddRoadObject(mario);
-	newRoad->AddRoadObject(block);
 
 	for(int i = 0; i < coins.size(); i++)
 		scene->AddObject(coins[i]);
+
+	newRoad->AddRoadObject(mario);
+	newRoad->AddRoadObject(block);
 }
 
 Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
@@ -115,15 +116,14 @@ void Initialize()
 
 	newRoad = new Road();
 
-	particles = new Particles(AllDirections, DefaultTranslation);
-
+//	particles = new Particles(AllDirections, DefaultTranslation);
+	
 	block = new QuestionBlock(newRoad,7, 7, 7);
 	block->Translate(Point3D(0, 12, 70));
 	block->AddCollider();
 	
 	mario = new Mario();
 	mario->Translate(Point3D(0.1,0.0,0.0));
-	
 	double x = 5;
 	for(int i = 0; i < 10; i++)
 	{
@@ -135,7 +135,6 @@ void Initialize()
 		coins.push_back(newCoin);
 		x += 0.1;
 	}
-
 
 	newTulip = new PlantTulip(2,2,2);
 	newTulip->Translate(Point3D(-10,0.5,100));
@@ -156,7 +155,6 @@ void Initialize()
 	test1 = new Box(2,2,10);
 	test1->Translate(Point3D(0.0, 1.0, 110.0));
 	test1->AddCollider();
-	scene->AddObject(test1);
 	
 	/*particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));*/
 
@@ -168,11 +166,37 @@ void Initialize()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glEnable(GL_BLEND);
-
+	
 	Textures::GetInstance()->LoadGLTextures();
 
+	// LIGHTING TEST
+
+	GLfloat light_position[] = { 1.0, 0.0, 1.0};
+		
+	GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat spec[] = {1, 1, 1, 1};
+	GLfloat em[] = {0, 0, 0, 1};
+
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+	
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+	//glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
+
+	// /LIGHTING TEST
+
+	glEnable(GL_BLEND);
+	glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
+	glEnable ( GL_COLOR_MATERIAL ) ;
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+	//glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, em);
 }
 
 void Draw()
@@ -183,8 +207,6 @@ void Draw()
 void Timer(int value)
 {
 	scene->Update();
-	particles->Translate(-particles->GetTranslate()+mario->GetTranslate());
-
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }

@@ -1,5 +1,6 @@
 #include "Goomba.h"
 #include "Pivot.h"
+#include "Input.h"
 
 Goomba::Goomba(void)
 {
@@ -15,12 +16,12 @@ Goomba::Goomba(void)
 
 	Pivot *pivotLeftFoot = new Pivot();
 	pivotLeftFoot->AddChild(leftFoot);
-	leftFoot->Translate(Point3D(-0.25,-0.5,-0.2));
+	leftFoot->Translate(Point3D(-0.25,-0.5,0.2));
 	leftFoot->Rotate(Point3D(0,110,0));
 
 	Pivot *pivotRightFoot = new Pivot();
 	pivotRightFoot->AddChild(rightFoot);
-	rightFoot->Translate(Point3D(0.25,-0.5,-0.2));
+	rightFoot->Translate(Point3D(0.25,-0.5,0.2));
 	rightFoot->Rotate(Point3D(0,70,0));
 
 
@@ -30,14 +31,21 @@ Goomba::Goomba(void)
 	AddChild(pivotRightFoot);
 	torso->Translate(Point3D(0.0, 0.5, 0.0));
 
-	head->AddAnimationStep(AnimationStep(3, Point3D(0, 190, 0), Point3D(0.0, 1.5, 0.0)));
-	head->AddAnimationStep(AnimationStep(3, Point3D(0, 170, 0), Point3D(0.0, 1.5, 0.0)));
-	
-	pivotLeftFoot->AddAnimationStep(AnimationStep(0.5, Point3D(-25.0, 0, 0), Point3D(-0.25,0.5,-0.1)));
-	pivotLeftFoot->AddAnimationStep(AnimationStep(0.5, Point3D(25.0, 0, 0), Point3D(-0.25,0.5,-0.1)));
+	Animation headAnimation;
+	headAnimation.AddAnimationStep(AnimationStep(3, Point3D(0, 10, 0), Point3D(0.0, 1.5, 0.0)));
+	headAnimation.AddAnimationStep(AnimationStep(3, Point3D(0, -10, 0), Point3D(0.0, 1.5, 0.0)));
+	head->SetAnimation(headAnimation);
 
-	pivotRightFoot->AddAnimationStep(AnimationStep(0.5, Point3D(25.0, 0, 0), Point3D(0.25, 0.5, -0.1)));
-	pivotRightFoot->AddAnimationStep(AnimationStep(0.5, Point3D(-25.0, 0, 0), Point3D(0.25, 0.5, -0.1)));
+
+	Animation leftFootAnimation;
+	leftFootAnimation.AddAnimationStep(AnimationStep(0.5, Point3D(-25.0, 0, 0), Point3D(-0.25,0.5,-0.1)));
+	leftFootAnimation.AddAnimationStep(AnimationStep(0.5, Point3D(25.0, 0, 0), Point3D(-0.25,0.5,-0.1)));	
+	pivotLeftFoot->SetAnimation(leftFootAnimation);
+
+	Animation rightFootAnimation;
+	rightFootAnimation.AddAnimationStep(AnimationStep(0.5, Point3D(25.0, 0, 0), Point3D(0.25, 0.5, -0.1)));
+	rightFootAnimation.AddAnimationStep(AnimationStep(0.5, Point3D(-25.0, 0, 0), Point3D(0.25, 0.5, -0.1)));
+	pivotRightFoot->SetAnimation(rightFootAnimation);
 
 	target = NULL;
 }
@@ -67,6 +75,9 @@ void Goomba::Update()
 		GLfloat angleToTarget = AngleBetween(point);
 		Rotate(Point3D(0.0,angleToTarget, 0.0));
 	}
+
+	if(Input::GetLeft())
+		Translate(Point3D(-10,0,0));
 }
 
 Goomba::~Goomba(void)

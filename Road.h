@@ -6,19 +6,22 @@
 #include "Goomba.h"
 #include "QuestionBlock.h"
 
+class RoadWorldObjectLink;
+
 class Road : public WorldObject, public Updatable
 { 
 private:
 	vector<Point3D> roadVector;
 	vector<Point3D> leftVector;
 	vector<Point3D> rightVector;
+	vector<RoadWorldObjectLink> onRoadObjects;
 
 	WorldObject* onRoadObject;
 	int roadIndex;
 	int roadSize;
 
-	bool IsOnIndex();
-	void SetOnRoadAngle();
+	bool IsOnIndex(RoadWorldObjectLink onRoadObject);
+	void SetOnRoadAngle(RoadWorldObjectLink onRoadObject);
 public:
 	Road(void);
 	~Road(void);
@@ -29,6 +32,9 @@ public:
 	vector<Point3D> GetRight();
 	void SetRoadObject(WorldObject* object);
 	int GetRoadSize();
-	
+
+	void AddRoadObject(WorldObject* object);
 	void Update();
 };
+
+#include "RoadWorldObjectLink.h"

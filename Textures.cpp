@@ -75,12 +75,9 @@ void Textures::LoadGLTextures()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-   textures[4] = SOIL_load_OGL_texture
+  textures[4] = SOIL_load_OGL_texture
         (
-        "Assets/GoombaSole.bmp",
-	/*textures[4] = SOIL_load_OGL_texture
-        (
-        "Assets/smoke.png",*/
+        "Assets/flame.png",
         SOIL_LOAD_AUTO,
         SOIL_CREATE_NEW_ID,
         SOIL_FLAG_INVERT_Y
@@ -180,6 +177,9 @@ void Textures::LoadGLTextures()
 
 	/*textures[5] = SOIL_load_OGL_texture
 		("Assets/flame.png",
+=======
+		("Assets/smoke.png",
+>>>>>>> 28cab066a963c79804e2988e7f3622929f188922
 		SOIL_LOAD_AUTO,
         SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_INVERT_Y
@@ -189,7 +189,7 @@ void Textures::LoadGLTextures()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-	textures[6] = SOIL_load_OGL_texture
+	/*textures[6] = SOIL_load_OGL_texture
 		("Assets/coin.bmp",
 		SOIL_LOAD_AUTO,
         SOIL_CREATE_NEW_ID,

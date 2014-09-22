@@ -6,7 +6,6 @@
 Road::Road(void)
 {
 	srand(time(NULL));
-	onRoadObject = NULL;
 
 	GLfloat width = 20;
 	GLfloat length = 40;
@@ -19,6 +18,7 @@ Road::Road(void)
 	double angle = 10;
 
 	for(int i = 0; i < roadSize; i++)
+	for(int i = 0; i < 40; i++)
 	{
 		Point3D newRoad = lastCurve.RotateY(angle);
 		lastCurve = newRoad;
@@ -46,8 +46,11 @@ void Road::DrawObject()
 	for(int i = 0; i < rightVector.size() - 1; i++)
 	{
 		glColor3f(1.0,1.0,1.0);
-		if(i == roadIndex)
-			glColor3f(1.0,0.0,0.0);
+		for(unsigned j = 0; j<onRoadObjects.size();j++)
+		{
+			if(i == onRoadObjects[j].GetIndex())
+				glColor3f(1.0,0.0,0.0);
+		}
 
 		glBegin(GL_QUADS);
 			glVertex3f(leftVector[i].x, 0.1, leftVector[i].z);
@@ -65,20 +68,23 @@ using namespace std;
 
 void Road::Update()
 {
-	if(onRoadObject != NULL)
+	for(unsigned i = 0; i<onRoadObjects.size();i++)
 	{
-		if(!IsOnIndex())
+		while(!IsOnIndex(onRoadObjects[i]))
 		{
-			roadIndex++;			
+			onRoadObjects[i].IncrementIndex();
 		}
-		SetOnRoadAngle();
-	
+		/*SetOnRoadAngle();*/
+		SetOnRoadAngle(onRoadObjects[i]);
 	}
 }
 
-void Road::SetOnRoadAngle()
+void Road::SetOnRoadAngle(RoadWorldObjectLink link)
 {
-	Point3D rotationDirection = (roadVector[roadIndex+1] - roadVector[roadIndex]);	
+	int roadIndex = link.GetIndex();
+	WorldObject* onRoadObject = link.GetObject();
+
+	Point3D rotationDirection = (roadVector[roadIndex+1] - roadVector[roadIndex]);
 	Point3D relativObjPosition = (onRoadObject->GetTranslate()-roadVector[roadIndex]);
 
 	double angle = (rotationDirection).AngleBetween(Point3D(0,0,1));
@@ -103,8 +109,11 @@ void Road::SetOnRoadAngle()
 	onRoadObject->SetRotateY(angle);
 }
 
-bool Road::IsOnIndex()
+bool Road::IsOnIndex(RoadWorldObjectLink link)
 {
+	int roadIndex = link.GetIndex();
+	WorldObject* onRoadObject = link.GetObject();
+
 	//cout<<roadIndex<<"X"<<endl;
 	Point2D p1 = Point2D(rightVector[roadIndex],View::Up);
 	Point2D p2 = Point2D(leftVector[roadIndex],View::Up);
@@ -125,54 +134,39 @@ bool Road::IsOnIndex()
 	lines[2] = Segment2D(check,p3);
 	lines[3] = Segment2D(check,p4);
 
-	//cout<<"POS "<<check.x<<" "<<check.y<<endl;
-	//cout<<"p1X "<<p1.x<<" "<<p1.y<<endl;
-	//cout<<"p2X "<<p2.x<<" "<<p2.y<<endl;
-	//cout<<"p3X "<<p3.x<<" "<<p3.y<<endl;
-	//cout<<"p4X "<<p4.x<<" "<<p4.y<<endl;
-
 	if(lines[0].Intersects(polySegments[1]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[0].Intersects(polySegments[2]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[1].Intersects(polySegments[2]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[1].Intersects(polySegments[3]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[2].Intersects(polySegments[3]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[2].Intersects(polySegments[0]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[3].Intersects(polySegments[0]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 	if(lines[3].Intersects(polySegments[1]))
 	{
-		//cout<<"FALSE"<<endl;
 		return false;
 	}
 
-	//cout<<"TRUE"<<endl;
 	return true;
 }
 
@@ -215,10 +209,11 @@ Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 
 }
 
-void Road::SetRoadObject(WorldObject* object)
+void Road::AddRoadObject(WorldObject* object)
 {
 	onRoadObject = object;
 	roadIndex = 1;
+	onRoadObjects.push_back(RoadWorldObjectLink(object,0));
 }
 
 vector<Point3D> Road::GetRoad()

@@ -12,6 +12,7 @@ WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
 	scene = NULL;
 
 	visible = true;
+	hardCollider = false;
 }
 
 WorldObject::WorldObject(bool hasCollider)
@@ -21,6 +22,7 @@ WorldObject::WorldObject(bool hasCollider)
 	scene = NULL;
 
 	visible = true;
+	hardCollider = false;
 }
 
 WorldObject::~WorldObject(void)
@@ -102,7 +104,7 @@ void WorldObject::ParentPerspectiveBack()
 void WorldObject::Translate(Point3D translation)
 {
 	translate += translation;
-	if(HasCollider())
+	if(HardCollider())
 	{
 		if(scene != NULL)
 		{
@@ -171,6 +173,11 @@ bool WorldObject::HasCollider()
 	return collider != NULL;
 }
 
+bool WorldObject::HardCollider()
+{
+	return hardCollider;
+}
+
 Collider* WorldObject::GetCollider()
 {
 	return collider;
@@ -214,4 +221,14 @@ GLfloat WorldObject::AngleBetween(Point3D point)
 void WorldObject::SetRotateY(GLfloat rotateY)
 {
 	rotate.y = rotateY;
+}
+
+void WorldObject::SetTranslate(Point3D translate)
+{
+	this->translate = translate;
+}
+
+void WorldObject::SetRotate(Point3D rotate)
+{
+	this->rotate = rotate;
 }

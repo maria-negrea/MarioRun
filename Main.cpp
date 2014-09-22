@@ -6,6 +6,8 @@
 #include "PlantTulip.h"
 #include "PlantHead.h"
 #include "PlantLeaf.h"
+#include "Road.h"
+#include "Omi.h"
 #include "Line.h"
 #include "Segment2D.h"
 #include "Environment.h"
@@ -24,18 +26,17 @@ PlantLeaf *newLeaf=new PlantLeaf(2,2,2);
 PlantTulip *newTulip=new PlantTulip(2,2,2);
 
 
-
-Point3D AllDirections()
-{
-	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
-	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
-}
-
-Point3D Planar()
-{
-	int a = rand() % 100-50, b = rand() % 100-50;
-	return Point3D(a*1.0, 0.0, b*1.0).Normalize();
-}
+//Point3D AllDirections()
+//{
+//	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
+//	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
+//}
+//
+//Point3D Planar()
+//{
+//	int a = rand() % 100-50, b = rand() % 100-50;
+//	return Point3D(a*1.0, 0.0, b*1.0).Normalize();
+//}
 
 Point3D NoDirection()
 {
@@ -55,6 +56,7 @@ Point3D DefaultTranslation() {
 	return Point3D(0.0, 0.0, 0.0);
 }
 
+
 Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
 {
 	GLfloat complementAngle=90.0-angle;
@@ -69,20 +71,7 @@ Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
 
 void Initialize() 
 {
-
-	//particles = new Particles(AllDirections, BoxPosition);
-
-	//newTulip->AddChild(newHead);
-	//newTulip->AddChild(newLeaf);
-	//newHead->Rotate(Point3D(180,0,0));
-
-	//newHead->Translate(Point3D(0.4,3.2,0.4));
-	//newLeaf->Translate(Point3D(0,0,-0.4));
-	//newTulip->Translate(Point3D(-10,0.5,20));
-
-	//newTulip->SetTarget(mario);
-	//newTulip->Scale(Point3D(1,1,1));
-	//scene->AddObject(newTulip);*/
+//	particles = new Particles(AllDirections, DefaultTranslation);
 
 	/*particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));*/
 
@@ -96,11 +85,37 @@ void Initialize()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glEnable(GL_BLEND);
-
+	
 	Textures::GetInstance()->LoadGLTextures();
 
+	// LIGHTING TEST
+
+	GLfloat light_position[] = { 1.0, 0.0, 1.0};
+		
+	GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
+	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat spec[] = {1, 1, 1, 1};
+	GLfloat em[] = {0, 0, 0, 1};
+
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+	
+	glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+	//glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
+
+	// /LIGHTING TEST
+
+	glEnable(GL_BLEND);
+	glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
+	glEnable ( GL_COLOR_MATERIAL ) ;
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+	//glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, em);
 }
 
 void Draw()
@@ -130,7 +145,7 @@ void specialKey(int key, int x, int y)
 	switch(key)
 	{
 		case GLUT_KEY_LEFT:
-			Input::SetLeft(true);
+			Input::SetLeft(true);			
 			break;
 		case GLUT_KEY_RIGHT:
 			Input::SetRight(true);
@@ -192,8 +207,8 @@ int main(int argc, char** argv)
 	Initialize();
 	glutDisplayFunc(Draw);
 
-	cout<<GetSquareOutside(Point3D(1, 1, 1), 45).x<<" "<<GetSquareOutside(Point3D(1, 1, 1), 45).y<<" "<<
-		GetSquareOutside(Point3D(1, 1, 1), 30).z<<endl;
+	//cout<<GetSquareOutside(Point3D(1, 1, 1), 45).x<<" "<<GetSquareOutside(Point3D(1, 1, 1), 45).y<<" "<<
+	//	GetSquareOutside(Point3D(1, 1, 1), 30).z<<endl;
 
 	glutSpecialFunc(specialKey);
 	glutSpecialUpFunc(specialUpKey);

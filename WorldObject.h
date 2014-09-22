@@ -33,6 +33,8 @@ protected:
 	WorldObject* parent;
 
 	Collider* collider;
+	bool hardCollider;
+
 	Scene *scene;
 	bool visible;
 public:
@@ -48,14 +50,17 @@ public:
 	void Draw();
 
 	Point3D GetForward();
-	Point3D GetTranslate();
 	Point3D GetRight();
 	Point3D GetScale();
 
 	vector<Point3D> GetBoundingBox();
 
+	Point3D GetTranslate();
+	void SetTranslate(Point3D translate);
+
 	Point3D GetRotate();
 	void SetRotateY(GLfloat rotateY);
+	void SetRotate(Point3D rotate);
 
 	void SetScene(Scene* scene);
 
@@ -66,6 +71,7 @@ public:
 	GLfloat AngleBetween(Point3D point);
 
 	bool HasCollider();
+	bool HardCollider();
 
 	Collider* GetCollider();
 	void AddCollider();

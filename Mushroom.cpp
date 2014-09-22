@@ -1,11 +1,11 @@
 #include "Mushroom.h"
 #define PI 3.14
-#include<vector>
+
 Mushroom::Mushroom(GLfloat width, GLfloat height, GLfloat size)
 {
-	this->size=size;
 	this->width=width;
 	this->height=height;
+	this->length=size;
 	fallSpeed = 1;
 	this->speed = 2;
 }
@@ -29,10 +29,8 @@ void Mushroom::DrawMushroom()
 	//glTranslatef(width*0.5,0,height*0.5);
 
 	for (double t = 0; t < 2 * PI; t = t + 0.1)
-	base.push_back(Point3D(radius*0.5*cos(t), 0,  radius*0.5*sin(t)));
-	
+	base.push_back(Point3D(radius*0.5*cos(t), 0,  radius*0.5*sin(t)));	
 	base.push_back(Point3D(radius*0.5*cos(0.),0));
-		
 
  
     int k;
@@ -46,14 +44,14 @@ void Mushroom::DrawMushroom()
 			glTexCoord2f(j, 0.0f); 
 			glVertex3f(base[k].x, base[k].y, base[k].z);				
 			glTexCoord2f(j, 1.0f);
-			glVertex3f(base[k].x, size*0.4, base[k].z);
+			glVertex3f(base[k].x, length*0.4, base[k].z);
 			glTexCoord2f(j+step, 1.0f); 
-			glVertex3f(base[k+1].x, size*0.4, base[k+1].z);
+			glVertex3f(base[k+1].x, length*0.4, base[k+1].z);
 		glEnd();
 
         glBegin(GL_TRIANGLES);
 			glTexCoord2f(j+step, 1.0f); 
-			glVertex3f(base[k+1].x, size*0.4, base[k+1].z);
+			glVertex3f(base[k+1].x, length*0.4, base[k+1].z);
 			glTexCoord2f(j+step, 0.0f); 
 			glVertex3f(base[k+1].x, base[k+1].y, base[k+1].z);
 			glTexCoord2f(j, 0.0f);
@@ -82,9 +80,9 @@ void Mushroom::DrawMushroom()
 	 glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[1]); 
      
 	 for (double t = 0; t < 2 * PI; t = t + 0.1)
-	 head.push_back(Point3D(radius*0.75* cos(t), size*0.4, radius*0.75 * sin(t)));
+	 head.push_back(Point3D(radius*0.75* cos(t), length*0.4, radius*0.75 * sin(t)));
      
-	 head.push_back(Point3D(radius *0.75* cos(0.0), size*0.4, radius*0.75 * sin(0.0)));
+	 head.push_back(Point3D(radius *0.75* cos(0.0), length*0.4, radius*0.75 * sin(0.0)));
 
      step=1./head.size();
 	 j=0;
@@ -108,54 +106,54 @@ void Mushroom::DrawMushroom()
 			glTexCoord2f(j+step,0.f);
 			glVertex3f(head[i+1].x, head[i+1].y, head[i+1].z);
 	        glTexCoord2f(j+step,0.25f);
-			glVertex3f(1.2*head[i+1].x, head[i+1].y + size*0.1, 1.2*head[i+1].z);
+			glVertex3f(1.2*head[i+1].x, head[i+1].y + length*0.1, 1.2*head[i+1].z);
             glTexCoord2f(j, 0.25f);
-			glVertex3f(1.2 * head[i].x, head[i].y + size*0.1, 1.2*head[i].z);
+			glVertex3f(1.2 * head[i].x, head[i].y + length*0.1, 1.2*head[i].z);
         glEnd();
 
          glBegin(GL_QUADS);
 		    glTexCoord2f(j,0.25f);
-			glVertex3f(head[i].x*1.2, head[i].y+size*0.1, head[i].z*1.2);
+			glVertex3f(head[i].x*1.2, head[i].y+length*0.1, head[i].z*1.2);
 			glTexCoord2f(j+step,0.25);
-			glVertex3f(head[i+1].x*1.2, head[i+1].y+size*0.1, head[i+1].z*1.2);
+			glVertex3f(head[i+1].x*1.2, head[i+1].y+length*0.1, head[i+1].z*1.2);
 	        glTexCoord2f(j+step,0.5f);
-			glVertex3f(0.8*head[i+1].x, head[i+1].y + size*0.2, 0.8*head[i+1].z);
+			glVertex3f(0.8*head[i+1].x, head[i+1].y + length*0.2, 0.8*head[i+1].z);
             glTexCoord2f(j, 0.5f);
-			glVertex3f(0.8 * head[i].x, head[i].y + size*0.2, 0.8*head[i].z);
+			glVertex3f(0.8 * head[i].x, head[i].y + length*0.2, 0.8*head[i].z);
         glEnd();
 
         glBegin(GL_QUADS);
 		    glTexCoord2f(j,0.5f);
-			glVertex3f(head[i].x*0.8, head[i].y+size*0.2, head[i].z*0.8);
+			glVertex3f(head[i].x*0.8, head[i].y+length*0.2, head[i].z*0.8);
 			glTexCoord2f(j+step,0.5);
-			glVertex3f(head[i+1].x*0.8, head[i+1].y+size*0.2, head[i+1].z*0.8);
+			glVertex3f(head[i+1].x*0.8, head[i+1].y+length*0.2, head[i+1].z*0.8);
 	        glTexCoord2f(j+step,0.75f);
-			glVertex3f(0.6*head[i+1].x, head[i+1].y + size*0.3, 0.6*head[i+1].z);
+			glVertex3f(0.6*head[i+1].x, head[i+1].y + length*0.3, 0.6*head[i+1].z);
             glTexCoord2f(j, 0.75f);
-			glVertex3f(0.6 * head[i].x, head[i].y +size* 0.3, 0.6*head[i].z);
+			glVertex3f(0.6 * head[i].x, head[i].y +length* 0.3, 0.6*head[i].z);
 	     
         glEnd();
 
        glBegin(GL_QUADS);
 		    glTexCoord2f(j,0.75f);
-			glVertex3f(head[i].x*0.6, head[i].y+size*0.3, head[i].z*0.6);
+			glVertex3f(head[i].x*0.6, head[i].y+length*0.3, head[i].z*0.6);
 			glTexCoord2f(j+step,0.75);
-			glVertex3f(head[i+1].x*0.6, head[i+1].y+size*0.3, head[i+1].z*0.6);
+			glVertex3f(head[i+1].x*0.6, head[i+1].y+length*0.3, head[i+1].z*0.6);
 	        glTexCoord2f(j+step,1.0f);
-			glVertex3f(0.5*head[i+1].x, head[i+1].y + size*0.5, 0.5*head[i+1].z);
+			glVertex3f(0.5*head[i+1].x, head[i+1].y + length*0.5, 0.5*head[i+1].z);
             glTexCoord2f(j, 1.0f);
-			glVertex3f(0.5 * head[i].x, head[i].y + size*0.5, 0.5*head[i].z);
+			glVertex3f(0.5 * head[i].x, head[i].y + length*0.5, 0.5*head[i].z);
 	     
         glEnd();
        
       //top-head
 		glBegin(GL_TRIANGLE_FAN);
 		    glTexCoord2f(0.5 + 0.5*head[i+1].x, 0.5+0.5*head[i+1].z);
-			glVertex3f(0.5*head[i+1].x, head[i+1].y + size*0.5, 0.5*head[i+1].z);
+			glVertex3f(0.5*head[i+1].x, head[i+1].y + length*0.5, 0.5*head[i+1].z);
 			glTexCoord2f(0.5 + 0.5*head[i].x, 0.5+0.5*head[i].z);
-			glVertex3f(0.5 * head[i].x, head[i].y + size*0.5, 0.5*head[i].z);
+			glVertex3f(0.5 * head[i].x, head[i].y + length*0.5, 0.5*head[i].z);
 			glTexCoord2f(0.5,0.5);
-			glVertex3f(0,head[i].y+size*0.5,0);
+			glVertex3f(0,head[i].y+length*0.5,0);
 			glEnd();
 
 
@@ -168,10 +166,17 @@ void Mushroom::DrawObject()
 	 Mushroom::DrawMushroom();
 }
 
+
 void Mushroom::Update()
 {
 	PhysicsObject::Update();
-	this->Translate(Point3D(0,0,speed));
+	this->Translate(GetForward()*speed);
 	if(speed > 0.3)
 		this->speed -= 0.01;
+}
+
+void Mushroom::Function(Mario *mario)
+{
+	scene->RemoveObject(this);
+	mario->SetSize();
 }

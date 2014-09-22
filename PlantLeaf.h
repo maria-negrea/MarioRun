@@ -8,5 +8,6 @@ private:
 public:
 	PlantLeaf(GLfloat width, GLfloat height, GLfloat size);
 	~PlantLeaf(void);
+	
 	void DrawObject();
 };

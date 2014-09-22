@@ -80,7 +80,7 @@ void Environment:: InitializeObstacles()
 			}
 			case 2:
 			{
-				QuestionBlock* questionBlock=new QuestionBlock(5,5,5);
+				QuestionBlock* questionBlock=new QuestionBlock(road, 5,5,5);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
 				currentPosition.y=12;
 				questionBlock->Translate(currentPosition);

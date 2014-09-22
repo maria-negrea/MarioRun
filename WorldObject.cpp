@@ -198,7 +198,8 @@ bool WorldObject::GetVisibility()
 
 GLfloat WorldObject::AngleBetween(Point3D point)
 {
-    GLfloat angleToTarget=GetForward().AngleBetween(point);
+	GLfloat angleToTarget=GetForward().AngleBetween(point);
+
 	GLfloat rightDistance = (point+GetRight()).Magnitude();
 	GLfloat distance = point.Magnitude();
 
@@ -206,5 +207,11 @@ GLfloat WorldObject::AngleBetween(Point3D point)
 	{
 		angleToTarget = 360-angleToTarget;
 	}
+
 	return angleToTarget;
+}
+
+void WorldObject::SetRotateY(GLfloat rotateY)
+{
+	rotate.y = rotateY;
 }

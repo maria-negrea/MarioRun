@@ -11,5 +11,6 @@ MarioCamera::~MarioCamera(void)
 
 void MarioCamera::Update()
 {
-	translate.z = (follow->GetTranslate()-follow->GetForward()*30).z;
+	translate = (follow->GetTranslate()-follow->GetForward()*30)+Point3D(0,10,0);
+	rotate.y = follow->GetRotate().y;
 }

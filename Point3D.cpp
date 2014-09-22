@@ -99,3 +99,16 @@ istream& operator>>(istream& in, Point3D& point)
 	return in>>point.x>>point.y>>point.z;
 }
 
+GLfloat GetRandomGLfloat(GLfloat min, GLfloat max)
+{
+	GLfloat range = max - min;
+	GLfloat num = range * (rand()%100)/100.0;
+	GLfloat sign=rand()%2;
+	if(sign==0)
+	{
+		return (num + min);
+	}
+
+	return -(num + min);
+	
+}

@@ -1,6 +1,12 @@
 #pragma once
+
 #include <math.h>
 #include<iostream>
+#ifdef __unix || __unix__
+ #include <GL/glut.h>
+#else
+ #include <glut.h>
+#endif
 
 using namespace std;
 
@@ -31,4 +37,5 @@ public:
 	Point3D Normalize();
 	float AngleBetween(Point3D point);
 	friend istream& operator>>(istream& in, Point3D& point);
+	friend GLfloat GetRandomGLfloat(GLfloat min, GLfloat max);
 };

@@ -161,12 +161,12 @@ void Mario::Hit(Collision collision)
 
 void Mario::MoveRight()
 {
-	Translate(GetRight()*-1);
+	Rotate(Point3D(0,1,0)*-1);
 }
 
 void Mario::MoveLeft()
 {
-	Translate(GetRight()*1);
+	Rotate(Point3D(0,1,0)*1);
 }
 
 

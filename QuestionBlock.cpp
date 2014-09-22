@@ -6,6 +6,7 @@ QuestionBlock::QuestionBlock(GLfloat width, GLfloat height, GLfloat length)
     this->height=height;
 	this->length=length;
 	this->textureIndex=2;
+	AddCollider();
 }
 
 QuestionBlock::~QuestionBlock(void)
@@ -34,7 +35,7 @@ void QuestionBlock::SetIndex(int newIndex)
 }
 void QuestionBlock::DrawObject()
 {
-glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
   glBegin(GL_QUADS);
  // front face
   glTexCoord2f(0, 1);glVertex3f(0. ,length*0.75, 0);

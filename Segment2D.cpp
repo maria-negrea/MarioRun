@@ -25,12 +25,39 @@ Line Segment2D::GetLine()
 	return Line(p1,p2);
 }
 
+#include<iostream>
+
 bool Segment2D::IsOnSegment(Point2D point)
 {
-	float minX, maxX, minY, maxY;
 
-	(p1.x > p2.x)?maxX = p1.x,minX = p2.x:maxX = p2.x, minX = p1.x;
-	(p1.y > p2.y)?maxY = p1.y,minY = p2.y:maxY = p2.y, minY = p1.y;
+	double minX, maxX, minY, maxY;
+
+	if(p1.x > p2.x)
+	{
+		maxX = p1.x;
+		minX = p2.x;
+	}
+	else
+	{
+		maxX = p2.x; 
+		minX = p1.x;
+	}
+
+
+	if(p1.y > p2.y)
+	{
+		maxY = p1.y;
+		minY = p2.y;
+	}
+	else
+	{
+		maxY = p2.y; 
+		minY = p1.y;
+	}
+
+	//std::cout<<"INT "<<point.x<<" "<<point.y<<std::endl;
+	//std::cout<<"INT "<<minX<<" "<<maxX<<std::endl;
+	//std::cout<<"INT "<<minY<<" "<<maxY<<std::endl<<std::endl;
 
 	return point.x > minX && point.x < maxX && point.y > minY && point.y < maxY;
 }

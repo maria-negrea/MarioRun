@@ -10,7 +10,6 @@ protected:
 public:
 	PhysicsObject();
 	~PhysicsObject();
-
 	bool IsGrounded();
 	virtual void Update();
 };

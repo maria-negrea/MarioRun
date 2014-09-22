@@ -175,6 +175,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Animation.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\AnimationStep.cpp"
 				>
 			</File>
@@ -311,6 +315,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\RoadWorldObjectLink.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Scene.cpp"
 				>
 			</File>
@@ -346,6 +354,10 @@
 			>
 			<File
 				RelativePath=".\AnimatedWorldObject.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Animation.h"
 				>
 			</File>
 			<File
@@ -486,6 +498,10 @@
 			</File>
 			<File
 				RelativePath=".\Road.h"
+				>
+			</File>
+			<File
+				RelativePath=".\RoadWorldObjectLink.h"
 				>
 			</File>
 			<File

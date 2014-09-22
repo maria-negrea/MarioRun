@@ -1,11 +1,12 @@
 #include "QuestionBlock.h"
 
-QuestionBlock::QuestionBlock(GLfloat width, GLfloat height, GLfloat length)
+QuestionBlock::QuestionBlock(Road* road,GLfloat width, GLfloat height, GLfloat length)
 {	
 	this->width=width;
     this->height=height;
 	this->length=length;
 	this->textureIndex=2;
+	this->road = road;
 }
 
 QuestionBlock::~QuestionBlock(void)
@@ -23,7 +24,9 @@ void QuestionBlock::Hit()
 	newMushroom->Translate(translate);
 	newMushroom->Translate(Point3D(0,length,0));
 	scene->AddObject(newMushroom);
-	
+
+	road->AddRoadObject(newMushroom);
+
 	textureIndex=3;
 }
 	else return;

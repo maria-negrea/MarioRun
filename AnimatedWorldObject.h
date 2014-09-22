@@ -2,16 +2,15 @@
 #include "WorldObject.h"
 #include "Updatable.h"
 #include "AnimationStep.h"
+#include "Animation.h"
 
 class AnimatedWorldObject : public WorldObject, public Updatable
 {
-	vector<AnimationStep> animations;
-	double fullTime;
-	int stepIndex;
+	Animation currentAnimation;
 public:
 	AnimatedWorldObject();
 	~AnimatedWorldObject();
-	void Update();
 
-	void AddAnimationStep(AnimationStep step);
+	void Update();
+	void SetAnimation(Animation animation);
 };

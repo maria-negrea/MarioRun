@@ -17,7 +17,7 @@ void Coin::DrawObject()
 	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[6]);
 
 	vector<Point3D> coin;
-	for(double t = 0; t <= 2 * 3.14; t += 0.1)
+	for(double t = 0; t <= 2 * 3.14; t += 0.6)
 		coin.push_back(Point3D(0.25 * cos(t), 0.25 * sin(t), -0.05));
 
 	coin.push_back(Point3D(0.25 * cos(0.), 0.25 * sin(0.), -0.05));

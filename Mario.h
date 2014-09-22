@@ -16,6 +16,20 @@ class Mario : public PhysicsObject
 	bool bleep;
 
 	double time;
+
+	Box* pelvis;
+	Box* neck;
+	Box* head;
+	Box* body;
+	Box* upperLegRight;
+	Box* lowerLegRight;
+	Box* rightFoot;
+	Box* upperLegLeft;
+	Box* lowerLegLeft;
+	Box* leftFoot;
+
+	void RunAnimation();
+	void JumpAnimation();
 public:
 	Mario();
 	~Mario();

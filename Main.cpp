@@ -85,11 +85,14 @@ void AddObjectsToScene()
 	//scene->AddObject(test2);
 	//scene->AddObject(coin);
 	scene->AddObject(new Ground);
-	scene->AddObject(newTulip);
+//	scene->AddObject(newTulip);
 //	scene->AddObject(particles);
 	scene->AddObject(mario);
 	scene->AddObject(block);
-	
+
+	newRoad->AddRoadObject(mario);
+	newRoad->AddRoadObject(block);
+
 	for(int i = 0; i < coins.size(); i++)
 		scene->AddObject(coins[i]);
 }
@@ -110,17 +113,16 @@ void Initialize()
 {
 	scene = new Scene();
 
+	newRoad = new Road();
+
 	particles = new Particles(AllDirections, DefaultTranslation);
 
-	block = new QuestionBlock(7, 7, 7);
+	block = new QuestionBlock(newRoad,7, 7, 7);
 	block->Translate(Point3D(0, 12, 70));
 	block->AddCollider();
 	
 	mario = new Mario();
 	mario->Translate(Point3D(0.1,0.0,0.0));
-
-	newRoad = new Road();
-	newRoad->SetRoadObject(mario);
 	
 	double x = 5;
 	for(int i = 0; i < 10; i++)

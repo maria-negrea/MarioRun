@@ -170,7 +170,7 @@ void Mushroom::DrawObject()
 void Mushroom::Update()
 {
 	PhysicsObject::Update();
-	this->Translate(Point3D(0,0,speed));
+	this->Translate(GetForward()*speed);
 	if(speed > 0.3)
 		this->speed -= 0.01;
 }

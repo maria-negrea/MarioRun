@@ -31,14 +31,21 @@ Goomba::Goomba(void)
 	AddChild(pivotRightFoot);
 	torso->Translate(Point3D(0.0, 0.5, 0.0));
 
-	head->AddAnimationStep(AnimationStep(3, Point3D(0, 10, 0), Point3D(0.0, 1.5, 0.0)));
-	head->AddAnimationStep(AnimationStep(3, Point3D(0, -10, 0), Point3D(0.0, 1.5, 0.0)));
-	
-	pivotLeftFoot->AddAnimationStep(AnimationStep(0.5, Point3D(-25.0, 0, 0), Point3D(-0.25,0.5,-0.1)));
-	pivotLeftFoot->AddAnimationStep(AnimationStep(0.5, Point3D(25.0, 0, 0), Point3D(-0.25,0.5,-0.1)));
+	Animation headAnimation;
+	headAnimation.AddAnimationStep(AnimationStep(3, Point3D(0, 10, 0), Point3D(0.0, 1.5, 0.0)));
+	headAnimation.AddAnimationStep(AnimationStep(3, Point3D(0, -10, 0), Point3D(0.0, 1.5, 0.0)));
+	head->SetAnimation(headAnimation);
 
-	pivotRightFoot->AddAnimationStep(AnimationStep(0.5, Point3D(25.0, 0, 0), Point3D(0.25, 0.5, -0.1)));
-	pivotRightFoot->AddAnimationStep(AnimationStep(0.5, Point3D(-25.0, 0, 0), Point3D(0.25, 0.5, -0.1)));
+
+	Animation leftFootAnimation;
+	leftFootAnimation.AddAnimationStep(AnimationStep(0.5, Point3D(-25.0, 0, 0), Point3D(-0.25,0.5,-0.1)));
+	leftFootAnimation.AddAnimationStep(AnimationStep(0.5, Point3D(25.0, 0, 0), Point3D(-0.25,0.5,-0.1)));	
+	pivotLeftFoot->SetAnimation(leftFootAnimation);
+
+	Animation rightFootAnimation;
+	rightFootAnimation.AddAnimationStep(AnimationStep(0.5, Point3D(25.0, 0, 0), Point3D(0.25, 0.5, -0.1)));
+	rightFootAnimation.AddAnimationStep(AnimationStep(0.5, Point3D(-25.0, 0, 0), Point3D(0.25, 0.5, -0.1)));
+	pivotRightFoot->SetAnimation(rightFootAnimation);
 
 	target = NULL;
 }

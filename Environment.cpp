@@ -129,7 +129,8 @@ void Environment:: InitializeOffRoadObjects()
 			}
 			case 1:
 			{
-				PlantTulip* plant=new PlantTulip(1,1,1);
+				PlantTulip* plant=new PlantTulip(2,2,2);
+				plant->Scale(Point3D(3,3,3));
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 2.0);
 				plant->Translate(currentPosition);
 				lastZ=initialPoint.z;

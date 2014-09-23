@@ -13,6 +13,24 @@ Point3D Planar()
 	return Point3D(0.0, 0.0, 0.0).Normalize();
 }
 
+Point3D NoDirection()
+{
+	return Point3D(0.0, 0.0, 0.0).Normalize();
+}
+
+Point3D Translation() {
+	return Point3D(rand() % 5, rand() % 5, 0.0);
+}
+
+Point3D BoxPosition() {
+	return Point3D(rand() % 10-5, rand() % 10-5, rand() % 10-5).Normalize()*(rand()%10);
+}
+
+
+Point3D DefaultTranslation() {
+	return Point3D(0.0, 0.0, 0.0);
+}
+
 FireBall::FireBall(GLfloat radius)
 {
 	Translate(Point3D(0,5,0));
@@ -22,6 +40,7 @@ FireBall::FireBall(GLfloat radius)
 	this->radius=radius;
 	particles = NULL;
 	distanceTravelled = 0;
+	particles = NULL;
 }
 
 FireBall::~FireBall(void)
@@ -37,20 +56,16 @@ void FireBall::DrawObject()
     //gluSphere(quadratic,radius,5,5);
 	//gluQuadricTexture(quadratic, GL_TRUE);
 }
+
 void FireBall::Update()
 {
 	if(particles == NULL)
 	{
-		particles = new Particles(AllDirections, Planar);
+		particles = new Particles(AllDirections, BoxPosition);
 		scene->AddObject(particles);
-		//particles->Translate(Point3D(0.0, -5.0, 0.0));
 	}
-  Translate(GetForward()*5);
-  particles->Translate(Point3D(-particles->GetTranslate().x+translate.x, 0.0, -particles->GetTranslate().z+translate.z));
-  if(this->distanceTravelled > 5)
-	  scene->RemoveObject(this);
-  else 
-	  distanceTravelled += 0.1;
+	Translate(GetForward()*5);
+	particles->Translate(Point3D(-particles->GetTranslate().x+translate.x, 0.0, -particles->GetTranslate().z+translate.z));
 }
 
 void FireBall::Function(Mario *mario)

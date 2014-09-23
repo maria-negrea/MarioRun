@@ -224,7 +224,7 @@ void Mario::Hit(Collision collision)
 			Goomba* goomba = dynamic_cast<Goomba*>(collision.GetHitObject());
 			if(goomba != NULL)
 			{
-				fallSpeed = jumpForce;
+				fallSpeed = jumpForce*0.3;
 				goomba->Damage();
 			}
 		}

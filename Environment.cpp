@@ -49,7 +49,10 @@ void Environment:: InitializeCoins(double& lastZ)
 			step+=PI/10.0;
 		}
 	}
-	
+}
+
+void Environment::AddObject(WorldObject *obj) {
+	scene->AddObject(obj);
 }
 
 void Environment:: InitializeObstacles()
@@ -150,6 +153,7 @@ void Environment:: InitializeOffRoadObjects()
 			{
 				Tree*tree=new Tree();
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, tree->width);
+				tree->Scale(Point3D(2,2,2));
 				tree->Translate(currentPosition);
 				lastZ=initialPoint.z;
 				offRoadObjects.push_back(tree);

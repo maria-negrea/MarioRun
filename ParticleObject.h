@@ -14,5 +14,6 @@ public:
 	double GetLife();
 	ParticleObject(Point3D direction, Point3D position, Point3D emitterPosition, Point3D initialScale, Point3D finalScale);
 	~ParticleObject(void);
+	bool operator<(ParticleObject& a);
 	void Update();
 };

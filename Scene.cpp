@@ -27,16 +27,22 @@ void Scene::Render()
 		lightSources[i]->Illuminate();
 	}
 
-	//Draws the objects on screen
-	
 	for(unsigned i = 0; i < 3; i++)
-	sceneObjects[i]->Draw();
-	//Draws the objects on screen
-	 for(unsigned i = 3; i<sceneObjects.size(); ++i)
-	 {
-		  if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 350)
+		sceneObjects[i]->Draw();
+	 //Draws the objects on screen
+	for(unsigned i = 3; i<sceneObjects.size(); ++i)
+	{
+		 if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 400)
 			sceneObjects[i]->Draw();
-	 }
+	}
+	
+	//LIGHTING
+	glDisable (GL_LIGHTING);
+	Point3D pos = sceneObjects[0]->GetTranslate() + sceneObjects[0]->GetForward()*50;
+	GLfloat light_position[] = { pos.x, 5.0, pos.z, 1.0};
+	glLightfv (GL_LIGHT0, GL_POSITION, light_position);
+	glEnable (GL_LIGHTING);
+
 	glFlush();
 
 }

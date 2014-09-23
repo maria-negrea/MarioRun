@@ -1,5 +1,17 @@
 #include "Particles.h"
 #include <time.h>
+#include <algorithm>
+
+
+Point3D Particles::DefDir2()
+{
+	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
+	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
+}
+
+Point3D Particles::DefTran2() {
+	return Point3D(rand() % 5, rand() % 5, 0.0);
+}
 
 Particles::Particles(DirectionGenerator directionGenerator, TranslationGenerator translationGenerator)
 {
@@ -12,24 +24,14 @@ Particles::~Particles(void)
 }
 
 void Particles::DrawObject() 
-{	
-	/*AddChild(particle);*/
-	
-	//for(int i=0; i < particles.size(); i++) {
-	//	particles[i]->Draw();
-	//}
-	//if(particles.size() > 50) {
-	//	/*RemoveChild(children[0]);
-	//	children.erase(children.begin());*/
-	//	particles.erase(particles.begin());
-	//}
+{
 }
 
 void Particles::Update() {
 	
-	for(int i=0; i < rand() % 4 + 1; i++) {
-		ParticleObject* particle = new ParticleObject(directionGenerator(), translationGenerator(),translate, Point3D(3.0, 3.0, 3.0), Point3D(0.0, 0.0, 0.0));
-		particle->Rotate(Point3D(0,0,rand()%360));
+	for(int i=0; i < rand() % 10 + 1; i++) {
+		ParticleObject* particle = new ParticleObject(directionGenerator(), translationGenerator(),translate, Point3D(1.0, 1.0, 1.0), Point3D(0.0, 0.0, 0.0));
+		//particle->Rotate(Point3D(180,0,0));
 		particles.push_back(particle);
 
 		scene->AddObject(particle);
@@ -44,4 +46,6 @@ void Particles::Update() {
 			particles.erase(particles.begin() + i);
 		}
 	}
+
+	sort(particles.begin(), particles.end());
 }

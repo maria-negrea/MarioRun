@@ -58,7 +58,7 @@ void Environment:: InitializeObstacles()
 	double lastZ=0.0;
 	while(i<road->GetRoadSize()-2)
 	{
-		int type=rand()%4;
+		int type=rand()%5;
 		cout<<type<<endl;
 		Point3D initialPoint; 
 		initialPoint.x=GetRandomGLfloat(0.0, 1.0);
@@ -87,6 +87,7 @@ void Environment:: InitializeObstacles()
 				questionBlock->Translate(currentPosition);
 				lastZ=initialPoint.z;
 				obstacles.push_back(questionBlock);
+				road->AddRoadObject(questionBlock);
 				break;
 			}
 			case 3:
@@ -98,6 +99,17 @@ void Environment:: InitializeObstacles()
 				obstacles.push_back(box);
 				break;
 			}
+			case 4:
+			{
+				SplitBox* splitBox=new SplitBox(2, 2, 2);
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, splitBox->width);
+				splitBox->Translate(currentPosition);
+				lastZ=initialPoint.z;
+				obstacles.push_back(splitBox);
+				break;
+			}
+
+
 		}
 
 		i=lastZ;
@@ -121,7 +133,7 @@ void Environment:: InitializeOffRoadObjects()
 			case 0:
 			{
 				Tree*tree=new Tree();
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 2.0);
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, tree->width);
 				tree->Translate(currentPosition);
 				lastZ=initialPoint.z;
 				offRoadObjects.push_back(tree);
@@ -129,9 +141,11 @@ void Environment:: InitializeOffRoadObjects()
 			}
 			case 1:
 			{
-				PlantTulip* plant=new PlantTulip(1,1,1);
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 2.0);
+				PlantTulip* plant=new PlantTulip(2,2,2);
+				plant->SetTarget(mario);
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, plant->width);
 				plant->Translate(currentPosition);
+				plant->Scale(Point3D(3, 3, 3));
 				lastZ=initialPoint.z;
 				offRoadObjects.push_back(plant);
 				break;

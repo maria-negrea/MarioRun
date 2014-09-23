@@ -17,6 +17,7 @@
 #include <cmath>
 #include "PlantTulip.h"
 #include "Score.h"
+#include "SplitBox.h"
 
 class Environment: public Updatable
 {

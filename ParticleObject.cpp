@@ -25,9 +25,10 @@ ParticleObject::~ParticleObject(void)
 }
 
 void ParticleObject::DrawObject() {
+
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glDisable(GL_DEPTH_TEST);
+	glDisable(GL_DEPTH_TEST);
 	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[4]);
 	glColor4f ( 1.0, 1.0, 1.0, alpha);
 	glBegin(GL_QUADS);
@@ -39,7 +40,7 @@ void ParticleObject::DrawObject() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glColor4f ( 1.0, 1.0, 1.0, 1.0);
 	glDisable(GL_BLEND);
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 }
 
 void ParticleObject::Update() {

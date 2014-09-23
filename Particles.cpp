@@ -1,5 +1,17 @@
 #include "Particles.h"
 #include <time.h>
+#include <algorithm>
+
+
+Point3D Particles::DefDir2()
+{
+	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
+	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
+}
+
+Point3D Particles::DefTran2() {
+	return Point3D(rand() % 5, rand() % 5, 0.0);
+}
 
 Particles::Particles(DirectionGenerator directionGenerator, TranslationGenerator translationGenerator)
 {
@@ -13,7 +25,6 @@ Particles::~Particles(void)
 
 void Particles::DrawObject() 
 {
-
 }
 
 void Particles::Update() {
@@ -35,4 +46,6 @@ void Particles::Update() {
 			particles.erase(particles.begin() + i);
 		}
 	}
+
+	sort(particles.begin(), particles.end());
 }

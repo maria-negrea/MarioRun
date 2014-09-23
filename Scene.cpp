@@ -32,6 +32,14 @@ void Scene::Render()
 	{
 		sceneObjects[i]->Draw();
 	}
+	
+	//LIGHTING
+	glDisable (GL_LIGHTING);
+	Point3D pos = sceneObjects[0]->GetTranslate() + sceneObjects[0]->GetForward()*50;
+	GLfloat light_position[] = { pos.x, 5.0, pos.z, 1.0};
+	glLightfv (GL_LIGHT0, GL_POSITION, light_position);
+	glEnable (GL_LIGHTING);
+	
 	glFlush();
 
 }

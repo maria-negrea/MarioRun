@@ -2,6 +2,8 @@
 #include <time.h>
 #include "Textures.h"
 
+
+
 ParticleObject::ParticleObject(Point3D direction,Point3D position, Point3D emitterPosition, Point3D initialScale, Point3D finalScale)
 {
 	Translate(emitterPosition+position);
@@ -23,6 +25,13 @@ ParticleObject::ParticleObject(Point3D direction,Point3D position, Point3D emitt
 ParticleObject::~ParticleObject(void)
 {
 
+}
+
+
+bool ParticleObject::operator<(ParticleObject& a)
+{
+	Point3D camera = scene->GetCamera()->GetTranslate();
+	return (this->GetTranslate()-camera).Magnitude() < (a.translate-camera).Magnitude();
 }
 
 void ParticleObject::DrawObject() {

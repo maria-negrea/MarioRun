@@ -11,7 +11,6 @@ protected:
 public:
 	PhysicsObject(double bounce = 0.9);
 	~PhysicsObject();
-
 	bool IsGrounded();
 	virtual void Update();
 };

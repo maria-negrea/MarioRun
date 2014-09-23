@@ -8,6 +8,8 @@ Mushroom::Mushroom(GLfloat width, GLfloat height, GLfloat size)
 	this->length=size;
 	fallSpeed = 1;
 	this->speed = 2;
+
+	road = NULL;
 }
 
 Mushroom::~Mushroom(void)
@@ -166,7 +168,6 @@ void Mushroom::DrawObject()
 	 Mushroom::DrawMushroom();
 }
 
-
 void Mushroom::Update()
 {
 	PhysicsObject::Update();
@@ -179,4 +180,13 @@ void Mushroom::Function(Mario *mario)
 {
 	scene->RemoveObject(this);
 	mario->SetSize();
+}
+
+void Mushroom::Translate(Point3D translation)
+{
+	WorldObject::Translate(translation);
+	if(road != NULL)
+	{
+		Point3D offRoad = road->OffRoad(this);
+	}
 }

@@ -79,7 +79,7 @@ void Collider::Hit(Collision collision)
 
 	direction = direction*Min(moves.x,Min(moves.y,moves.z));
 
-	object->Translate(-direction);
+	object->SetTranslate(object->GetTranslate()-direction);
 }
 
 float Collider::Min(float x,float y)

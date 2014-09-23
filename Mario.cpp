@@ -1,10 +1,14 @@
 #include "Mario.h"
 #include "MarioCollider.h"
+#include "Goomba.h"
 
-Mario::Mario()
+Mario::Mario():PhysicsObject(0.8)
 {
 	collider = new MarioCollider(this);
 	hardCollider = true;
+	road = NULL;
+
+	jumpForce = 1.5;
 
 	length = 2;
 	width = 2;
@@ -187,7 +191,7 @@ void Mario::Jump()
 {
 	if(IsGrounded())
 	{
-		fallSpeed += 1.5;
+		fallSpeed += jumpForce;
 	}
 }
 
@@ -206,12 +210,20 @@ void Mario::Hit(Collision collision)
 		if(direction.y < -0.8)
 		{
 			fallSpeed = 0;
+
+			Goomba* goomba = dynamic_cast<Goomba*>(collision.GetHitObject());
+			if(goomba != NULL)
+			{
+				fallSpeed = jumpForce;
+				goomba->Damage();
+			}
 		}
 		else
 		{
 			if(direction.AngleBetween(GetForward()) < 3)
 			{
 				forwardSpeed = -1;
+				Damage();
 			}
 		}
 	}
@@ -227,6 +239,15 @@ void Mario::MoveLeft()
 	Translate(GetRight()*1);
 }
 
+
+void Mario::Translate(Point3D translation)
+{
+	WorldObject::Translate(translation);
+	if(road != NULL)
+	{
+		Point3D offRoad = road->OffRoad(this);
+	}
+}
 
 void Mario::SetSize()
 {
@@ -249,4 +270,13 @@ bool Mario::GetBleep()
 bool Mario::IsBig()
 {
 	return isBig;
+}
+
+void Mario::Damage()
+{
+	if(isBig)
+	{
+		isBig = false;
+	}
+	bleep = true;
 }

@@ -3,7 +3,7 @@
 #include "WorldObject.h"
 #include "Updatable.h"
 
-class RoadWorldObjectLink;
+class OnRoadObject;
 
 class Road : public WorldObject, public Updatable
 { 
@@ -12,10 +12,10 @@ private:
 	vector<Point3D> leftVector;
 	vector<Point3D> rightVector;
 
-	vector<RoadWorldObjectLink> onRoadObjects;
+	vector<OnRoadObject*> onRoadObjects;
 
-	bool IsOnIndex(RoadWorldObjectLink onRoadObject);
-	void SetOnRoadAngle(RoadWorldObjectLink onRoadObject);
+	bool IsOnIndex(OnRoadObject* onRoadObject);
+	void SetOnRoadAngle(OnRoadObject* onRoadObject);
 public:
 	Road(void);
 	~Road(void);
@@ -27,8 +27,10 @@ public:
 	vector<Point3D> GetLeft();
 	vector<Point3D> GetRight();
 
-	void AddRoadObject(WorldObject* object);
+	void AddRoadObject(OnRoadObject* object);
 	void Update();
+
+	Point3D OffRoad(OnRoadObject* onRoadObject);
 };
 
-#include "RoadWorldObjectLink.h"
+#include "OnRoadObject.h"

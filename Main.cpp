@@ -25,8 +25,6 @@
 Scene *scene;
 Camera* mainCamera;
 Goomba* goomba;
-Goomba* goomba2;
-Goomba* goomba3;
 Mario* mario;
 
 //Box* test1;
@@ -82,13 +80,14 @@ void AddObjectsToScene()
 {
 	scene->AddObject(newRoad);
 	scene->AddObject(test1);
+	scene->AddObject(goomba);
 	//scene->AddObject(test2);
 	//scene->AddObject(coin);
 	scene->AddObject(new Ground);
 //	scene->AddObject(newTulip);
 //	scene->AddObject(particles);
 	scene->AddObject(mario);
-	scene->AddObject(newTulip);
+	//scene->AddObject(newTulip);
 	scene->AddObject(block);
 
 	for(int i = 0; i < coins.size(); i++)
@@ -96,18 +95,6 @@ void AddObjectsToScene()
 
 	newRoad->AddRoadObject(mario);
 	newRoad->AddRoadObject(block);
-}
-
-Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
-{
-	GLfloat complementAngle=90.0-angle;
-	Point3D outside;
-	GLfloat l1=pointIn.x*sin(angle*PI/180), l2=pointIn.z*cos(complementAngle*PI/180);
-	outside.x=l1+l2;
-	outside.z=pointIn.z*sin(complementAngle*PI/180)+pointIn.x*cos(angle*PI/180);
-	outside.y=0;
-
-	return outside;
 }
 
 void Initialize() 
@@ -121,7 +108,7 @@ void Initialize()
 	block = new QuestionBlock(newRoad,7, 7, 7);
 	block->Translate(Point3D(0, 12, 70));
 	block->AddCollider();
-	
+		
 	mario = new Mario();
 	mario->Translate(Point3D(0.1,0.0,0.0));
 	double x = 5;
@@ -148,7 +135,8 @@ void Initialize()
 
 	goomba=new Goomba();
 	goomba->SetTarget(mario);
-	goomba->Translate(Point3D(-5, 0, 20));
+	goomba->Translate(Point3D(-5, 0, 100));
+
 	//tree=new Tree();
 	//tree->Translate(Point3D(-5, 0, 40));
 	

@@ -46,7 +46,7 @@ void Road::DrawObject()
 		glColor3f(1.0,1.0,1.0);
 		for(unsigned j = 0; j<onRoadObjects.size();j++)
 		{
-			if(i == onRoadObjects[j].GetIndex())
+			if(i == onRoadObjects[j]->GetIndex())
 				glColor3f(1.0,0.0,0.0);
 		}
 
@@ -66,18 +66,27 @@ void Road::Update()
 {
 	for(unsigned i = 0; i<onRoadObjects.size();i++)
 	{
-		while(!IsOnIndex(onRoadObjects[i]))
+		int index = onRoadObjects[i]->GetIndex();
+		if(!IsOnIndex(onRoadObjects[i]))
 		{
-			onRoadObjects[i].IncrementIndex();
+			if(index > 1)
+			{
+				onRoadObjects[i]->SetIndex(index-1);
+			}
+
+			while(!IsOnIndex(onRoadObjects[i]))
+			{
+				onRoadObjects[i]->IncrementIndex();
+			}
 		}
+		
 		SetOnRoadAngle(onRoadObjects[i]);
 	}
 }
 
-void Road::SetOnRoadAngle(RoadWorldObjectLink link)
+void Road::SetOnRoadAngle(OnRoadObject* onRoadObject)
 {
-	int roadIndex = link.GetIndex();
-	WorldObject* onRoadObject = link.GetObject();
+	int roadIndex = onRoadObject->GetIndex();
 
 	Point3D rotationDirection = (roadVector[roadIndex+1] - roadVector[roadIndex]);
 	Point3D relativObjPosition = (onRoadObject->GetTranslate()-roadVector[roadIndex]);
@@ -104,10 +113,9 @@ void Road::SetOnRoadAngle(RoadWorldObjectLink link)
 	onRoadObject->SetRotateY(angle);
 }
 
-bool Road::IsOnIndex(RoadWorldObjectLink link)
+bool Road::IsOnIndex(OnRoadObject* onRoadObject)
 {
-	int roadIndex = link.GetIndex();
-	WorldObject* onRoadObject = link.GetObject();
+	int roadIndex = onRoadObject->GetIndex();
 
 	//cout<<roadIndex<<"X"<<endl;
 	Point2D p1 = Point2D(rightVector[roadIndex],View::Up);
@@ -200,9 +208,10 @@ Point3D Road::GetCoinPoint(double index, double gradient, int side)
 	}
 }
 
-void Road::AddRoadObject(WorldObject* object)
+void Road::AddRoadObject(OnRoadObject* object)
 {
-	onRoadObjects.push_back(RoadWorldObjectLink(object,0));
+	onRoadObjects.push_back(object);
+	object->SetRoad(this);
 }
 
 vector<Point3D> Road::GetRoad()
@@ -218,4 +227,36 @@ vector<Point3D> Road::GetLeft()
 vector<Point3D> Road::GetRight()
 {
 	return rightVector;
+}
+
+Point3D Road::OffRoad(OnRoadObject* onRoadObject)
+{
+	GLfloat width = 14;
+	int roadIndex = onRoadObject->GetIndex();
+
+	Point3D reachPosition = onRoadObject->GetTranslate();
+
+	Point3D rotationDirection = (roadVector[roadIndex+1] - roadVector[roadIndex]);
+	Point3D relativObjPosition = (reachPosition-roadVector[roadIndex]);
+	
+	double angle = (rotationDirection).AngleBetween(Point3D(0,0,1));
+
+	if((rotationDirection).x < 0)
+	{
+		angle = -angle;
+	}
+
+	relativObjPosition = relativObjPosition.RotateY(angle);
+	if(relativObjPosition.x < -width)
+	{
+		relativObjPosition.x = -width;
+		onRoadObject->SetTranslate(relativObjPosition.RotateY(-angle));
+	}
+	if(relativObjPosition.x > width)
+	{
+		relativObjPosition.x = width;		
+	}
+	onRoadObject->SetTranslate(relativObjPosition.RotateY(-angle)+roadVector[roadIndex]);
+
+	return Point3D();
 }

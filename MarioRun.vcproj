@@ -267,6 +267,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\OnRoadObject.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ParticleObject.cpp"
 				>
 			</File>
@@ -312,10 +316,6 @@
 			</File>
 			<File
 				RelativePath=".\Road.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\RoadWorldObjectLink.cpp"
 				>
 			</File>
 			<File
@@ -445,6 +445,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\OnRoadObject.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ParticleObject.h"
 				>
 			</File>
@@ -498,10 +502,6 @@
 			</File>
 			<File
 				RelativePath=".\Road.h"
-				>
-			</File>
-			<File
-				RelativePath=".\RoadWorldObjectLink.h"
 				>
 			</File>
 			<File

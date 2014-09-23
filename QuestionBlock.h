@@ -1,10 +1,10 @@
 #pragma once
-#include"WorldObject.h"
+#include"OnRoadObject.h"
 #include"Textures.h"
 #include"Mushroom.h"
 #include "Road.h"
 
-class QuestionBlock : public WorldObject
+class QuestionBlock : public OnRoadObject
 {
 	int textureIndex;
 	Road* road;

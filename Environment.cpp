@@ -145,7 +145,7 @@ void Environment:: InitializeOffRoadObjects()
 		int type=rand()%2;
 		cout<<type<<endl;
 		Point3D initialPoint; 
-		initialPoint.x=GetRandomGLfloat(1.0, 8.0);
+		initialPoint.x=GetRandomGLfloat(2.0, 8.0);
 		initialPoint.z=lastZ+rand()%3;
 		switch(type)
 		{

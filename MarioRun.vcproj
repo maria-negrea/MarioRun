@@ -227,6 +227,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FullMountain.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GlobalScore.cpp"
 				>
 			</File>
@@ -272,6 +276,10 @@
 			</File>
 			<File
 				RelativePath=".\Mesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mountain.cpp"
 				>
 			</File>
 			<File
@@ -328,6 +336,10 @@
 			</File>
 			<File
 				RelativePath=".\Point3D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Pond.cpp"
 				>
 			</File>
 			<File
@@ -449,6 +461,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FullMountain.h"
+				>
+			</File>
+			<File
 				RelativePath=".\GlobalScore.h"
 				>
 			</File>
@@ -490,6 +506,10 @@
 			</File>
 			<File
 				RelativePath=".\Mesh.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mountain.h"
 				>
 			</File>
 			<File
@@ -546,6 +566,10 @@
 			</File>
 			<File
 				RelativePath=".\Point3D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Pond.h"
 				>
 			</File>
 			<File

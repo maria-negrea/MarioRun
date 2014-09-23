@@ -35,7 +35,7 @@ public:
 	void AddRoadObject(OnRoadObject* object);
 	void Update();
 
-	Point3D OffRoad(OnRoadObject* onRoadObject);
+	void OffRoad(OnRoadObject* onRoadObject);
 	GLfloat GetCurrentLength();
 };
 

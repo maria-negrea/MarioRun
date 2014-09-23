@@ -255,7 +255,7 @@ void Mario::Translate(Point3D translation)
 	WorldObject::Translate(translation);
 	if(road != NULL)
 	{
-		Point3D offRoad = road->OffRoad(this);
+		road->OffRoad(this);
 	}
 }
 

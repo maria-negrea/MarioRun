@@ -124,8 +124,6 @@ void Scene::RemoveObject(WorldObject* object)
 		if(sceneObjects[i] == object)
 		{
 			sceneObjects.erase(sceneObjects.begin()+i);
-			
-		cout<<"Removed"<<endl;
 			break;
 		}
 	}

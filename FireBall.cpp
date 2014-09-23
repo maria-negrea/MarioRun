@@ -3,7 +3,7 @@
 
 Point3D AllDirections()
 {
-	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
+	int a = rand() % 100-50, b = (rand() % 100 - 50) / 200.0, c = rand() % 100-50;
 	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
 }
 
@@ -24,12 +24,19 @@ Point3D Translation() {
 }
 
 Point3D BoxPosition() {
-	return Point3D(rand() % 10-5, rand() % 10-5, rand() % 10-5).Normalize()*(rand()%10);
+	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100 - 50;
+	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
 }
 
 
 Point3D DefaultTranslation() {
 	return Point3D(0.0, 0.0, 0.0);
+}
+
+int gen() {
+	if(rand() % 2 == 0)
+		return 1;
+	return 0;
 }
 
 FireBall::FireBall(GLfloat radius)
@@ -58,11 +65,18 @@ void FireBall::DrawObject()
 	//gluQuadricTexture(quadratic, GL_TRUE);
 }
 
+int angleGen() {
+	return rand() % 100 + 10;
+}
+
+void AfterE(Point3D p) {
+}
+
 void FireBall::Update()
 {
 	if(particles == NULL)
 	{
-		particles = new Particles(AllDirections, BoxPosition);
+		particles = new Particles(AllDirections, BoxPosition, false, gen, Point3D(3.0, 3.0, 3.0), angleGen, AfterE);
 		scene->AddObject(particles);
 	}
 	Translate(GetForward()*5);

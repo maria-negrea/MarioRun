@@ -11,6 +11,8 @@
 #include "Line.h"
 #include "Segment2D.h"
 #include "Environment.h"
+#include "GlobalScore.h"
+#include "Pond.h"
 
 Scene *scene;
 Camera* mainCamera;
@@ -23,12 +25,6 @@ Omi* omi;
 Particles *particles;
 Point3D collision;
 
-int score = 0;
-
-PlantHead *newHead=new PlantHead(2,2,2);
-PlantLeaf *newLeaf=new PlantLeaf(2,2,2);
-PlantTulip *newTulip=new PlantTulip(2,2,2);
-
 Point3D Dir()
 {
 	int a = rand() % 100-50, b = (-1)*(rand() % 100 + 50), c = rand() % 100-50;
@@ -39,6 +35,10 @@ Point3D Tran()
 {
 	int a = rand() % 100-50, b = rand() % 100-50;
 	return Point3D(a*10.0, 0.0, b*10.0).Normalize()*20;
+}
+
+int generator() {
+	return rand() % 10 + 1;
 }
 
 Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
@@ -53,12 +53,27 @@ Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
 	return outside;
 }
 
+int angleG() {
+	return 180;
+}
+
+void AfterEff(Point3D p) {
+	cout<<"buhu"<<p.y<<endl;
+	Pond *pond = new Pond(environment->GetScene());
+	pond->Draw();
+	pond->Translate(Point3D(p.x, 0.01, p.z));
+	environment->AddObject(pond);
+}
+
+
 void Initialize()
 {
 	environment=new Environment();
 	environment->AddObjectsToScene();
 	
-	particles = new Particles(Dir, Tran);
+	particles = new Particles(Dir, Tran, true, generator, Point3D(0.5, 0.5, 0.5), angleG, AfterEff);
+
+	GlobalScore::GetInstance()->SetScore(0);
 
 	//environment->AddObject(particles);
 
@@ -110,7 +125,7 @@ void Timer(int value)
 {
 	environment->GetScene()->Update();
 	particles->Translate(-particles->GetTranslate());
-	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 15.0, 0.0));
+	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 25.0, 0.0));
 	glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }
@@ -167,9 +182,12 @@ void keyPressed(unsigned char key, int x, int y)
 			glutSpecialUpFunc(specialUpKey);
 			break;
 	case (char)32 :
-	   if(environment != NULL) 
-		   environment->GetMario()->Jump();
-	   break;
+			if(environment != NULL) environment->GetMario()->Jump();
+			break;
+
+	case 'r' :
+			if(environment != NULL) Initialize();
+			break;
 	}
 }  
 

@@ -7,6 +7,7 @@ Star::Star(GLfloat width, GLfloat height, GLfloat length)
 	this->height = height;
 	this->speed = 2;
 
+	road = NULL;
 }
 
 Star::~Star(void)
@@ -125,6 +126,6 @@ void Star::Translate(Point3D translation)
 	WorldObject::Translate(translation);
 	if(road != NULL)
 	{
-		Point3D offRoad = road->OffRoad(this);
+		road->OffRoad(this);
 	}
 }

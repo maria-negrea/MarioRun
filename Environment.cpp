@@ -113,7 +113,8 @@ void Environment:: InitializeObstacles()
 			}
 			case 4:
 			{
-				SplitBox* splitBox=new SplitBox(2, 2, 2);
+				SplitBox* splitBox=new SplitBox(5, 5, 5);
+				splitBox->AddCollider();
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, splitBox->width);
 				splitBox->Translate(currentPosition);
 				lastZ=initialPoint.z;
@@ -121,7 +122,7 @@ void Environment:: InitializeObstacles()
 				break;
 				
 			}
-			case 5:
+			/*case 5:
 			{
 				Box* box=new Box(2, 2, 2);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, box->width);
@@ -129,7 +130,7 @@ void Environment:: InitializeObstacles()
 				lastZ=initialPoint.z;
 				obstacles.push_back(box);
 				break;
-			}
+			}*/
 		}
 		i=lastZ;
 

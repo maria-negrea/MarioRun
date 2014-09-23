@@ -11,6 +11,7 @@
 #include "Line.h"
 #include "Segment2D.h"
 #include "Environment.h"
+#include "GlobalScore.h"
 
 Scene *scene;
 Camera* mainCamera;
@@ -22,12 +23,6 @@ Environment* environment;
 Omi* omi;
 Particles *particles;
 Point3D collision;
-
-int score = 0;
-
-PlantHead *newHead=new PlantHead(2,2,2);
-PlantLeaf *newLeaf=new PlantLeaf(2,2,2);
-PlantTulip *newTulip=new PlantTulip(2,2,2);
 
 Point3D Dir()
 {
@@ -59,6 +54,8 @@ void Initialize()
 	environment->AddObjectsToScene();
 	
 	particles = new Particles(Dir, Tran);
+
+	GlobalScore::GetInstance()->SetScore(0);
 
 	//environment->AddObject(particles);
 
@@ -165,6 +162,14 @@ void keyPressed(unsigned char key, int x, int y)
 
 			glutSpecialFunc(specialKey);
 			glutSpecialUpFunc(specialUpKey);
+			break;
+
+	case (char)32 :
+			if(environment != NULL) environment->GetMario()->Jump();
+			break;
+
+	case 'r' :
+			if(environment != NULL) Initialize();
 			break;
 	}
 }  

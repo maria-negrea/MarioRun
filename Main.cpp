@@ -12,6 +12,7 @@
 #include "Segment2D.h"
 #include "Environment.h"
 #include "GlobalScore.h"
+#include "Pond.h"
 
 Scene *scene;
 Camera* mainCamera;
@@ -36,6 +37,10 @@ Point3D Tran()
 	return Point3D(a*10.0, 0.0, b*10.0).Normalize()*20;
 }
 
+int generator() {
+	return rand() % 10 + 1;
+}
+
 Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
 {
 	GLfloat complementAngle=90.0-angle;
@@ -48,12 +53,25 @@ Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
 	return outside;
 }
 
+int angleG() {
+	return 180;
+}
+
+void AfterEff(Point3D p) {
+	cout<<"buhu"<<p.y<<endl;
+	Pond *pond = new Pond(environment->GetScene());
+	pond->Draw();
+	pond->Translate(Point3D(p.x, 0.01, p.z));
+	environment->AddObject(pond);
+}
+
+
 void Initialize()
 {
 	environment=new Environment();
 	environment->AddObjectsToScene();
 	
-	particles = new Particles(Dir, Tran);
+	particles = new Particles(Dir, Tran, true, generator, Point3D(0.5, 0.5, 0.5), angleG, AfterEff);
 
 	GlobalScore::GetInstance()->SetScore(0);
 
@@ -107,7 +125,7 @@ void Timer(int value)
 {
 	environment->GetScene()->Update();
 	particles->Translate(-particles->GetTranslate());
-	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 15.0, 0.0));
+	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 25.0, 0.0));
 	glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }

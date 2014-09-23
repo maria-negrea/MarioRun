@@ -4,8 +4,9 @@
 
 
 
-ParticleObject::ParticleObject(Point3D direction,Point3D position, Point3D emitterPosition, Point3D initialScale, Point3D finalScale)
+ParticleObject::ParticleObject(Point3D direction,Point3D position, Point3D emitterPosition, Point3D initialScale, Point3D finalScale, bool rain, AngleGenerator angleGen)
 {
+	this->rain = rain;
 	Translate(emitterPosition+position);
 	this->direction = direction;
 	alpha = rand() % 10 / 10 + 0.6;
@@ -15,11 +16,12 @@ ParticleObject::ParticleObject(Point3D direction,Point3D position, Point3D emitt
 
 	this->initialScale = initialScale;
 	this->finalScale = finalScale;
-
-	this->angle = 180;//rand() % 100 + 10;
-	rotate.z = 180;
+	this->angle = angleGen();
+	if(this->angle == 180)
+		rotate.z = this->angle;
 	
 	this->speed = ((rand()%50)+30) / 40;
+
 }
 
 ParticleObject::~ParticleObject(void)
@@ -39,7 +41,11 @@ void ParticleObject::DrawObject() {
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_DEPTH_TEST);
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[14]);
+	if(this->rain == true) {	
+		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[14]);
+	} else {
+		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[4]);
+	}
 	glColor4f ( 1.0, 1.0, 1.0, alpha);
 	glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);glVertex3f(-1.5, 1.5,  0.0);
@@ -67,7 +73,8 @@ void ParticleObject::Update() {
 	scale.x = initialScale.x + (finalScale.x - initialScale.x)*life;
 	scale.y = initialScale.y + (finalScale.y - initialScale.y)*life;
 	scale.z = initialScale.z + (finalScale.z - initialScale.z)*life;
-	//rotate.z = 0.0 + (angle - 0.0)*life;
+	if(this->angle != 180)
+		rotate.z = 0.0 + (angle - 0.0)*life;
 }
 
 double ParticleObject::GetLife() {

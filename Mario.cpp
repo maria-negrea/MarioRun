@@ -34,6 +34,10 @@ Mario::Mario():PhysicsObject(0.8)
 	head->Rotate(Point3D(0,0,0));
 	body = new Box(1,1,1);
 
+	upperArmLeft = new Box(0.4,0.6,0.4);
+	upperArmLeft->Rotate(Point3D(180,0,0));
+	upperArmLeft->Translate(Point3D(1.3,1.5,0));
+
 	upperLegRight = new Box(0.4,0.5,0.4);
 	upperLegRight->Rotate(Point3D(180,0,0));
 	upperLegRight->Translate(Point3D(0.5,0.0,0));	
@@ -57,6 +61,7 @@ Mario::Mario():PhysicsObject(0.8)
 	pelvis->AddChild(body);
 	body->Translate(Point3D(0,1,0));
 	body->AddChild(neck);
+	body->AddChild(upperArmLeft);
 	neck->Translate(Point3D(0,2,0));
 	neck->AddChild(head);
 	head->Translate(Point3D(0,0.5,0));
@@ -130,40 +135,7 @@ void Mario::RunAnimation()
 
 void Mario::JumpAnimation()
 {
-	Animation pelvisAnimation;
-	pelvisAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(0,200,0),pelvis->GetTranslate()));
-	pelvisAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(0,160,0),pelvis->GetTranslate()));
-	pelvis->SetAnimation(pelvisAnimation);
-
-	Animation upperLegRightAnimation;
-	upperLegRightAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(290,0,0),upperLegRight->GetTranslate()));
-	upperLegRightAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(80,0,0),upperLegRight->GetTranslate()));
-	upperLegRight->SetAnimation(upperLegRightAnimation);
-
-	Animation lowerLegRightAnimation;
-	lowerLegRightAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(-120,0,0),lowerLegRight->GetTranslate()));
-	lowerLegRightAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(0,0,0),lowerLegRight->GetTranslate()));
-	lowerLegRight->SetAnimation(lowerLegRightAnimation);
-
-	Animation rightFootAnimation;
-	rightFootAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(50,0,0),rightFoot->GetTranslate()));
-	rightFootAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(-50,0,0),rightFoot->GetTranslate()));
-	rightFoot->SetAnimation(rightFootAnimation);
-
-	Animation upperLegLeftAnimation;
-	upperLegLeftAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(80,0,0),upperLegLeft->GetTranslate()));
-	upperLegLeftAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(290,0,0),upperLegLeft->GetTranslate()));
-	upperLegLeft->SetAnimation(upperLegLeftAnimation);
-
-	Animation lowerLegLeftAnimation;
-	lowerLegLeftAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(0,0,0),lowerLegLeft->GetTranslate()));
-	lowerLegLeftAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(-120,0,0),lowerLegLeft->GetTranslate()));
-	lowerLegLeft->SetAnimation(lowerLegLeftAnimation);
 	
-	Animation leftFootAnimation;
-	leftFootAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(50,0,0),leftFoot->GetTranslate()));
-	leftFootAnimation.AddAnimationStep(AnimationStep(1.5,Point3D(-50,0,0),leftFoot->GetTranslate()));
-	leftFoot->SetAnimation(leftFootAnimation);
 }
 
 

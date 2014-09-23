@@ -23,12 +23,18 @@ class Mario : public PhysicsObject, public OnRoadObject
 	Box* neck;
 	Box* head;
 	Box* body;
+
 	Box* upperLegRight;
 	Box* lowerLegRight;
 	Box* rightFoot;
+
 	Box* upperLegLeft;
 	Box* lowerLegLeft;
 	Box* leftFoot;
+
+	Box* upperArmLeft;
+	Box* lowerArmLeft;
+	Box* leftHand;
 
 	void RunAnimation();
 	void JumpAnimation();

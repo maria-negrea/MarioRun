@@ -5,31 +5,31 @@
 
 Road::Road(void)
 {
-	srand(time(NULL));
+	 srand(time(NULL));
 
-	GLfloat width = 20;
-	GLfloat length = 40;
-	Point3D lastRoad(0, 0, -length/2);
-	roadSize=20;
+	 GLfloat width = 20;
+	 GLfloat length = 40;
+	 Point3D lastRoad(0, 0, -length/2);
+	 roadSize=20;
 
-	Point3D lastCurve = Point3D(0,0,1);
+	 Point3D lastCurve = Point3D(0,0,1);
 
-	double angle = 10;
+	 double angle = 10;
 
-	for(int i = 0; i < roadSize+1; i++)
-	{
-		Point3D newRoad = lastCurve.RotateY(angle);
-		lastCurve = newRoad;
+	 for(int i = 0; i < roadSize+1; i++)
+	 {
+		  Point3D newRoad = lastCurve.RotateY(angle);
+		  lastCurve = newRoad;
 
 		if(i % 5 == 0)
 			angle = rand() % 30 - 15;
 
-		leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
-		rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
+		  leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
+		  rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
 
-		roadVector.push_back(lastRoad);
-		lastRoad += newRoad*length;
-	}
+		  roadVector.push_back(lastRoad);
+		  lastRoad += newRoad*length;
+	 }
 }
 
 Road::~Road(void)

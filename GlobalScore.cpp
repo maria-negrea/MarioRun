@@ -28,3 +28,8 @@ int GlobalScore::GetScore()
 {
 	return globalScore;
 }
+
+void GlobalScore::SetScore(int score)
+{
+	globalScore = score;
+}

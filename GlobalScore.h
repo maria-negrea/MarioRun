@@ -14,4 +14,5 @@ public:
 	~GlobalScore(void);
 	static void UpdateScore(int score);
 	static int GetScore();
+	static void SetScore(int score);
 };

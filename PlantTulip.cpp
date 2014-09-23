@@ -112,8 +112,6 @@ void PlantTulip::Update()
 			  fireBall->Translate(GetRight()*0.5+GetForward()*1);
 			  fireBall->Rotate(rotate);
 			  fireBall->Translate(translate);
-			 
-			  
 			  contor=0;
 		  }
 		  contor++;

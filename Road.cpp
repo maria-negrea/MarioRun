@@ -112,7 +112,12 @@ void Road::SetOnRoadAngle(OnRoadObject* onRoadObject)
 		angle = -angle;
 	}
 
+	if(angle-onRoadObject->GetLastAngle() > 0.5)
+	{
+		cout<<angle-onRoadObject->GetLastAngle()<<endl;
+	}
 	onRoadObject->SetRotateY(angle);
+	onRoadObject->SetLastAngle(angle);
 }
 
 bool Road::IsOnIndex(OnRoadObject* onRoadObject)
@@ -235,7 +240,7 @@ vector<Point3D> Road::GetRight()
 	return rightVector;
 }
 
-Point3D Road::OffRoad(OnRoadObject* onRoadObject)
+void Road::OffRoad(OnRoadObject* onRoadObject)
 {
 	GLfloat width = 14;
 	int roadIndex = onRoadObject->GetIndex();
@@ -256,15 +261,13 @@ Point3D Road::OffRoad(OnRoadObject* onRoadObject)
 	if(relativObjPosition.x < -width)
 	{
 		relativObjPosition.x = -width;
-		onRoadObject->SetTranslate(relativObjPosition.RotateY(-angle));
+
 	}
 	if(relativObjPosition.x > width)
 	{
 		relativObjPosition.x = width;		
 	}
-	onRoadObject->SetTranslate(relativObjPosition.RotateY(-angle)+roadVector[roadIndex]);
-
-	return Point3D();
+	//onRoadObject->SetTranslate(relativObjPosition.RotateY(-angle)+roadVector[roadIndex]);
 }
 
 int Road:: GetRoadSize()

@@ -62,7 +62,7 @@ void Environment:: InitializeObstacles()
 	while(i<road->GetRoadSize()-2)
 	{
 		int type=rand()%4;
-		cout<<type<<endl;
+		//cout<<type<<endl;
 		Point3D initialPoint; 
 		initialPoint.x=GetRandomGLfloat(0.0, 1.0);
 		initialPoint.z=lastZ+rand()%3;
@@ -70,7 +70,7 @@ void Environment:: InitializeObstacles()
 		{
 			case 0:
 			{
-				//InitializeCoins(lastZ);
+				InitializeCoins(lastZ);
 				break;
 			}
 			case 1:
@@ -133,13 +133,13 @@ void Environment:: InitializeOffRoadObjects()
 			}
 			case 1:
 			{
-				PlantTulip* plant=new PlantTulip(2,2,2);
-				plant->SetTarget(mario);
-				plant->Scale(Point3D(3.0, 3.0, 3.0));
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 2.0);
-				plant->Translate(currentPosition);
-				lastZ=initialPoint.z;
-				offRoadObjects.push_back(plant);
+				//PlantTulip* plant=new PlantTulip(2,2,2);
+				//plant->SetTarget(mario);
+				//plant->Scale(Point3D(3.0, 3.0, 3.0));
+				//Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 2.0);
+				//plant->Translate(currentPosition);
+				//lastZ=initialPoint.z;
+				//offRoadObjects.push_back(plant);
 				break;
 			}
 		}

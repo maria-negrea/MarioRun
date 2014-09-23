@@ -41,18 +41,6 @@ Point3D Tran()
 	return Point3D(a*10.0, 0.0, b*10.0).Normalize()*20;
 }
 
-Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
-{
-	GLfloat complementAngle=90.0-angle;
-	Point3D outside;
-	GLfloat l1=pointIn.x*sin(angle*PI/180), l2=pointIn.z*cos(complementAngle*PI/180);
-	outside.x=l1+l2;
-	outside.z=pointIn.z*sin(complementAngle*PI/180)+pointIn.x*cos(angle*PI/180);
-	outside.y=0;
-
-	return outside;
-}
-
 void Initialize()
 {
 	environment=new Environment();

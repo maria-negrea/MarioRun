@@ -42,6 +42,7 @@ public:
 	void InitializeObstacles();
 	void InitializeOffRoadObjects();
 	void AddObjectsToScene();
+	void AddObject(WorldObject *obj);
 	Mario* GetMario();
 	Scene* GetScene();
 	void Update();

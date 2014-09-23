@@ -2,6 +2,8 @@
 #include <time.h>
 #include "Textures.h"
 
+
+
 ParticleObject::ParticleObject(Point3D direction,Point3D position, Point3D emitterPosition, Point3D initialScale, Point3D finalScale)
 {
 	Translate(emitterPosition+position);
@@ -14,7 +16,8 @@ ParticleObject::ParticleObject(Point3D direction,Point3D position, Point3D emitt
 	this->initialScale = initialScale;
 	this->finalScale = finalScale;
 
-	this->angle = rand() % 100 + 10;
+	this->angle = 180;//rand() % 100 + 10;
+	rotate.z = 180;
 	
 	this->speed = ((rand()%50)+30) / 40;
 }
@@ -24,11 +27,18 @@ ParticleObject::~ParticleObject(void)
 
 }
 
+
+bool ParticleObject::operator<(ParticleObject& a)
+{
+	Point3D camera = scene->GetCamera()->GetTranslate();
+	return (this->GetTranslate()-camera).Magnitude() < (a.translate-camera).Magnitude();
+}
+
 void ParticleObject::DrawObject() {
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glDisable(GL_DEPTH_TEST);
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[4]);
+	glDisable(GL_DEPTH_TEST);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[14]);
 	glColor4f ( 1.0, 1.0, 1.0, alpha);
 	glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);glVertex3f(-1.5, 1.5,  0.0);
@@ -39,7 +49,7 @@ void ParticleObject::DrawObject() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glColor4f ( 1.0, 1.0, 1.0, 1.0);
 	glDisable(GL_BLEND);
-	//glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH_TEST);
 }
 
 void ParticleObject::Update() {
@@ -56,7 +66,7 @@ void ParticleObject::Update() {
 	scale.x = initialScale.x + (finalScale.x - initialScale.x)*life;
 	scale.y = initialScale.y + (finalScale.y - initialScale.y)*life;
 	scale.z = initialScale.z + (finalScale.z - initialScale.z)*life;
-	rotate.z = 0.0 + (angle - 0.0)*life;
+	//rotate.z = 0.0 + (angle - 0.0)*life;
 }
 
 double ParticleObject::GetLife() {

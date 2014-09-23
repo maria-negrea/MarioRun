@@ -49,7 +49,10 @@ void Environment:: InitializeCoins(double& lastZ)
 			step+=PI/10.0;
 		}
 	}
-	
+}
+
+void Environment::AddObject(WorldObject *obj) {
+	scene->AddObject(obj);
 }
 
 void Environment:: InitializeObstacles()
@@ -131,7 +134,8 @@ void Environment:: InitializeOffRoadObjects()
 			case 1:
 			{
 				PlantTulip* plant=new PlantTulip(2,2,2);
-				plant->Scale(Point3D(3,3,3));
+				plant->SetTarget(mario);
+				plant->Scale(Point3D(3.0, 3.0, 3.0));
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 2.0);
 				plant->Translate(currentPosition);
 				lastZ=initialPoint.z;

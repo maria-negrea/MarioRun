@@ -6,13 +6,18 @@ Goomba::Goomba(void)
 {
 	Head *head = new Head();
 	Torso *torso = new Torso();
+	speed=1.05;
+
+	AddCollider();
+	hardCollider = true;
 	Foot *leftFoot = new Foot(6);
 	Foot *rightFoot = new Foot(6);
-	speed=1.1;
 
 	width=head->GetBigRadius()*2;
 	length=head->GetSmallRadius()*2;
 	height=5.5;
+	width = head->GetBigRadius()*2;
+	length = head->GetSmallRadius()*2;
 
 	Pivot *pivotLeftFoot = new Pivot();
 	pivotLeftFoot->AddChild(leftFoot);
@@ -48,10 +53,18 @@ Goomba::Goomba(void)
 	pivotRightFoot->SetAnimation(rightFootAnimation);
 
 	target = NULL;
+	dead = false;
 }
 
 void Goomba:: DrawObject()
 {
+}
+
+void Goomba::Damage()
+{
+	dead = true;
+	deathTime = 3.0;
+	RemoveCollider();
 }
 
 void Goomba:: SetTarget(WorldObject* target)
@@ -65,19 +78,29 @@ void Goomba:: SetTarget(WorldObject* target)
 #include <iostream>
 void Goomba::Update()
 {
-	if(target != NULL)
+	if(dead)
 	{
-		Translate(GetForward()*speed);
-		
-		Point3D point = target->GetTranslate()-GetTranslate();
-		point.y = 0;
-
-		GLfloat angleToTarget = AngleBetween(point);
-		Rotate(Point3D(0.0,angleToTarget, 0.0));
+		deathTime -= 0.1;
+		scale.y = scale.y*0.8;
+		if(deathTime < 0)
+		{
+			scene->RemoveObject(this);
+		}
 	}
-
-	if(Input::GetLeft())
-		Translate(Point3D(-10,0,0));
+	else
+	{
+		if(target != NULL)
+		{
+			Point3D point = target->GetTranslate()-GetTranslate();
+			point.y = 0;
+			if(point.Magnitude()<10)
+			{
+				Translate(GetForward()*speed);			
+				GLfloat angleToTarget = AngleBetween(point);
+				Rotate(Point3D(0.0,angleToTarget, 0.0));
+			}			
+		}
+	}
 }
 
 Goomba::~Goomba(void)

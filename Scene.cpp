@@ -28,10 +28,15 @@ void Scene::Render()
 	}
 
 	//Draws the objects on screen
-	for(unsigned i=0;i<sceneObjects.size();++i)
-	{
-		sceneObjects[i]->Draw();
-	}
+	
+	for(unsigned i = 0; i < 3; i++)
+	sceneObjects[i]->Draw();
+	//Draws the objects on screen
+	 for(unsigned i = 3; i<sceneObjects.size(); ++i)
+	 {
+		  if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 350)
+			sceneObjects[i]->Draw();
+	 }
 	glFlush();
 
 }
@@ -146,7 +151,7 @@ void Scene::CollisionCheck(WorldObject* object,Point3D direction)
 {
 	for(unsigned i=0;i<colliders.size();++i)
 	{
-		if(object != colliders[i])
+		if(object != colliders[i] && (object->GetTranslate() - colliders[i]->GetTranslate()).Magnitude() < 10)
 		{
 			Collision collision = colliders[i]->GetCollider()->Check(object);
 			if(collision.IsCollision())

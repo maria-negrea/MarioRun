@@ -43,9 +43,9 @@ public:
 	WorldObject(bool hasCollider);
 	~WorldObject();
 
-	void Translate(Point3D);
-	void Rotate(Point3D);
-	void Scale(Point3D);
+	virtual void Translate(Point3D);
+	virtual void Rotate(Point3D);
+	virtual void Scale(Point3D);
 
 	void Draw();
 
@@ -53,6 +53,7 @@ public:
 	Point3D GetRight();
 	Point3D GetScale();
 
+	Point3D GetSquareOutside(Point3D pointIn, GLfloat angle);
 	vector<Point3D> GetBoundingBox();
 
 	Point3D GetTranslate();
@@ -75,6 +76,8 @@ public:
 
 	Collider* GetCollider();
 	void AddCollider();
+	void RemoveCollider();
+
 	void SetCollider(Collider* collider);
 	void RemoveChild(WorldObject *child);
 

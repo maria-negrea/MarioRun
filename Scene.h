@@ -28,13 +28,13 @@ class Scene
 
 	/*! Removes an object from the updateObjects list */
 	void RemoveUpdatable(Updatable* object);
-	void RemoveCollider(WorldObject* object);
 
 	void AddSpecialObject(WorldObject* object);
 public:
 	Scene();
 	~Scene();
 	
+	void RemoveCollider(WorldObject* object);
 	/*!Draws the object on the screen */
 	void Render();
 	/*! Updates all the objects that need updating */

@@ -1,10 +1,12 @@
 #include "Star.h"
 
-Star::Star(void)
+Star::Star(GLfloat width, GLfloat height, GLfloat length)
 {
-	length = 0.1;
-	width = 0.8;
-	height = 1;
+	this->length = length;
+	this->width = width;
+	this->height = height;
+	this->speed = 2;
+
 }
 
 Star::~Star(void)
@@ -105,7 +107,10 @@ void Star::DrawObject()
 
 void Star::Update()
 {
-	Rotate(Point3D(0.0, 5.0, 0.0));
+	PhysicsObject::Update();
+	this->Translate(GetForward()*speed);
+	if(speed > 0.3)
+		this->speed -= 0.01;
 }
 
 void Star::Function(Mario *mario)
@@ -113,4 +118,13 @@ void Star::Function(Mario *mario)
 	scene->RemoveObject(this);
 	mario->SetInvulnerable();
 	GlobalScore::GetInstance()->UpdateScore(300);
+}
+
+void Star::Translate(Point3D translation)
+{
+	WorldObject::Translate(translation);
+	if(road != NULL)
+	{
+		Point3D offRoad = road->OffRoad(this);
+	}
 }

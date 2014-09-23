@@ -5,7 +5,7 @@
 #include "Box.h"
 #include "QuestionBlock.h"
 
-class Mario : public PhysicsObject
+class Mario : public PhysicsObject, public OnRoadObject
 {
 	void DrawObject();
 
@@ -17,6 +17,7 @@ class Mario : public PhysicsObject
 	bool invulnerable;
 
 	double time;
+	double jumpForce;
 
 	Box* pelvis;
 	Box* neck;
@@ -42,6 +43,9 @@ public:
 	void Jump();
 
 	void Hit(Collision collision);
+	void Damage();
+
+	void Translate(Point3D translation);
 
 	void SetSize();
 	bool GetBleep();

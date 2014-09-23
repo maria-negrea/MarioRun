@@ -160,11 +160,32 @@ void WorldObject::SetScene(Scene* scene)
 {
 	this->scene = scene;
 }
+
+
+Point3D WorldObject::GetSquareOutside(Point3D pointIn, GLfloat angle)
+{
+	GLfloat PI = 3.14159265359;
+	GLfloat alpha = angle*PI/180;
+
+	Point3D outside;
+	GLfloat l1=pointIn.x*sin(alpha), l2=pointIn.z*cos(alpha);
+	GLfloat w1=pointIn.x*cos(alpha), w2=pointIn.z*sin(alpha);
+
+	outside.z=l1+l2;
+	outside.x=w1+w2;
+	outside.y=pointIn.y;
+
+	return outside;
+}
+
 vector<Point3D> WorldObject::GetBoundingBox()
 {
+//	Point3D topBox = GetSquareOutside(Point3D(width,0,length),360-rotate.y);
+	Point3D topBox = Point3D(width,0,length);
+
 	vector<Point3D> res;
-		res.push_back(Point3D(translate.x - (width*scale.x)/2, translate.y, translate.z - (length*scale.z)/2));
-		res.push_back(Point3D(translate.x + (width*scale.x)/2, translate.y + height*scale.y, translate.z + (length*scale.z)/2));
+		res.push_back(Point3D(translate.x - (topBox.x*scale.x)/2, translate.y, translate.z - (topBox.z*scale.z)/2));
+		res.push_back(Point3D(translate.x + (topBox.x*scale.x)/2, translate.y + height*scale.y, translate.z + (topBox.z*scale.z)/2));
 	return res;
 }
 
@@ -191,6 +212,12 @@ void WorldObject::SetCollider(Collider* collider)
 void WorldObject::AddCollider()
 {
 	this->collider = new Collider(this);
+}
+
+void WorldObject::RemoveCollider()
+{
+	this->collider = NULL;
+	scene->RemoveCollider(this);
 }
 
 void WorldObject::SetVisibility(bool visibility)

@@ -58,45 +58,54 @@ void Environment:: InitializeObstacles()
 	double lastZ=0.0;
 	while(i<road->GetRoadSize()-2)
 	{
-		int type=rand()%5;
+		double type=rand()%25+1.0;
 		cout<<type<<endl;
 		Point3D initialPoint; 
 		initialPoint.x=GetRandomGLfloat(0.0, 1.0);
 		initialPoint.z=lastZ+rand()%3;
-		switch(type)
+		switch((int)sqrt(type))
 		{
-			case 0:
-			{
-				InitializeCoins(lastZ);
-				break;
-			}
 			case 1:
 			{
+				int  value=rand()%2;
+				QuestionBlock* questionBlock;
+				if(value==0)
+				{
+					Mushroom* mushroom=new Mushroom(5, 5, 5);
+					questionBlock=new QuestionBlock(mushroom, road, 5,5,5);
+				}
+				else
+				{
+
+					Mushroom* mushroom=new Mushroom(5, 5, 5);
+					questionBlock=new QuestionBlock(mushroom, road, 5,5,5);
+
+
+					/*Star* star=new Star(5, 5, 5);
+					questionBlock=new QuestionBlock(star, road, 5,5,5);*/
+				}
+
+				
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
+				currentPosition.y=12;
+				questionBlock->Translate(currentPosition);
+				lastZ=initialPoint.z;
+				obstacles.push_back(questionBlock);
+				break;
+			}
+			case 2:
+			{
 				Goomba* goomba=new Goomba();
+				goomba->SetTarget(mario);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, goomba->width);				
 				goomba->Translate(currentPosition);
 				lastZ=initialPoint.z;
 				obstacles.push_back(goomba);
 				break;
 			}
-			case 2:
-			{
-				QuestionBlock* questionBlock=new QuestionBlock(road, 5,5,5);
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
-				currentPosition.y=12;
-				questionBlock->Translate(currentPosition);
-				lastZ=initialPoint.z;
-				obstacles.push_back(questionBlock);
-				road->AddRoadObject(questionBlock);
-				break;
-			}
 			case 3:
 			{
-				Box* box=new Box(2, 2, 2);
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, box->width);
-				box->Translate(currentPosition);
-				lastZ=initialPoint.z;
-				obstacles.push_back(box);
+				InitializeCoins(lastZ);
 				break;
 			}
 			case 4:
@@ -107,11 +116,18 @@ void Environment:: InitializeObstacles()
 				lastZ=initialPoint.z;
 				obstacles.push_back(splitBox);
 				break;
+				
 			}
-
-
+			case 5:
+			{
+				Box* box=new Box(2, 2, 2);
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, box->width);
+				box->Translate(currentPosition);
+				lastZ=initialPoint.z;
+				obstacles.push_back(box);
+				break;
+			}
 		}
-
 		i=lastZ;
 
 	}
@@ -126,7 +142,7 @@ void Environment:: InitializeOffRoadObjects()
 		int type=rand()%2;
 		cout<<type<<endl;
 		Point3D initialPoint; 
-		initialPoint.x=GetRandomGLfloat(1.0, 3.0);
+		initialPoint.x=GetRandomGLfloat(1.0, 8.0);
 		initialPoint.z=lastZ+rand()%3;
 		switch(type)
 		{
@@ -142,7 +158,7 @@ void Environment:: InitializeOffRoadObjects()
 			case 1:
 			{
 				PlantTulip* plant=new PlantTulip(2,2,2);
-				plant->SetTarget(mario);
+				//plant->SetTarget(mario);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, plant->width);
 				plant->Translate(currentPosition);
 				plant->Scale(Point3D(3, 3, 3));
@@ -180,6 +196,8 @@ void Environment:: AddObjectsToScene()
 		scene->AddObject(obstacles[i]);
 	for(int i = 0; i < offRoadObjects.size(); i++)
 		scene->AddObject(offRoadObjects[i]);
+
+	road->AddRoadObject(mario);
 }
 
 Mario* Environment:: GetMario()

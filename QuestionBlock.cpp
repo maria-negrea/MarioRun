@@ -1,7 +1,8 @@
 #include "QuestionBlock.h"
 
-QuestionBlock::QuestionBlock(Road* road, GLfloat width, GLfloat height, GLfloat length)
+QuestionBlock::QuestionBlock(OnRoadObject* insideObject, Road* road, GLfloat width, GLfloat height, GLfloat length)
 {	
+	this->insideObject=insideObject;
 	this->width=width;
     this->height=height;
 	this->length=length;
@@ -17,7 +18,7 @@ QuestionBlock::~QuestionBlock(void)
 void QuestionBlock::Hit()
 { if(textureIndex==2)
 {
-	Mushroom *newMushroom=new Mushroom(width,height,length);
+	/*Mushroom *newMushroom=new Mushroom(width,height,length);
 
 	newMushroom->AddCollider();
 	
@@ -27,6 +28,18 @@ void QuestionBlock::Hit()
 	scene->AddObject(newMushroom);
 
 	road->AddRoadObject(newMushroom);
+
+	textureIndex=3;*/
+
+
+	insideObject->AddCollider();
+	
+	insideObject->Rotate(rotate);
+	insideObject->Translate(translate);
+	insideObject->Translate(Point3D(0,length,0));
+	scene->AddObject(insideObject);
+
+	road->AddRoadObject(insideObject);
 
 	textureIndex=3;
 }

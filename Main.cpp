@@ -12,7 +12,10 @@
 #include "Segment2D.h"
 #include "Environment.h"
 
-
+Scene *scene;
+Camera* mainCamera;
+Goomba* goomba;
+Mario* mario;
 
 Environment* environment;
 
@@ -57,23 +60,9 @@ Point3D DefaultTranslation() {
 	return Point3D(0.0, 0.0, 0.0);
 }
 
-
-Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
-{
-	GLfloat complementAngle=90.0-angle;
-	Point3D outside;
-	GLfloat l1=pointIn.x*sin(angle*PI/180), l2=pointIn.z*cos(complementAngle*PI/180);
-	outside.x=l1+l2;
-	outside.z=pointIn.z*sin(complementAngle*PI/180)+pointIn.x*cos(angle*PI/180);
-	outside.y=0;
-
-	return outside;
-}
-
 void Initialize() 
 {
 //	particles = new Particles(AllDirections, DefaultTranslation);
-
 	/*particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));*/
 
 	environment=new Environment();
@@ -152,34 +141,8 @@ void specialKey(int key, int x, int y)
 			Input::SetRight(true);
 			break;
 		case GLUT_KEY_F1:
-			//block->Hit();
 			environment->GetMario()->Jump();
 			break;
-
-		/*case GLUT_KEY_RIGHT :
-			snowMan->Rotate(Point3D(0,10,0));
-		break;
-		case GLUT_KEY_LEFT :
-			snowMan->Rotate(Point3D(0,-10,0));
-		break;
-		case GLUT_KEY_UP :
-			snowMan->Rotate(Point3D(10,0,0));
-		break;
-		case GLUT_KEY_DOWN :
-			snowMan->Rotate(Point3D(-10,0,0));
-		break;
-		case GLUT_KEY_F1 :
-			mainCamera->Translate(Point3D(0.0, 0.0, -1.0));
-		break;
-		case GLUT_KEY_F2 :
-			mainCamera->Translate(Point3D(0.0, 0.0, 1.0));
-		break;
-		case GLUT_KEY_F3:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
-		break;
-		case GLUT_KEY_F4:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); 
-		break;*/
 	}
 	glutPostRedisplay();
 }

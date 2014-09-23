@@ -5,13 +5,16 @@
 #include "Updatable.h"
 #include "Item.h"
 #include "GlobalScore.h"
+#include "OnRoadObject.h"
 
-class Star : public WorldObject, public Updatable, public Item
+class Star : public PhysicsObject, public OnRoadObject, public Item
 {
+	GLfloat speed;
 public:
-	Star(void);
+	Star(GLfloat width, GLfloat height, GLfloat length);
 	~Star(void);
 	void DrawObject();
 	void Update();
 	void Function(Mario *mario);
+	void Translate(Point3D translation);
 };

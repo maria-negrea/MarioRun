@@ -8,10 +8,15 @@ class Goomba: public WorldObject, public Updatable
 protected:
 	WorldObject* target;
 	GLfloat speed;
+
+	double deathTime;
+	bool dead;
 public:
 	Goomba(void);
 	void DrawObject();
 	void Update();
 	void SetTarget(WorldObject* target);
 	~Goomba(void);
+
+	void Damage();
 };

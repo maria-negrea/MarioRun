@@ -27,6 +27,7 @@ void QuestionBlock::Hit()
 	insideObject->Translate(Point3D(0,length,0));
 	scene->AddObject(insideObject);
 
+	insideObject->SetIndex(roadIndex);
 	road->AddRoadObject(insideObject);
 
 	textureIndex=3;

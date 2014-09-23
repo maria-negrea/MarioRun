@@ -211,6 +211,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Fence.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FencePart.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FireBall.cpp"
 				>
 			</File>
@@ -422,6 +430,14 @@
 			</File>
 			<File
 				RelativePath=".\Environment.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Fence.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FencePart.h"
 				>
 			</File>
 			<File

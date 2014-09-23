@@ -12,24 +12,15 @@ Particles::~Particles(void)
 }
 
 void Particles::DrawObject() 
-{	
-	/*AddChild(particle);*/
-	
-	//for(int i=0; i < particles.size(); i++) {
-	//	particles[i]->Draw();
-	//}
-	//if(particles.size() > 50) {
-	//	/*RemoveChild(children[0]);
-	//	children.erase(children.begin());*/
-	//	particles.erase(particles.begin());
-	//}
+{
+
 }
 
 void Particles::Update() {
 	
-	for(int i=0; i < rand() % 4 + 1; i++) {
-		ParticleObject* particle = new ParticleObject(directionGenerator(), translationGenerator(),translate, Point3D(3.0, 3.0, 3.0), Point3D(0.0, 0.0, 0.0));
-		particle->Rotate(Point3D(0,0,rand()%360));
+	for(int i=0; i < rand() % 10 + 1; i++) {
+		ParticleObject* particle = new ParticleObject(directionGenerator(), translationGenerator(),translate, Point3D(1.0, 1.0, 1.0), Point3D(0.0, 0.0, 0.0));
+		//particle->Rotate(Point3D(180,0,0));
 		particles.push_back(particle);
 
 		scene->AddObject(particle);

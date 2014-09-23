@@ -27,36 +27,36 @@ PlantLeaf *newLeaf=new PlantLeaf(2,2,2);
 PlantTulip *newTulip=new PlantTulip(2,2,2);
 
 
-//Point3D AllDirections()
+Point3D Dir()
+{
+	int a = rand() % 100-50, b = (-1)*(rand() % 100 + 50), c = rand() % 100-50;
+	return Point3D(0.2, b*1.0, 0.2).Normalize();
+}
+
+Point3D Tran()
+{
+	int a = rand() % 100-50, b = rand() % 100-50;
+	return Point3D(a*10.0, 0.0, b*10.0).Normalize()*20;
+}
+
+//Point3D NoDirection()
 //{
-//	int a = rand() % 100-50, b = rand() % 100-50, c = rand() % 100-50;
-//	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
+//	return Point3D(0.0, 0.0, 0.0).Normalize();
 //}
 //
-//Point3D Planar()
-//{
-//	int a = rand() % 100-50, b = rand() % 100-50;
-//	return Point3D(a*1.0, 0.0, b*1.0).Normalize();
+//Point3D Translation() {
+//	return Point3D(rand() % 5, rand() % 5, 0.0);
 //}
-
-Point3D NoDirection()
-{
-	return Point3D(0.0, 0.0, 0.0).Normalize();
-}
-
-Point3D Translation() {
-	return Point3D(rand() % 5, rand() % 5, 0.0);
-}
-
-Point3D BoxPosition() {
-	return Point3D(rand() % 10-5, rand() % 10-5, rand() % 10-5).Normalize()*(rand()%10);
-}
-
-
-Point3D DefaultTranslation() {
-	return Point3D(0.0, 0.0, 0.0);
-}
-
+//
+//Point3D BoxPosition() {
+//	return Point3D(rand() % 10-5, rand() % 10-5, rand() % 10-5).Normalize()*(rand()%10);
+//}
+//
+//
+//Point3D DefaultTranslation() {
+//	return Point3D(0.0, 0.0, 0.0);
+//}
+//
 
 Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
 {
@@ -72,13 +72,14 @@ Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
 
 void Initialize() 
 {
-//	particles = new Particles(AllDirections, DefaultTranslation);
-
-	/*particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));*/
-
 	environment=new Environment();
 	environment->AddObjectsToScene();
 	
+	particles = new Particles(Dir, Tran);
+
+	//environment->AddObject(particles);
+	
+	particles->Translate(Point3D(0.0, 15.0, 10.0));
 
 	Textures::GetInstance()->LoadGLTextures();
 	glEnable(GL_TEXTURE_2D);
@@ -127,7 +128,6 @@ void Draw()
 void Timer(int value)
 {
 	environment->GetScene()->Update();
-	//particles->Translate(-particles->GetTranslate()+mario->GetTranslate());
 
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
@@ -152,34 +152,8 @@ void specialKey(int key, int x, int y)
 			Input::SetRight(true);
 			break;
 		case GLUT_KEY_F1:
-			//block->Hit();
 			environment->GetMario()->Jump();
 			break;
-
-		/*case GLUT_KEY_RIGHT :
-			snowMan->Rotate(Point3D(0,10,0));
-		break;
-		case GLUT_KEY_LEFT :
-			snowMan->Rotate(Point3D(0,-10,0));
-		break;
-		case GLUT_KEY_UP :
-			snowMan->Rotate(Point3D(10,0,0));
-		break;
-		case GLUT_KEY_DOWN :
-			snowMan->Rotate(Point3D(-10,0,0));
-		break;
-		case GLUT_KEY_F1 :
-			mainCamera->Translate(Point3D(0.0, 0.0, -1.0));
-		break;
-		case GLUT_KEY_F2 :
-			mainCamera->Translate(Point3D(0.0, 0.0, 1.0));
-		break;
-		case GLUT_KEY_F3:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); 
-		break;
-		case GLUT_KEY_F4:
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); 
-		break;*/
 	}
 	glutPostRedisplay();
 }
@@ -207,9 +181,6 @@ int main(int argc, char** argv)
 	glutCreateWindow("Mario");
 	Initialize();
 	glutDisplayFunc(Draw);
-
-	//cout<<GetSquareOutside(Point3D(1, 1, 1), 45).x<<" "<<GetSquareOutside(Point3D(1, 1, 1), 45).y<<" "<<
-	//	GetSquareOutside(Point3D(1, 1, 1), 30).z<<endl;
 
 	glutSpecialFunc(specialKey);
 	glutSpecialUpFunc(specialUpKey);

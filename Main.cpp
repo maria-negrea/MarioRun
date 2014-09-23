@@ -60,52 +60,45 @@ void Initialize()
 	
 	particles = new Particles(Dir, Tran);
 
-	environment->AddObject(particles);
-	
-	Textures::GetInstance()->LoadGLTextures();
-	glEnable(GL_TEXTURE_2D);
-	glClearColor(0.0, 0.0, 0.0, 0.0);
-
-	
+	//environment->AddObject(particles);
 
 	// LIGHTING TEST
 
-	GLfloat light_position[] = { 1.0, 1.0, 10.0, 1.0};
-		
-	GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	//GLfloat spec[] = {253/255.0, 173/255.0, 0, 1};
-	GLfloat spec[] = {1.0, 1.0, 1.0, 1};
-	GLfloat em[] = {0, 0, 0, 1};
+	//GLfloat light_position[] = { 1.0, 1.0, 10.0, 1.0};
+	//	
+	//GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
+	//GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+	//GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	////GLfloat spec[] = {253/255.0, 173/255.0, 0, 1};
+	//GLfloat spec[] = {1.0, 1.0, 1.0, 1};
+	//GLfloat em[] = {0, 0, 0, 1};
 
-	//glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-	//glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-	
-	//glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-	//glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	////glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+	////glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
+	//
+	////glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+	////glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 
-	//glEnable(GL_LIGHTING);
+	////glEnable(GL_LIGHTING);
 
-	glEnable(GL_LIGHT0);
-	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_LIGHT0);
+	//glEnable(GL_DEPTH_TEST);
 
-	// /LIGHTING TEST
+	//// /LIGHTING TEST
 
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	
-	Textures::GetInstance()->LoadGLTextures();
-	glEnable(GL_BLEND);
-	GLfloat mat_amb_diff[] = { 0.1, 0.5, 0.8, 1.0 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, 
-            mat_amb_diff);
-	glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
-	glEnable ( GL_COLOR_MATERIAL ) ;
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, em);
-	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//
+	//glEnable(GL_BLEND);
+	//GLfloat mat_amb_diff[] = { 0.1, 0.5, 0.8, 1.0 };
+	//glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, 
+ //           mat_amb_diff);
+	//glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
+	//glEnable ( GL_COLOR_MATERIAL ) ;
+	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+	////glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
+	////glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, em);
+	//glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 }
 
 void Draw()
@@ -143,9 +136,6 @@ void specialKey(int key, int x, int y)
 		case GLUT_KEY_F2:
 			exit(0);
 			break;
-		case GLUT_KEY_F1:
-			environment->GetMario()->Jump();
-			break;
 	}
 	glutPostRedisplay();
 }
@@ -164,6 +154,55 @@ void specialUpKey(int key, int x, int y)
 	glutPostRedisplay();
 }
 
+void keyPressed(unsigned char key, int x, int y) 
+{
+	switch(key)
+	{
+	case (char)13 :
+			Initialize();
+			glutDisplayFunc(Draw);
+			glutTimerFunc(30, Timer, 0);
+
+			glutSpecialFunc(specialKey);
+			glutSpecialUpFunc(specialUpKey);
+			break;
+	}
+}  
+
+void DrawTitleScreen()
+{
+	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	glPushMatrix();
+	glTranslatef(0, 0, -2);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[11]);
+	glBegin(GL_QUADS);
+		glTexCoord2f(0, 1); glVertex3f(-1, 1, 0);
+		glTexCoord2f(1, 1); glVertex3f(1, 1, 0);
+		glTexCoord2f(1, 0); glVertex3f(1, -1, 0);
+		glTexCoord2f(0, 0); glVertex3f(-1, -1, 0);
+	glEnd();
+
+	glPopMatrix();
+
+	glFlush();
+}
+
+void InitializeTitleScreen()
+{
+	glEnable(GL_TEXTURE_2D);
+	glClearColor(0.0, 0.0, 0.0, 0.0);
+
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glEnable(GL_BLEND);
+
+	glEnable(GL_DEPTH_TEST);
+
+	Textures::GetInstance()->LoadGLTextures();
+}
+
+
 int main(int argc, char** argv)
 {
     glutInit(&argc, argv);
@@ -171,13 +210,12 @@ int main(int argc, char** argv)
 	glutInitWindowSize(768, 768);
 	glutInitWindowPosition(200, 200);
 	glutCreateWindow("Mario");
-	Initialize();
-	glutDisplayFunc(Draw);
 
-	glutSpecialFunc(specialKey);
-	glutSpecialUpFunc(specialUpKey);
+	InitializeTitleScreen();
+	glutDisplayFunc(DrawTitleScreen);
 
-	glutTimerFunc(30, Timer, 0);
+	glutKeyboardFunc(keyPressed);
+
 	glutReshapeFunc(reshape);
 	glutMainLoop();
 

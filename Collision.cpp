@@ -1,7 +1,7 @@
 #include "Collision.h"
 
 Collision::Collision(Point3D insidePositive,Point3D insideNegative,WorldObject* other)
-	:insidePositive(insidePositive),insideNegative(insideNegative),other(other)
+	:insidePositive(insidePositive*1.001),insideNegative(insideNegative*1.001),other(other)
 {
 }
 

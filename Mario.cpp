@@ -1,12 +1,15 @@
 #include "Mario.h"
 #include "MarioCollider.h"
+#include "Goomba.h"
 #include "Box.h"
 
-
-Mario::Mario()
+Mario::Mario():PhysicsObject(0.8)
 {
 	collider = new MarioCollider(this);
-	hardCollider=true;
+	hardCollider = true;
+	road = NULL;
+
+	jumpForce = 1.5;
 
 	length = 2;
 	width = 2;
@@ -78,45 +81,6 @@ void Mario::DrawObject()
 {
 }
 
-void Mario::Update()
-{
-	PhysicsObject::Update();
-	
-	forwardSpeed += acceleration;
-	if(forwardSpeed > maxSpeed)
-		forwardSpeed = maxSpeed;
-
-	Translate(GetForward()*forwardSpeed);
-
-	if(Input::GetLeft())
-		this->MoveLeft();
-
-	if(Input::GetRight())
-		this->MoveRight();
-
-	if(bleep == true)
-	{
-		if(invulnerable == false && time < 3)
-		{
-			visible = !visible;
-			time += 0.05;
-		}
-		else if(invulnerable == true && time <	10)
-		{
-			visible = !visible;
-			time += 0.05;
-		}
-		else
-		{
-			visible = true;
-			time = 0;
-			bleep = false;
-			invulnerable = false;
-		}
-	}
-
-}
-
 void Mario::Jump()
 {
 	if(IsGrounded())
@@ -125,31 +89,6 @@ void Mario::Jump()
 	}
 }
 
-void Mario::Hit(Collision collision)
-{
-	Point3D direction = collision.GetDirection();
-
-	if(direction.y > 0.8)
-	{
-		QuestionBlock *block = dynamic_cast<QuestionBlock*>(collision.GetHitObject());
-		if(block != NULL)
-			block->Hit();
-	}
-	else
-	{
-		if(direction.y < -0.8)
-		{
-			fallSpeed = 0;
-		}
-		else
-		{
-			if(direction.AngleBetween(GetForward()) < 3)
-			{
-				forwardSpeed = -1;
-			}
-		}
-	}
-}
 
 void Mario::RunAnimation()
 {
@@ -227,6 +166,79 @@ void Mario::JumpAnimation()
 	leftFoot->SetAnimation(leftFootAnimation);
 }
 
+
+void Mario::Update()
+{
+	PhysicsObject::Update();
+	
+	forwardSpeed += acceleration;
+	if(forwardSpeed > maxSpeed)
+		forwardSpeed = maxSpeed;
+
+	Translate(GetForward()*forwardSpeed);
+
+	if(Input::GetLeft())
+		this->MoveLeft();
+
+	if(Input::GetRight())
+		this->MoveRight();
+
+	if(bleep == true)
+	{
+		if(invulnerable == false && time < 3)
+		{
+			visible = !visible;
+			time += 0.05;
+		}
+		else if(invulnerable == true && time <	10)
+		{
+			visible = !visible;
+			time += 0.05;
+		}
+		else
+		{
+			visible = true;
+			time = 0;
+			bleep = false;
+			invulnerable = false;
+		}
+	}
+}
+
+void Mario::Hit(Collision collision)
+{
+	Point3D direction = collision.GetDirection();
+
+	if(direction.y > 0.8)
+	{
+		QuestionBlock *block = dynamic_cast<QuestionBlock*>(collision.GetHitObject());
+		if(block != NULL)
+			block->Hit();
+	}
+	else
+	{
+		if(direction.y < -0.8)
+		{
+			fallSpeed = 0;
+
+			Goomba* goomba = dynamic_cast<Goomba*>(collision.GetHitObject());
+			if(goomba != NULL)
+			{
+				fallSpeed = jumpForce;
+				goomba->Damage();
+			}
+		}
+		else
+		{
+			if(direction.AngleBetween(GetForward()) < 3)
+			{
+				forwardSpeed = -1;
+				Damage();
+			}
+		}
+	}
+}
+
 void Mario::MoveRight()
 {
 	Translate(GetRight()*-1);
@@ -237,6 +249,15 @@ void Mario::MoveLeft()
 	Translate(GetRight()*1);
 }
 
+
+void Mario::Translate(Point3D translation)
+{
+	WorldObject::Translate(translation);
+	if(road != NULL)
+	{
+		Point3D offRoad = road->OffRoad(this);
+	}
+}
 
 void Mario::SetSize()
 {
@@ -259,6 +280,15 @@ bool Mario::GetBleep()
 bool Mario::IsBig()
 {
 	return isBig;
+}
+
+void Mario::Damage()
+{
+	if(isBig)
+	{
+		isBig = false;
+	}
+	bleep = true;
 }
 
 void Mario::SetInvulnerable()

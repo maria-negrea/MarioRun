@@ -12,7 +12,10 @@
 #include "Segment2D.h"
 #include "Environment.h"
 
-
+Scene *scene;
+Camera* mainCamera;
+Goomba* goomba;
+Mario* mario;
 
 Environment* environment;
 
@@ -39,25 +42,6 @@ Point3D Tran()
 	return Point3D(a*10.0, 0.0, b*10.0).Normalize()*20;
 }
 
-//Point3D NoDirection()
-//{
-//	return Point3D(0.0, 0.0, 0.0).Normalize();
-//}
-//
-//Point3D Translation() {
-//	return Point3D(rand() % 5, rand() % 5, 0.0);
-//}
-//
-//Point3D BoxPosition() {
-//	return Point3D(rand() % 10-5, rand() % 10-5, rand() % 10-5).Normalize()*(rand()%10);
-//}
-//
-//
-//Point3D DefaultTranslation() {
-//	return Point3D(0.0, 0.0, 0.0);
-//}
-//
-
 Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
 {
 	GLfloat complementAngle=90.0-angle;
@@ -77,10 +61,8 @@ void Initialize()
 	
 	particles = new Particles(Dir, Tran);
 
-	//environment->AddObject(particles);
+	environment->AddObject(particles);
 	
-	particles->Translate(Point3D(0.0, 15.0, 10.0));
-
 	Textures::GetInstance()->LoadGLTextures();
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
@@ -128,8 +110,9 @@ void Draw()
 void Timer(int value)
 {
 	environment->GetScene()->Update();
-
-    glutPostRedisplay();
+	particles->Translate(-particles->GetTranslate());
+	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 15.0, 0.0));
+	glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }
 

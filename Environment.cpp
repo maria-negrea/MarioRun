@@ -133,8 +133,8 @@ void Environment:: InitializeOffRoadObjects()
 			case 1:
 			{
 				PlantTulip* plant=new PlantTulip(2,2,2);
-				//plant->SetTarget(mario);
-				plant->Scale(Point3D(2.0, 2.0, 2.0));
+				plant->SetTarget(mario);
+				plant->Scale(Point3D(3.0, 3.0, 3.0));
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 2.0);
 				plant->Translate(currentPosition);
 				lastZ=initialPoint.z;
@@ -171,6 +171,8 @@ void Environment:: AddObjectsToScene()
 		scene->AddObject(obstacles[i]);
 	for(int i = 0; i < offRoadObjects.size(); i++)
 		scene->AddObject(offRoadObjects[i]);
+
+	road->AddRoadObject(mario);
 }
 
 Mario* Environment:: GetMario()

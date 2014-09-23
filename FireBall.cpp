@@ -20,6 +20,7 @@ FireBall::FireBall(GLfloat radius)
 	length = 1;
 	this->radius=radius;
 	distanceTravelled = 0;
+	particles = NULL;
 }
 
 FireBall::~FireBall(void)

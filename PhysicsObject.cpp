@@ -1,6 +1,7 @@
 #include "PhysicsObject.h"
 
-PhysicsObject::PhysicsObject()
+PhysicsObject::PhysicsObject(double bouce)
+	:bounce(bounce)
 {
 	fallSpeed = 0;
 	isGrounded = true;
@@ -18,7 +19,7 @@ bool PhysicsObject::IsGrounded()
 void PhysicsObject::Update()
 {
 	fallSpeed -= 0.1;
-	Point3D lastY = translate.y;
+	GLfloat lastY = translate.y;
 
 	Translate(Point3D(0,fallSpeed,0));
 
@@ -27,7 +28,7 @@ void PhysicsObject::Update()
 		translate.y = 0;
 	}
 
-	if(lastY == translate.y)
+	if(abs(lastY-translate.y) < 0.0001)
 	{
 		isGrounded = true;
 	}
@@ -40,7 +41,9 @@ void PhysicsObject::Update()
 	{
 		if(IsGrounded())
 		{
-			fallSpeed = 0;
+			fallSpeed = -fallSpeed*bounce;
+			if(abs(fallSpeed) > 0.0001)
+				fallSpeed = 0;
 		}
 	}
 }

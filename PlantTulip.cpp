@@ -11,7 +11,7 @@ PlantTulip::PlantTulip(GLfloat width, GLfloat height, GLfloat size)
 	contor=0;
 	head=new PlantHead(width, height, size);
 	leaf=new PlantLeaf(width, height, size);
-	head->Translate(Point3D(0.5, 3.3, 0.4));
+	head->Translate(Point3D(0.5, 3.3,0.4));
 	head->Rotate(Point3D(180, -20, 0));
 	leaf->Translate(Point3D(0, 0, -0.4));
 	this->AddChild(head);
@@ -77,9 +77,6 @@ void PlantTulip::DrawTulip()
 			glVertex3f(base[k].x, base[k].y+initialsize, base[k].z);
 		glEnd();
 
-     
-
-
 	}
 
     if(i%2==0)
@@ -100,7 +97,6 @@ void PlantTulip::DrawObject()
 
 void PlantTulip::Update()
 {	
-	
 	if(target != NULL)
 	 {  
 		  Point3D point = target->GetTranslate()-GetTranslate();

@@ -275,6 +275,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\OnRoadObject.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ParticleObject.cpp"
 				>
 			</File>
@@ -288,6 +292,10 @@
 			</File>
 			<File
 				RelativePath=".\Pipe.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Pivot.cpp"
 				>
 			</File>
 			<File
@@ -323,11 +331,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\RoadWorldObjectLink.cpp"
+				RelativePath=".\Scene.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Scene.cpp"
+				RelativePath=".\Score.cpp"
 				>
 			</File>
 			<File
@@ -473,6 +481,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\OnRoadObject.h"
+				>
+			</File>
+			<File
 				RelativePath=".\ParticleObject.h"
 				>
 			</File>
@@ -486,10 +498,6 @@
 			</File>
 			<File
 				RelativePath=".\Pipe.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Pivot.cpp"
 				>
 			</File>
 			<File
@@ -529,15 +537,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\RoadWorldObjectLink.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Scene.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Score.cpp"
 				>
 			</File>
 			<File

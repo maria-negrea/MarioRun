@@ -323,6 +323,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Pond.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\QuestionBlock.cpp"
 				>
 			</File>
@@ -526,6 +530,10 @@
 			</File>
 			<File
 				RelativePath=".\Point3D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Pond.h"
 				>
 			</File>
 			<File

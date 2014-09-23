@@ -355,6 +355,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Star.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Textures.cpp"
 				>
 			</File>
@@ -562,6 +566,10 @@
 			</File>
 			<File
 				RelativePath=".\SplitBox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Star.h"
 				>
 			</File>
 			<File

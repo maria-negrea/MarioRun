@@ -10,7 +10,6 @@ Road::Road(void)
 	GLfloat width = 20;
 	GLfloat length = 40;
 	Point3D lastRoad(0, 0, -length/2);
-	Point3D currentRoad;
 	roadSize=20;
 
 	Point3D lastCurve = Point3D(0,0,1);
@@ -25,17 +24,16 @@ Road::Road(void)
 		if(i % 5 == 0)
 			angle = rand() % 30 - 15;
 
-		leftVector.push_back(newRoad.RotateY(-90)*width + lastRoad);
-		rightVector.push_back(newRoad.RotateY(90)*width + lastRoad);
+		leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
+		rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
 
-		roadVector.push_back(currentRoad);
-
-		lastRoad = currentRoad;
-		currentRoad += newRoad*length;
+		roadVector.push_back(lastRoad);
+		lastRoad += newRoad*length;
 	}
 }
 
 Road::~Road(void)
+
 {
 }
 
@@ -191,27 +189,27 @@ Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 		posX = -posX;
 	}
 		
-	Point3D intermediateZ = roadVector[indexZ] + (roadVector[indexZ+1] - roadVector[indexZ]) * posZ;
+	Point3D intermediateZ = (roadVector[indexZ+1] - roadVector[indexZ]) * posZ;
 
 	int index=indexZ;
 
 	Point3D intermediateX;
 	if(point.x<0)
 	{
-		intermediateX = roadVector[indexZ] + (rightVector[index] - roadVector[indexZ]) * posX;
+		intermediateX = (rightVector[index] - roadVector[indexZ]) * posX;
 	}
 	else
 	{
-		intermediateX = roadVector[indexZ] + (leftVector[index] - roadVector[indexZ]) * posX;
+		intermediateX = (leftVector[index] - roadVector[indexZ]) * posX;
 	}
 
-	Point3D result = roadVector[indexZ] + (intermediateZ - roadVector[indexZ]) + (intermediateX - roadVector[indexZ]);
+	Point3D result = roadVector[indexZ] + intermediateZ + intermediateX;
 
-	if(result.x+obstacleWidth>leftVector[indexZ].x)
+	if(result.x+obstacleWidth+2>leftVector[indexZ].x)
 	{
 		result.x-=obstacleWidth;
 	}
-	if(result.x-obstacleWidth>rightVector[indexZ].x)
+	if(result.x-obstacleWidth-2>rightVector[indexZ].x)
 	{
 		result.x+=obstacleWidth;
 	}
@@ -242,7 +240,7 @@ vector<Point3D> Road::GetRight()
 
 void Road::OffRoad(OnRoadObject* onRoadObject)
 {
-	GLfloat width = 14;
+	GLfloat width = 16;
 	int roadIndex = onRoadObject->GetIndex();
 
 	Point3D reachPosition = onRoadObject->GetTranslate();
@@ -267,7 +265,7 @@ void Road::OffRoad(OnRoadObject* onRoadObject)
 	{
 		relativObjPosition.x = width;		
 	}
-	//onRoadObject->SetTranslate(relativObjPosition.RotateY(-angle)+roadVector[roadIndex]);
+	onRoadObject->SetTranslate(relativObjPosition.RotateY(-angle)+roadVector[roadIndex]);
 }
 
 int Road:: GetRoadSize()

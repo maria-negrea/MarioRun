@@ -91,21 +91,21 @@ float Collider::Min(float x,float y)
 
 Collision Collider::Check(WorldObject* other) 
 {
-	//vector<Point3D> a = object->GetBoundingBox();
-	//vector<Point3D> b = other->GetBoundingBox();
+	vector<Point3D> a = object->GetBoundingBox();
+	vector<Point3D> b = other->GetBoundingBox();
 
-	//if(a[1].x > b[0].x &&
-	//	a[0].x < b[1].x &&
-	//	a[1].y > b[0].y &&
-	//	a[0].y < b[1].y &&
-	//	a[1].z > b[0].z &&
-	//	a[0].z < b[1].z)
-	//{
-	//	return Collision(Point3D(b[1].x-a[0].x,b[1].y-a[0].y,b[1].z-a[0].z),Point3D(b[0].x-a[1].x,b[0].y-a[1].y,b[0].z-a[1].z),object);
-	//}
-	//else
-	//{
-	//	return Collision();
-	//}
+	if(a[1].x > b[0].x &&
+		a[0].x < b[1].x &&
+		a[1].y > b[0].y &&
+		a[0].y < b[1].y &&
+		a[1].z > b[0].z &&
+		a[0].z < b[1].z)
+	{
+		return Collision(Point3D(b[1].x-a[0].x,b[1].y-a[0].y,b[1].z-a[0].z),Point3D(b[0].x-a[1].x,b[0].y-a[1].y,b[0].z-a[1].z),object);
+	}
+	else
+	{
+		return Collision();
+	}
 	return false;
 }

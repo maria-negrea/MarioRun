@@ -9,7 +9,7 @@ Road::Road(void)
 
 	GLfloat width = 20;
 	GLfloat length = 40;
-	Point3D lastRoad(0, 0, -length);
+	Point3D lastRoad(0, 0, -length/2);
 	Point3D currentRoad;
 	roadSize=20;
 
@@ -17,7 +17,7 @@ Road::Road(void)
 
 	double angle = 10;
 
-	for(int i = 0; i < roadSize; i++)
+	for(int i = 0; i < roadSize+1; i++)
 	{
 		Point3D newRoad = lastCurve.RotateY(angle);
 		lastCurve = newRoad;
@@ -177,7 +177,7 @@ bool Road::IsOnIndex(OnRoadObject* onRoadObject)
 
 Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 {
-	int indexZ=(int) point.z;	
+	int indexZ= floor(point.z);	
 	double posZ = point.z-indexZ;
 	double posX = point.x;
 

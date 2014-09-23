@@ -45,7 +45,7 @@ void PlantTulip::DrawTulip()
 
 
 
-	for (double t = 0; t < 2 * PI; t = t + 0.1)
+	for (double t = 0; t < 2 * PI; t = t + 1.0)
 		base.push_back(Point3D(radius*0.5*cos(t), initialsize,  radius*0.5*sin(t)));
 	    base.push_back(Point3D(radius*0.5*cos(0.),initialsize, 0));
 	

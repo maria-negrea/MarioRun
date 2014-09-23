@@ -67,7 +67,7 @@ void Environment:: InitializeObstacles()
 		{
 			case 0:
 			{
-				InitializeCoins(lastZ);
+				//InitializeCoins(lastZ);
 				break;
 			}
 			case 1:
@@ -122,6 +122,7 @@ void Environment:: InitializeOffRoadObjects()
 			{
 				Tree*tree=new Tree();
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 2.0);
+				tree->Scale(Point3D(2,2,2));
 				tree->Translate(currentPosition);
 				lastZ=initialPoint.z;
 				offRoadObjects.push_back(tree);

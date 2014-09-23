@@ -171,9 +171,6 @@ int main(int argc, char** argv)
 	Initialize();
 	glutDisplayFunc(Draw);
 
-	//cout<<GetSquareOutside(Point3D(1, 1, 1), 45).x<<" "<<GetSquareOutside(Point3D(1, 1, 1), 45).y<<" "<<
-	//	GetSquareOutside(Point3D(1, 1, 1), 30).z<<endl;
-
 	glutSpecialFunc(specialKey);
 	glutSpecialUpFunc(specialUpKey);
 

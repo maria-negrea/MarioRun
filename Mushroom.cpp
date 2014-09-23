@@ -179,7 +179,11 @@ void Mushroom::Update()
 void Mushroom::Function(Mario *mario)
 {
 	scene->RemoveObject(this);
-	mario->SetSize();
+	
+	if(!mario->IsBig())
+		mario->SetSize();
+
+	GlobalScore::GetInstance()->UpdateScore(1000);
 }
 
 void Mushroom::Translate(Point3D translation)

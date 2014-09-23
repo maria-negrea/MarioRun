@@ -37,5 +37,6 @@ public:
 	Point3D Normalize();
 	float AngleBetween(Point3D point);
 	friend istream& operator>>(istream& in, Point3D& point);
+	friend ostream& operator<<(ostream& out, Point3D point);
 	friend GLfloat GetRandomGLfloat(GLfloat min, GLfloat max);
 };

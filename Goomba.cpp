@@ -91,13 +91,14 @@ void Goomba::Update()
 	{
 		if(target != NULL)
 		{
-			Translate(GetForward()*speed);
-			
 			Point3D point = target->GetTranslate()-GetTranslate();
 			point.y = 0;
-
-			GLfloat angleToTarget = AngleBetween(point);
-			Rotate(Point3D(0.0,angleToTarget, 0.0));
+			if(point.Magnitude()<10)
+			{
+				Translate(GetForward()*speed);			
+				GLfloat angleToTarget = AngleBetween(point);
+				Rotate(Point3D(0.0,angleToTarget, 0.0));
+			}			
 		}
 	}
 }

@@ -12,7 +12,7 @@ SplitBox::~SplitBox(void)
 }
 void SplitBox::DrawObject()
 {
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[3]);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[8]);
   glBegin(GL_QUADS);
  // front face
   glTexCoord2f(0, 1);glVertex3f(0.-width/2,height*0.75, 0-length/2.);

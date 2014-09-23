@@ -9,7 +9,7 @@ Road::Road(void)
 
 	GLfloat width = 20;
 	GLfloat length = 40;
-	Point3D lastRoad(0, 0, -length);
+	Point3D lastRoad(0, 0, -length/2);
 	Point3D currentRoad;
 	roadSize=20;
 
@@ -177,7 +177,7 @@ bool Road::IsOnIndex(OnRoadObject* onRoadObject)
 
 Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 {
-	int indexZ=(int) point.z;	
+	int indexZ= floor(point.z);	
 	double posZ = point.z-indexZ;
 	double posX = point.x;
 
@@ -202,11 +202,11 @@ Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 
 	Point3D result = roadVector[indexZ] + (intermediateZ - roadVector[indexZ]) + (intermediateX - roadVector[indexZ]);
 
-	if(result.x+obstacleWidth>leftVector[indexZ].x)
+	if(result.x+obstacleWidth+2>leftVector[indexZ].x)
 	{
 		result.x-=obstacleWidth;
 	}
-	if(result.x-obstacleWidth>rightVector[indexZ].x)
+	if(result.x-obstacleWidth-2>rightVector[indexZ].x)
 	{
 		result.x+=obstacleWidth;
 	}

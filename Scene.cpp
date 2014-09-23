@@ -22,24 +22,20 @@ void Scene::Render()
 	//Sets the perspective to the perspective of the main camera
 	mainCamera->Perspective();
 
-	for(unsigned i=0;i<lightSources.size();++i)
+	/*for(unsigned i=0;i<lightSources.size();++i)
 	{
 		lightSources[i]->Illuminate();
+	}*/
+
+	for(unsigned i = 0; i < 3; i++)
+		sceneObjects[i]->Draw();
+	 //Draws the objects on screen
+	for(unsigned i = 3; i<sceneObjects.size(); ++i)
+	{
+		 if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 400)
+			sceneObjects[i]->Draw();
 	}
 
-	//Draws the objects on screen
-	for(unsigned i=0;i<sceneObjects.size();++i)
-	{
-		sceneObjects[i]->Draw();
-	}
-	
-	//LIGHTING
-	glDisable (GL_LIGHTING);
-	Point3D pos = sceneObjects[0]->GetTranslate() + sceneObjects[0]->GetForward()*50;
-	GLfloat light_position[] = { pos.x, 5.0, pos.z, 1.0};
-	glLightfv (GL_LIGHT0, GL_POSITION, light_position);
-	glEnable (GL_LIGHTING);
-	
 	glFlush();
 
 }
@@ -152,7 +148,7 @@ void Scene::CollisionCheck(WorldObject* object,Point3D direction)
 {
 	for(unsigned i=0;i<colliders.size();++i)
 	{
-		if(object != colliders[i])
+		if(object != colliders[i] && (object->GetTranslate() - colliders[i]->GetTranslate()).Magnitude() < 20)
 		{
 			Collision collision = colliders[i]->GetCollider()->Check(object);
 			if(collision.IsCollision())

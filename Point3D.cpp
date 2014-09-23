@@ -99,6 +99,12 @@ istream& operator>>(istream& in, Point3D& point)
 	return in>>point.x>>point.y>>point.z;
 }
 
+ostream& operator<<(ostream& out, Point3D point)
+{
+	return out<<point.x<<" "<<point.y<<" "<<point.z;
+}
+
+
 GLfloat GetRandomGLfloat(GLfloat min, GLfloat max)
 {
 	GLfloat range = max - min;

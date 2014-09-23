@@ -4,6 +4,7 @@
 #include"PhysicsObject.h"
 #include"Textures.h"
 #include "Item.h"
+#include "GlobalScore.h"
 
 class Mushroom : public PhysicsObject, public OnRoadObject, public Item
 {

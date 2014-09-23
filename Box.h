@@ -1,5 +1,6 @@
 #pragma once
 #include "AnimatedWorldObject.h"
+#include "Textures.h"
 
 class Box : public AnimatedWorldObject
 {

@@ -1,6 +1,7 @@
 #include "Mario.h"
 #include "MarioCollider.h"
 #include "Goomba.h"
+#include "Box.h"
 
 Mario::Mario():PhysicsObject(0.8)
 {
@@ -21,6 +22,7 @@ Mario::Mario():PhysicsObject(0.8)
 	bleep = false;
 	isBig = false;
 	time = 0;
+	invulnerable = false;
 
 	pelvis = new Box(1,0.5,1);
 
@@ -74,6 +76,19 @@ Mario::~Mario()
 {
 
 }
+
+void Mario::DrawObject()
+{
+}
+
+void Mario::Jump()
+{
+	if(IsGrounded())
+	{
+		fallSpeed += 1.5;
+	}
+}
+
 
 void Mario::RunAnimation()
 {
@@ -151,9 +166,6 @@ void Mario::JumpAnimation()
 	leftFoot->SetAnimation(leftFootAnimation);
 }
 
-void Mario::DrawObject()
-{
-}
 
 void Mario::Update()
 {
@@ -173,7 +185,12 @@ void Mario::Update()
 
 	if(bleep == true)
 	{
-		if(time < 3)
+		if(invulnerable == false && time < 3)
+		{
+			visible = !visible;
+			time += 0.05;
+		}
+		else if(invulnerable == true && time <	10)
 		{
 			visible = !visible;
 			time += 0.05;
@@ -183,15 +200,8 @@ void Mario::Update()
 			visible = true;
 			time = 0;
 			bleep = false;
+			invulnerable = false;
 		}
-	}
-}
-
-void Mario::Jump()
-{
-	if(IsGrounded())
-	{
-		fallSpeed += jumpForce;
 	}
 }
 
@@ -279,4 +289,15 @@ void Mario::Damage()
 		isBig = false;
 	}
 	bleep = true;
+}
+
+void Mario::SetInvulnerable()
+{
+	invulnerable = true;
+	bleep = true;
+}
+
+bool Mario::GetInvulnerable()
+{
+	return invulnerable;
 }

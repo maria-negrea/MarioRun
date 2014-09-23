@@ -1,18 +1,7 @@
-#include "Scene.h"
 #include "Plant.h"
 #include "Box.h"
-#include "Mario.h"
-#include "MarioCamera.h"
 #include "Textures.h"
-#include "Goomba.h"
-#include "Foot.h"
-#include "Torso.h"
-#include "Head.h"
-#include "Ground.h"
-#include "Coin.h"
 #include "Particles.h"
-#include "QuestionBlock.h"
-#include "Tree.h"
 #include "Input.h"
 #include "PlantTulip.h"
 #include "PlantHead.h"
@@ -21,30 +10,25 @@
 #include "Omi.h"
 #include "Line.h"
 #include "Segment2D.h"
+#include "Environment.h"
 
 Scene *scene;
 Camera* mainCamera;
 Goomba* goomba;
 Mario* mario;
 
-//Box* test1;
-
-Tree* tree;
+Environment* environment;
 
 Omi* omi;
 Particles *particles;
-Coin *coin ;
 Point3D collision;
 
 int score = 0;
 
-Box *test1, *test2;
+PlantHead *newHead=new PlantHead(2,2,2);
+PlantLeaf *newLeaf=new PlantLeaf(2,2,2);
+PlantTulip *newTulip=new PlantTulip(2,2,2);
 
-QuestionBlock *block;
-Road *newRoad;
-PlantTulip *newTulip;
-
-vector<Coin*> coins;
 
 //Point3D AllDirections()
 //{
@@ -76,77 +60,14 @@ Point3D DefaultTranslation() {
 	return Point3D(0.0, 0.0, 0.0);
 }
 
-void AddObjectsToScene() 
-{
-	scene->AddObject(newRoad);
-	scene->AddObject(test1);
-	scene->AddObject(goomba);
-	//scene->AddObject(test2);
-	//scene->AddObject(coin);
-	scene->AddObject(new Ground);
-//	scene->AddObject(newTulip);
-//	scene->AddObject(particles);
-	scene->AddObject(mario);
-	//scene->AddObject(newTulip);
-	scene->AddObject(block);
-
-	for(int i = 0; i < coins.size(); i++)
-		scene->AddObject(coins[i]);
-
-	newRoad->AddRoadObject(mario);
-	newRoad->AddRoadObject(block);
-}
-
 void Initialize() 
 {
-	scene = new Scene();
-
-	newRoad = new Road();
-
 //	particles = new Particles(AllDirections, DefaultTranslation);
-	
-	block = new QuestionBlock(newRoad,7, 7, 7);
-	block->Translate(Point3D(0, 12, 70));
-	block->AddCollider();
-		
-	mario = new Mario();
-	mario->Translate(Point3D(0.1,0.0,0.0));
-	double x = 5;
-	for(int i = 0; i < 10; i++)
-	{
-		Coin *newCoin = new Coin;
-		newCoin->Translate(newRoad->GetCoinPoint(x, 0, 0));
-		newCoin->Scale(Point3D(5.0, 5.0, 5.0));
-		newCoin->AddCollider();
-
-		coins.push_back(newCoin);
-		x += 0.1;
-	}
-
-	newTulip = new PlantTulip(2,2,2);
-	newTulip->Translate(Point3D(-10,0.5,100));
-
-	newTulip->SetTarget(mario);
-	newTulip->Scale(Point3D(1,1,1));
-
-	mainCamera = new MarioCamera(mario);
-	mainCamera->Translate(Point3D(0,10,0));
-	scene->SetMainCamera(mainCamera);
-
-	goomba=new Goomba();
-	goomba->SetTarget(mario);
-	goomba->Translate(Point3D(-5, 0, 100));
-
-	//tree=new Tree();
-	//tree->Translate(Point3D(-5, 0, 40));
-	
-	test1 = new Box(2,2,10);
-	test1->Translate(Point3D(0.0, 1.0, 110.0));
-	test1->AddCollider();
-	
 	/*particles->Translate(mario->GetTranslate() + Point3D(0.0, 10.0, 0.0));*/
 
-	AddObjectsToScene();
+	environment=new Environment();
+	environment->AddObjectsToScene();
+	
 
 	Textures::GetInstance()->LoadGLTextures();
 	glEnable(GL_TEXTURE_2D);
@@ -189,12 +110,14 @@ void Initialize()
 
 void Draw()
 {
-	scene->Render();
+	environment->GetScene()->Render();
 }
 
 void Timer(int value)
 {
-	scene->Update();
+	environment->GetScene()->Update();
+	//particles->Translate(-particles->GetTranslate()+mario->GetTranslate());
+
     glutPostRedisplay();
     glutTimerFunc(30, Timer, 0);
 }
@@ -218,8 +141,7 @@ void specialKey(int key, int x, int y)
 			Input::SetRight(true);
 			break;
 		case GLUT_KEY_F1:
-			//block->Hit();
-			mario->Jump();
+			environment->GetMario()->Jump();
 			break;
 	}
 	glutPostRedisplay();

@@ -6,12 +6,12 @@ Goomba::Goomba(void)
 {
 	Head *head = new Head();
 	Torso *torso = new Torso();
-	Foot *leftFoot = new Foot();
-	Foot *rightFoot = new Foot();
 	speed=1.05;
 
 	AddCollider();
 	hardCollider = true;
+	Foot *leftFoot = new Foot(6);
+	Foot *rightFoot = new Foot(6);
 
 	width=head->GetBigRadius()*2;
 	length=head->GetSmallRadius()*2;

@@ -51,6 +51,5 @@ void Coin::Update() {
 void Coin::Function(Mario *mario)
 {
 	scene->RemoveObject(this);
-	if(mario->GetBleep() == false)
-		mario->SetSize();
+	GlobalScore::GetInstance()->UpdateScore(200);
 }

@@ -1,11 +1,12 @@
 #include "QuestionBlock.h"
 
-QuestionBlock::QuestionBlock(Road* road,GLfloat width, GLfloat height, GLfloat length)
+QuestionBlock::QuestionBlock(Road* road, GLfloat width, GLfloat height, GLfloat length)
 {	
 	this->width=width;
     this->height=height;
 	this->length=length;
 	this->textureIndex=2;
+	AddCollider();
 	this->road = road;
 }
 
@@ -37,7 +38,7 @@ void QuestionBlock::SetIndex(int newIndex)
 }
 void QuestionBlock::DrawObject()
 {
-glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
   glBegin(GL_QUADS);
  // front face
   glTexCoord2f(0, 1);glVertex3f(0.-width/2,length*0.75, 0-height/2);

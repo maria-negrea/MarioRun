@@ -207,11 +207,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Environment.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FireBall.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Foot.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\GlobalScore.cpp"
 				>
 			</File>
 			<File
@@ -287,6 +295,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Pivot.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Plant.cpp"
 				>
 			</File>
@@ -323,7 +335,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Score.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Segment2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SmallBox.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SnowMan.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SplitBox.cpp"
 				>
 			</File>
 			<File
@@ -389,11 +417,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Environment.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FireBall.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Foot.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GlobalScore.h"
 				>
 			</File>
 			<File
@@ -465,10 +501,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Pivot.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Pivot.h"
 				>
 			</File>
@@ -509,11 +541,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Score.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Segment2D.h"
 				>
 			</File>
 			<File
+				RelativePath=".\SmallBox.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SnowMan.h"
+				>
+			</File>
+			<File
 				RelativePath=".\SOIL.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SplitBox.h"
 				>
 			</File>
 			<File

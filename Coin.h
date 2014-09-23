@@ -7,6 +7,7 @@
 #include "Updatable.h"
 #include "Item.h"
 #include "Mario.h"
+#include "GlobalScore.h"
 
 class Coin : public WorldObject, public Updatable, public Item
 {

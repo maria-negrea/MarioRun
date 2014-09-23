@@ -2,7 +2,8 @@
 #include"OnRoadObject.h"
 #include"Textures.h"
 #include"Mushroom.h"
-#include "Road.h"
+
+class Road;
 
 class QuestionBlock : public OnRoadObject
 {
@@ -15,3 +16,5 @@ public:
 	void Hit();
 	void SetIndex(int newIndex);
 };
+
+#include "Road.h"

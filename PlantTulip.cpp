@@ -100,7 +100,6 @@ void PlantTulip::DrawObject()
 
 void PlantTulip::Update()
 {	
-	
 	if(target != NULL)
 	 {  
 		  Point3D point = target->GetTranslate()-GetTranslate();

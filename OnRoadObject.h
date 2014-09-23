@@ -1,6 +1,7 @@
 #pragma once
 #include "WorldObject.h"
-#include "Road.h"
+
+class Road;
 
 class OnRoadObject : virtual public WorldObject
 {
@@ -18,3 +19,5 @@ public:
 	void SetIndex(int index);
 	void IncrementIndex();
 };
+
+#include "Road.h"

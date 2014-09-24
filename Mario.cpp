@@ -273,3 +273,9 @@ bool Mario::GetInvulnerable()
 {
 	return invulnerable;
 }
+
+void Mario::IncrementIndex()
+{
+	OnRoadObject::IncrementIndex();
+	
+}

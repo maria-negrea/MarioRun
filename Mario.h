@@ -60,4 +60,6 @@ public:
 
 	bool GetInvulnerable();
 	void SetInvulnerable();
+
+	void IncrementIndex();
 };

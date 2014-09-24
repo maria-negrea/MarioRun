@@ -18,7 +18,7 @@ public:
 	void SetRoad(Road* road);
 
 	void SetIndex(int index);
-	void IncrementIndex();
+	virtual void IncrementIndex();
 
 	void SetLastAngle(double angle);
 	double GetLastAngle();

@@ -45,12 +45,12 @@ void ParticleObject::DrawObject() {
 
 	//glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glDisable(GL_DEPTH_TEST);
-	if(this->rain == true) {	
-		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[14]);
-	} else {
-		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[4]);
-	}
-	glColor4f ( 1.0, 1.0, 1.0, alpha);
+	//if(this->rain == true) {	
+	//	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[14]);
+	//} else {
+	//	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[4]);
+	//}
+	glColor4f ( 1.0, 1.0, 1.0, 1.0);
 	glBegin(GL_QUADS);
 		glTexCoord2f(0, 0);glVertex3f(-1.5, 1.5,  0.0);
 		glTexCoord2f(1, 0);glVertex3f( 1.5, 1.5,  0.0);
@@ -58,7 +58,7 @@ void ParticleObject::DrawObject() {
 		glTexCoord2f(0, 1);glVertex3f(-1.5, -1.5, 0.0);
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glColor4f ( 1.0, 1.0, 1.0, 1.0);
+	//glColor4f ( 1.0, 1.0, 1.0, 1.0);
 
 	//glDisable(GL_BLEND);
 	//glEnable(GL_DEPTH_TEST);

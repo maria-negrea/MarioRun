@@ -1,3 +1,4 @@
+#include "Environment.h"
 #include "Plant.h"
 #include "Box.h"
 #include "Textures.h"
@@ -10,7 +11,6 @@
 #include "Omi.h"
 #include "Line.h"
 #include "Segment2D.h"
-#include "Environment.h"
 #include "GlobalScore.h"
 #include "Pond.h"
 

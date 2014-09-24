@@ -9,6 +9,7 @@ typedef Point3D (*TranslationGenerator)();
 
 typedef int (*NumberGenerator)();
 typedef void (*AfterEffect)(Point3D position);
+
 class Particles : public WorldObject, public Updatable
 {
 private:

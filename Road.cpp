@@ -1,7 +1,7 @@
+#include<time.h>
 #include "Road.h"
 #include "Point2D.h"
 #include "Segment2D.h"
-#include<time.h>
 
 Road::Road(void)
 {

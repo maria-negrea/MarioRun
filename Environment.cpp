@@ -32,6 +32,7 @@ void Environment:: InitializeCoins(double& lastZ)
 	initialPoint.x=groupX;
 
 	double step=PI/10.0;
+	int value=rand()%2;
 	if(lastZ+1.5<road->GetRoadSize()-2)
 	{
 		for(int i = 0; i < 10; i++)
@@ -40,8 +41,22 @@ void Environment:: InitializeCoins(double& lastZ)
 			initialPoint.z=lastZ+ 0.15;
 			lastZ=initialPoint.z;
 			initialPoint.y+=0.5;
-			Point3D currentPosition=road->GetOnRoadPosition(initialPoint, newCoin->width);
-			currentPosition.y+=sin(step)* 5.0+ 3.0;
+			Point3D currentPosition=road->GetOnRoadPosition(initialPoint, newCoin->width);			
+			if(value==0)
+			{
+				currentPosition.y+=sin(step)* 5.0+ 3.0;
+			}
+			else
+				if(value==1)
+				{
+					currentPosition.y+= 3.0;
+
+				}
+				else
+				{
+					/*currentPosition.y+=cos(step)* 5.0;*/
+				}
+			
 			newCoin->Translate(currentPosition);
 			newCoin->Scale(Point3D(5.0, 5.0, 5.0));
 			newCoin->AddCollider();
@@ -61,7 +76,7 @@ void Environment:: InitializeObstacles()
 	double lastZ=0.0;
 	while(i<road->GetRoadSize()-2)
 	{
-		double type=rand()%25+1.0;
+		double type=rand()%35+1.0;
 		cout<<type<<endl;
 		Point3D initialPoint; 
 		initialPoint.x=GetRandomGLfloat(0.0, 1.0);
@@ -70,54 +85,28 @@ void Environment:: InitializeObstacles()
 		{
 			case 1:
 			{
-				int  value=rand()%2;
-				QuestionBlock* questionBlock;
-
-				if(value==0)
+				AddQuestionBlock(initialPoint);
+				if(initialPoint.x-2.5/10 > -1.0)
 				{
-					Mushroom* mushroom=new Mushroom(5, 5, 5);
-					questionBlock=new QuestionBlock(mushroom, road, 5,5,5);
+					initialPoint.x-=2.5/10;
+					AddQuestionBlock(initialPoint);
 				}
-				else
+				if(initialPoint.x+2.5/10 < 1.0)
 				{
-					Star* star=new Star(5, 5, 5);
-					star->Scale(Point3D(4,4,4));
-					questionBlock=new QuestionBlock(star, road, 5,5,5);
+					initialPoint.x+=2.5/10;
+					AddQuestionBlock(initialPoint);
 				}
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
-				currentPosition.y=12;
-				questionBlock->Translate(currentPosition);
 				lastZ=initialPoint.z;
-				obstacles.push_back(questionBlock);
 				break;
 			}
 			case 2:
 			{
-				/*Goomba* goomba=new Goomba();
+				Goomba* goomba=new Goomba();
 				goomba->SetTarget(mario);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, goomba->width);				
 				goomba->Translate(currentPosition);
 				lastZ=initialPoint.z;
 				obstacles.push_back(goomba);
-				break;*/
-				int value=rand()%2;
-				QuestionBlock*questionBlock;
-				if(value==0)
-				{
-					Mushroom* mushroom=new Mushroom(5, 5, 5);
-					questionBlock=new QuestionBlock(mushroom, road, 5,5,5);
-				}
-				else
-				{
-					Star* star=new Star(5, 5, 5);
-					star->Scale(Point3D(4,4,4));
-					questionBlock=new QuestionBlock(star, road, 5,5,5);
-				}
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
-				currentPosition.y=12;
-				questionBlock->Translate(currentPosition);
-				lastZ=initialPoint.z;
-				obstacles.push_back(questionBlock);
 				break;
 			}
 			case 3:
@@ -136,7 +125,7 @@ void Environment:: InitializeObstacles()
 				break;
 				
 			}
-			/*case 5:
+			case 5:
 			{
 				Box* box=new Box(2, 2, 2);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, box->width);
@@ -144,7 +133,7 @@ void Environment:: InitializeObstacles()
 				lastZ=initialPoint.z;
 				obstacles.push_back(box);
 				break;
-			}*/
+			}
 		}
 		i=lastZ;
 
@@ -155,14 +144,15 @@ void Environment:: InitializeOffRoadObjects()
 {
 	GLfloat i=0;
 	double lastZ=0.0;
+	int fenceIndex=rand()%3;
 	while(i<road->GetRoadSize()-2)
 	{
 		int type=rand()%4;
-		cout<<type<<endl;
+		cout<<"*******************************************"<<endl;
 		Point3D initialPoint; 
 		initialPoint.x=GetRandomGLfloat(1.0, 3.0);
-
-		initialPoint.z=lastZ+rand()%3;
+		initialPoint.z=lastZ+rand()%2;
+		
 		switch(type)
 		{
 			case 0:
@@ -181,6 +171,7 @@ void Environment:: InitializeOffRoadObjects()
 				tree->Translate(currentPosition);
 				lastZ=initialPoint.z;
 				offRoadObjects.push_back(tree);
+				cout<<"TREE"<<endl;
 				break;
 			}
 			case 1:
@@ -200,30 +191,47 @@ void Environment:: InitializeOffRoadObjects()
 				plant->Scale(Point3D(3, 3, 3));
 				lastZ=initialPoint.z;
 				offRoadObjects.push_back(plant);
+				cout<<"PLANT"<<endl;
 				break;
 			}
 			case 2:
 			{
-				Fence* fence=new Fence(4, 15 ,2, 5);
-				if(initialPoint.x<0)
+				Fence* fence=new Fence(2, 10 , 3, 7);
+				/*if(initialPoint.x<0)
 				{
 					initialPoint.x-=fence->length;
 				}
 				else
 				{
 					initialPoint.x+=fence->length;
-				}
+				}*/
 				
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
+				int value=rand()%2;
+				Point3D currentPosition;
+				Point3D fenceDirection;
+				if(value==0)
+				{
+					currentPosition=road->GetLeft()[fenceIndex];
+					fenceDirection=road->GetLeft()[fenceIndex+1]-road->GetLeft()[fenceIndex];
+				}
+				else
+				{
+					currentPosition=road->GetRight()[fenceIndex];
+					fenceDirection=road->GetRight()[fenceIndex+1]-road->GetRight()[fenceIndex];
+				}
+
 				fence->Translate(currentPosition);
-				fence->Rotate(Point3D(0, 180, 0));
+				GLfloat angle= fenceDirection.AngleBetween(Point3D(0, 0, 1));                                                              
+				fence->Rotate(Point3D(0, angle, 0));
 				lastZ=initialPoint.z;
 				offRoadObjects.push_back(fence);
+				cout<<"FENCE"<<endl;
+				fenceIndex+=rand()%4;
 				break;
 			}
 			case 3:
 			{
-				FullMountain* mountain=new FullMountain(20, 20, 20);
+				FullMountain* mountain=new FullMountain(15, 15, 15);
 				if(initialPoint.x<0)
 				{
 					initialPoint.x-=mountain->length;
@@ -238,6 +246,7 @@ void Environment:: InitializeOffRoadObjects()
 				mountain->Rotate(Point3D(0, 180, 0));
 				lastZ=initialPoint.z;
 				offRoadObjects.push_back(mountain);
+				cout<<"MOUNTAIN"<<endl;
 				break;
 			}
 		}
@@ -245,6 +254,27 @@ void Environment:: InitializeOffRoadObjects()
 		i=lastZ;
 
 	}
+}
+
+void Environment:: AddQuestionBlock(Point3D initialPoint)
+{
+	int value=rand()%2;
+	QuestionBlock*questionBlock;
+	if(value==0)
+	{
+		Mushroom* mushroom=new Mushroom(5, 5, 5);
+		questionBlock=new QuestionBlock(mushroom, road, 5,5,5);
+	}
+	else
+	{
+		Star* star=new Star(5, 5, 5);
+		star->Scale(Point3D(5, 5, 5));
+		questionBlock=new QuestionBlock(star, road, 5,5,5);
+	}
+	Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
+	currentPosition.y=12;
+	questionBlock->Translate(currentPosition);	
+	obstacles.push_back(questionBlock);
 }
 
 vector<WorldObject*> Environment:: GetObstacles()

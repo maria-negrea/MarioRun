@@ -6,6 +6,8 @@ Star::Star(GLfloat width, GLfloat height, GLfloat length):PhysicsObject(1.0)
 	this->width = width;
 	this->height = height;
 	this->speed = 2;
+	
+	fallSpeed=1;
 
 	fallSpeed = 1;
 

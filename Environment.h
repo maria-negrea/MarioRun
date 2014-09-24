@@ -49,6 +49,7 @@ public:
 	void AddObject(WorldObject *obj);
 	Mario* GetMario();
 	Scene* GetScene();
+	void AddQuestionBlock(Point3D initialPoint);
 	void Update();
 	~Environment(void);
 };

@@ -66,6 +66,7 @@ void Plant::DrawObject()
 	pass+=0.4*size;
 		centre+=0.1*size;
 		initialsize+=size*pass;
+		glColor3f(1,1,1);
 	}
 
 

@@ -16,7 +16,6 @@ void PlantLeaf::DrawObject()
 	//glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glDisable(GL_DEPTH_TEST);
 	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[5]); 
-	glColor4f(1.0f,1.0f,1.0f, 1.0f);
 
 	glBegin(GL_QUADS);
       glTexCoord2f(0.f,0.f);

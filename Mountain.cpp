@@ -16,7 +16,7 @@ void Mountain::DrawObject()
 {
 	GLfloat radius=sqrt(width*width+length*length)/2.;
 
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[13]); 
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[17]); 
 	
     vector<Point3D>base; 
 	vector<Point3D>head;

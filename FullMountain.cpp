@@ -19,20 +19,14 @@ void FullMountain::DrawObject()
 {
 	GLfloat radius=sqrt(width*width+length*length)/2.;
 
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[13]); 
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[17]); 
 	
     vector<Point3D>base; 
 	vector<Point3D>head;
-    
-
-
  
     int k;
     double step=1./base.size();
     double j=0;
-
-
-
 
 	 for (double t = 0; t < 2 * 3.14; t = t + 0.1)
 	 head.push_back(Point3D(radius*0.75* cos(t), 0, radius*0.75 * sin(t)));

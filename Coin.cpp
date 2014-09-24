@@ -13,8 +13,7 @@ Coin::~Coin(void)
 
 void Coin::DrawObject()
 {
-	glColor4f(1, 1, 1, 1);
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[6]);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[16]);
 
 	vector<Point3D> coin;
 	for(double t = 0; t <= 2 * 3.14; t += 0.6)

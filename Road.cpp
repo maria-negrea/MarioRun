@@ -14,7 +14,7 @@ Road::Road(void)
 
  Point3D lastCurve = Point3D(0,0,1);
 
- double angle = 10;
+ double angle = 10.2317543;
 
  for(int i = 0; i < roadSize+1; i++)
  {

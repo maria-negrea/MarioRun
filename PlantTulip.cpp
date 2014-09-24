@@ -86,6 +86,8 @@ void PlantTulip::DrawTulip()
    
 	initialsize+=sizepass;
 	}
+
+	glColor4f(1,1,1,1);	
 }
 
 void PlantTulip::DrawObject()

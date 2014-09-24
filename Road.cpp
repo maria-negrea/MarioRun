@@ -5,31 +5,31 @@
 
 Road::Road(void)
 {
-	 srand(time(NULL));
+	srand(time(NULL));
 
-	 GLfloat width = 20;
-	 GLfloat length = 40;
-	 Point3D lastRoad(0, 0, -length/2);
-	 roadSize=20;
+	GLfloat width = 20;
+	GLfloat length = 40;
+	Point3D lastRoad(0, 0, -length/2);
+	roadSize=20;
 
-	 Point3D lastCurve = Point3D(0,0,1);
+	Point3D lastCurve = Point3D(0,0,1);
 
-	 double angle = 10;
+	double angle = 10.234556;
 
-	 for(int i = 0; i < roadSize+1; i++)
-	 {
-		  Point3D newRoad = lastCurve.RotateY(angle);
-		  lastCurve = newRoad;
+	for(int i = 0; i < roadSize+1; i++)
+	{
+		Point3D newRoad = lastCurve.RotateY(angle);
+		lastCurve = newRoad;
 
 		if(i % 5 == 0)
 			angle = rand() % 30 - 15;
 
-		  leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
-		  rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
+		leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
+		rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
 
-		  roadVector.push_back(lastRoad);
-		  lastRoad += newRoad*length;
-	 }
+		roadVector.push_back(lastRoad);
+		lastRoad += newRoad*length;
+	}
 }
 
 Road::~Road(void)
@@ -188,7 +188,15 @@ Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 	{
 		posX = -posX;
 	}
-		
+			
+	if(point.x<0 && point.x-obstacleWidth/2<leftVector[indexZ].x)
+	{
+		point.x+=obstacleWidth/2;
+	}
+	if(point.x>0 && point.x+obstacleWidth/2>rightVector[indexZ].x)
+	{
+		point.x-=obstacleWidth/2;
+	}
 	Point3D intermediateZ = (roadVector[indexZ+1] - roadVector[indexZ]) * posZ;
 
 	int index=indexZ;
@@ -240,7 +248,7 @@ vector<Point3D> Road::GetRight()
 
 void Road::OffRoad(OnRoadObject* onRoadObject)
 {
-	GLfloat width = 16;
+	GLfloat width = 19;
 	int roadIndex = onRoadObject->GetIndex();
 
 	Point3D reachPosition = onRoadObject->GetTranslate();
@@ -266,6 +274,11 @@ void Road::OffRoad(OnRoadObject* onRoadObject)
 		relativObjPosition.x = width;		
 	}
 	onRoadObject->SetTranslate(relativObjPosition.RotateY(-angle)+roadVector[roadIndex]);
+}
+
+GLfloat Road:: GetCurrentLength()
+{
+	return 0.0;
 }
 
 int Road:: GetRoadSize()

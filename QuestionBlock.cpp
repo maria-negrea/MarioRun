@@ -17,6 +17,7 @@ QuestionBlock::~QuestionBlock(void)
 {
 }
 
+#include "Star.h"
 void QuestionBlock::Hit()
 {
 	if(textureIndex==2)

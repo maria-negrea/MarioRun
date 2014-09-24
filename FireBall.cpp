@@ -7,6 +7,7 @@ Point3D AllDirections()
 	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
 }
 
+
 Point3D Planar()
 {
 	int a = rand() % 100-50, b = rand() % 100-50;

@@ -57,11 +57,11 @@ int angleG() {
 	return 180;
 }
 
-void AfterEff(Point3D p) {
-	cout<<"buhu"<<p.y<<endl;
+void AfterEff(Point3D p) 
+{
 	Pond *pond = new Pond(environment->GetScene());
 	pond->Draw();
-	pond->Translate(Point3D(p.x, 0.01, p.z));
+	pond->Translate(Point3D(p.x, 0.02, p.z));
 	environment->AddObject(pond);
 }
 
@@ -74,7 +74,7 @@ void Initialize()
 
 	GlobalScore::GetInstance()->SetScore(0);
 
-	//environment->AddObject(particles);
+	environment->AddObject(particles);
 
 	// LIGHTING TEST
 
@@ -180,7 +180,6 @@ void keyPressed(unsigned char key, int x, int y)
 			glutSpecialFunc(specialKey);
 			glutSpecialUpFunc(specialUpKey);
 			break;
-
 	case (char)32 :
 			if(environment != NULL) environment->GetMario()->Jump();
 			break;

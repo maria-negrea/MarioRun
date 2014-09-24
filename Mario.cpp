@@ -3,13 +3,13 @@
 #include "Goomba.h"
 #include "Box.h"
 
-Mario::Mario():PhysicsObject(0.8)
+Mario::Mario():PhysicsObject(0.0)
 {
 	collider = new MarioCollider(this);
 	hardCollider = true;
 	road = NULL;
 
-	jumpForce = 1.5;
+	jumpForce = 1.52;
 
 	length = 2;
 	width = 2;

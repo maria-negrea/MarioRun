@@ -49,5 +49,5 @@ void PlantLeaf::DrawObject()
   glEnd();
 
   glDisable(GL_BLEND);
- glEnable(GL_DEPTH_TEST);
+// glEnable(GL_DEPTH_TEST);
 }

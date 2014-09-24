@@ -118,7 +118,8 @@ void WorldObject::Rotate(Point3D rotation)
 	rotate += rotation;
 }
 
-void WorldObject::Scale(Point3D s) {
+void WorldObject::Scale(Point3D s) 
+{
 	scale += s;
 }
 

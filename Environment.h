@@ -19,6 +19,8 @@
 #include "Score.h"
 #include "SplitBox.h"
 #include "Star.h"
+#include "Fence.h"
+#include "FullMountain.h"
 
 class Environment: public Updatable
 {

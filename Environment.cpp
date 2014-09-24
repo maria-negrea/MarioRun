@@ -71,8 +71,8 @@ void Environment:: InitializeObstacles()
 			case 1:
 			{
 				int  value=rand()%2;
-
 				QuestionBlock* questionBlock;
+
 				if(value==0)
 				{
 					Mushroom* mushroom=new Mushroom(5, 5, 5);
@@ -80,16 +80,10 @@ void Environment:: InitializeObstacles()
 				}
 				else
 				{
-
-					Mushroom* mushroom=new Mushroom(5, 5, 5);
-					questionBlock=new QuestionBlock(mushroom, road, 5,5,5);
-
-
-					/*Star* star=new Star(5, 5, 5);
-					questionBlock=new QuestionBlock(star, road, 5,5,5);*/
+					Star* star=new Star(5, 5, 5);
+					star->Scale(Point3D(4,4,4));
+					questionBlock=new QuestionBlock(star, road, 5,5,5);
 				}
-
-				
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
 				currentPosition.y=12;
 				questionBlock->Translate(currentPosition);
@@ -99,12 +93,31 @@ void Environment:: InitializeObstacles()
 			}
 			case 2:
 			{
-				Goomba* goomba=new Goomba();
+				/*Goomba* goomba=new Goomba();
 				goomba->SetTarget(mario);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, goomba->width);				
 				goomba->Translate(currentPosition);
 				lastZ=initialPoint.z;
 				obstacles.push_back(goomba);
+				break;*/
+				int value=rand()%2;
+				QuestionBlock*questionBlock;
+				if(value==0)
+				{
+					Mushroom* mushroom=new Mushroom(5, 5, 5);
+					questionBlock=new QuestionBlock(mushroom, road, 5,5,5);
+				}
+				else
+				{
+					Star* star=new Star(5, 5, 5);
+					star->Scale(Point3D(4,4,4));
+					questionBlock=new QuestionBlock(star, road, 5,5,5);
+				}
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
+				currentPosition.y=12;
+				questionBlock->Translate(currentPosition);
+				lastZ=initialPoint.z;
+				obstacles.push_back(questionBlock);
 				break;
 			}
 			case 3:
@@ -144,17 +157,26 @@ void Environment:: InitializeOffRoadObjects()
 	double lastZ=0.0;
 	while(i<road->GetRoadSize()-2)
 	{
-		int type=rand()%2;
+		int type=rand()%4;
 		cout<<type<<endl;
 		Point3D initialPoint; 
-		initialPoint.x=GetRandomGLfloat(2.0, 8.0);
+		initialPoint.x=GetRandomGLfloat(1.0, 3.0);
+
 		initialPoint.z=lastZ+rand()%3;
 		switch(type)
 		{
 			case 0:
 			{
 				Tree*tree=new Tree();
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, tree->width);
+				if(initialPoint.x<0)
+				{
+					initialPoint.x-=tree->width;
+				}
+				else
+				{
+					initialPoint.x+=tree->width;
+				}
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
 				tree->Scale(Point3D(2,2,2));
 				tree->Translate(currentPosition);
 				lastZ=initialPoint.z;
@@ -164,12 +186,58 @@ void Environment:: InitializeOffRoadObjects()
 			case 1:
 			{
 				PlantTulip* plant=new PlantTulip(2,2,2);
+				if(initialPoint.x<0)
+				{
+					initialPoint.x-=plant->width;
+				}
+				else
+				{
+					initialPoint.x+=plant->width;
+				}
 				//plant->SetTarget(mario);
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, plant->width);
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
 				plant->Translate(currentPosition);
 				plant->Scale(Point3D(3, 3, 3));
 				lastZ=initialPoint.z;
 				offRoadObjects.push_back(plant);
+				break;
+			}
+			case 2:
+			{
+				Fence* fence=new Fence(4, 15 ,2, 5);
+				if(initialPoint.x<0)
+				{
+					initialPoint.x-=fence->length;
+				}
+				else
+				{
+					initialPoint.x+=fence->length;
+				}
+				
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
+				fence->Translate(currentPosition);
+				fence->Rotate(Point3D(0, 180, 0));
+				lastZ=initialPoint.z;
+				offRoadObjects.push_back(fence);
+				break;
+			}
+			case 3:
+			{
+				FullMountain* mountain=new FullMountain(20, 20, 20);
+				if(initialPoint.x<0)
+				{
+					initialPoint.x-=mountain->length;
+				}
+				else
+				{
+					initialPoint.x+=mountain->length;
+				}
+				
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
+				mountain->Translate(currentPosition);
+				mountain->Rotate(Point3D(0, 180, 0));
+				lastZ=initialPoint.z;
+				offRoadObjects.push_back(mountain);
 				break;
 			}
 		}

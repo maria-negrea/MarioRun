@@ -36,6 +36,7 @@ public:
 	void Update();
 
 	void OffRoad(OnRoadObject* onRoadObject);
+	GLfloat GetCurrentLength();
 };
 
 #include "OnRoadObject.h"

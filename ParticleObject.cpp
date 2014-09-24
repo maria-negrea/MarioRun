@@ -38,9 +38,13 @@ bool ParticleObject::operator<(ParticleObject& a)
 
 void ParticleObject::DrawObject() {
 
-	glEnable(GL_BLEND);
-	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glDisable(GL_DEPTH_TEST);
+	//glEnable(GL_BLEND);
+	
+	//glEnable(GL_ALPHA_TEST);
+	//glAlphaFunc(GL_GREATER, 0.5f);
+
+	//glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glDisable(GL_DEPTH_TEST);
 	if(this->rain == true) {	
 		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[14]);
 	} else {
@@ -55,8 +59,9 @@ void ParticleObject::DrawObject() {
 	glEnd();
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glColor4f ( 1.0, 1.0, 1.0, 1.0);
-	glDisable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
+
+	//glDisable(GL_BLEND);
+	//glEnable(GL_DEPTH_TEST);
 }
 
 void ParticleObject::Update() {
@@ -70,9 +75,7 @@ void ParticleObject::Update() {
 		rotate.x = scene->GetCamera()->GetRotate().x;
 	}
 
-	scale.x = initialScale.x + (finalScale.x - initialScale.x)*life;
-	scale.y = initialScale.y + (finalScale.y - initialScale.y)*life;
-	scale.z = initialScale.z + (finalScale.z - initialScale.z)*life;
+	scale = initialScale + (finalScale - initialScale)*life;
 	if(this->angle != 180)
 		rotate.z = 0.0 + (angle - 0.0)*life;
 }

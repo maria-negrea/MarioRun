@@ -211,11 +211,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Fence.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FencePart.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\FireBall.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Foot.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\FullMountain.cpp"
 				>
 			</File>
 			<File
@@ -264,6 +276,10 @@
 			</File>
 			<File
 				RelativePath=".\Mesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mountain.cpp"
 				>
 			</File>
 			<File
@@ -429,11 +445,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Fence.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FencePart.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FireBall.h"
 				>
 			</File>
 			<File
 				RelativePath=".\Foot.h"
+				>
+			</File>
+			<File
+				RelativePath=".\FullMountain.h"
 				>
 			</File>
 			<File
@@ -478,6 +506,10 @@
 			</File>
 			<File
 				RelativePath=".\Mesh.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Mountain.h"
 				>
 			</File>
 			<File

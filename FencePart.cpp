@@ -12,8 +12,7 @@ FencePart::~FencePart(void)
 }
 void FencePart::DrawObject()
 {
-
-		glBegin(GL_QUADS);
+	glBegin(GL_QUADS);
  // front face
  // glTexCoord2f(0, 1);
   glVertex3f(0,height, 0);

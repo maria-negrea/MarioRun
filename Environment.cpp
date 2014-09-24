@@ -76,7 +76,7 @@ void Environment:: InitializeObstacles()
 	double lastZ=0.0;
 	while(i<road->GetRoadSize()-2)
 	{
-		double type=rand()%35+1.0;
+		double type=rand()%25+1.0;
 		cout<<type<<endl;
 		Point3D initialPoint; 
 		initialPoint.x=GetRandomGLfloat(0.0, 1.0);
@@ -127,12 +127,12 @@ void Environment:: InitializeObstacles()
 			}
 			case 5:
 			{
-				Box* box=new Box(2, 2, 2);
+				/*Box* box=new Box(2, 2, 2);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, box->width);
 				box->Translate(currentPosition);
 				lastZ=initialPoint.z;
 				obstacles.push_back(box);
-				break;
+				break;*/
 			}
 		}
 		i=lastZ;
@@ -223,7 +223,10 @@ void Environment:: InitializeOffRoadObjects()
 
 				fence->Translate(currentPosition);
 				GLfloat angle= fenceDirection.AngleBetween(Point3D(0, 0, 1));                                                              
-				fence->Rotate(Point3D(0, angle, 0));
+				if(fenceDirection.x < 0)
+					angle = -angle;
+				fence->Rotate(Point3D(0, angle-90, 0));
+
 				lastZ=initialPoint.z;
 				offRoadObjects.push_back(fence);
 				cout<<"FENCE"<<endl;

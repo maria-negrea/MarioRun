@@ -19,4 +19,6 @@ public:
 	void DrawObject();
 	void Update();
 	void Function(Mario *mario);
+	float angle;
+	bool effect;
 };

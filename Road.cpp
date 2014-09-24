@@ -10,7 +10,7 @@ Road::Road(void)
 	 GLfloat width = 20;
 	 GLfloat length = 40;
 	 Point3D lastRoad(0, 0, -length/2);
-	 roadSize=100;
+	 roadSize = 20;
 
 	 Point3D lastCurve = Point3D(0,0,1);
 

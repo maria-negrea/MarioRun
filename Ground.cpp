@@ -6,8 +6,6 @@ Ground::Ground()
 	width = 20000;
 	length = 20000;
 
-	AddCollider();
-	hardCollider = true;
 	Translate(Point3D(0,-0.1,0));
 }
 

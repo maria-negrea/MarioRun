@@ -23,6 +23,7 @@ Mario::Mario():PhysicsObject(0.0)
 	isBig = false;
 	time = 0;
 	invulnerable = false;
+	deadMario = false;
 
 	pelvis = new Box(1,0.5,1);
 
@@ -277,5 +278,14 @@ bool Mario::GetInvulnerable()
 void Mario::IncrementIndex()
 {
 	OnRoadObject::IncrementIndex();
-	
+}
+
+void Mario::SetDead()
+{
+	deadMario = !deadMario;
+}
+
+bool Mario::IsDead()
+{
+	return deadMario;
 }

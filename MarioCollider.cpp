@@ -23,6 +23,9 @@ void MarioCollider::Hit(Collision collision)
 		{
 			Collider::Hit(collision);
 			mario->Hit(collision);
+
+			if(mario->IsBig() == false)
+				mario->SetDead();
 		}
 	}
 }

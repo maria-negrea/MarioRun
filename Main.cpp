@@ -126,7 +126,9 @@ void Timer(int value)
 	particles->Translate(-particles->GetTranslate());
 	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 25.0, 0.0));
 	glutPostRedisplay();
-    glutTimerFunc(30, Timer, 0);
+	
+	if(environment->GetMario()->IsDead() == false)
+		glutTimerFunc(30, Timer, 0);
 }
 
 void reshape(int w, int h)
@@ -188,7 +190,14 @@ void keyPressed(unsigned char key, int x, int y)
 			break;
 
 	case 'r' :
-			if(environment != NULL) Initialize();
+			if(environment != NULL) 
+			{
+				bool isDead = environment->GetMario()->IsDead();
+				Initialize();
+
+				if(isDead == true)
+					glutTimerFunc(30, Timer, 0);
+			}
 			break;
 	}
 }  

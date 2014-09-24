@@ -15,6 +15,7 @@ class Mario : public PhysicsObject, public OnRoadObject
 	bool isBig;
 	bool bleep;
 	bool invulnerable;
+	bool deadMario;
 
 	double time;
 	double jumpForce;
@@ -60,6 +61,9 @@ public:
 
 	bool GetInvulnerable();
 	void SetInvulnerable();
+
+	void SetDead();
+	bool IsDead();
 
 	void IncrementIndex();
 };

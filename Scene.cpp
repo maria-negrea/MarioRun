@@ -46,6 +46,18 @@ void Scene::Update()
 	{
 		updateObjects[i]->Update();
 	}
+
+	OnRoadObject* mario = dynamic_cast<OnRoadObject*>(sceneObjects[3]);
+
+	for(int i = 4; i < sceneObjects.size(); i++)
+	{
+		OnRoadObject* obj = dynamic_cast<OnRoadObject*>(sceneObjects[i]);
+
+		if(obj != NULL && mario->GetIndex() > obj->GetIndex() + 2)
+		{
+			RemoveObject(sceneObjects[i]);
+		}
+	}
 }
 
 void Scene::RemoveUpdatable(Updatable* object)

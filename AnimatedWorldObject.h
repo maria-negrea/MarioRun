@@ -1,7 +1,6 @@
 #pragma once
 #include "WorldObject.h"
 #include "Updatable.h"
-#include "AnimationStep.h"
 #include "Animation.h"
 
 class AnimatedWorldObject : public WorldObject, public Updatable
@@ -14,3 +13,4 @@ public:
 	void Update();
 	void SetAnimation(Animation animation);
 };
+

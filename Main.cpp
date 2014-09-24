@@ -1,3 +1,4 @@
+#include "Environment.h"
 #include "Plant.h"
 #include "Box.h"
 #include "Textures.h"
@@ -10,7 +11,6 @@
 #include "Omi.h"
 #include "Line.h"
 #include "Segment2D.h"
-#include "Environment.h"
 #include "GlobalScore.h"
 #include "Pond.h"
 
@@ -126,7 +126,9 @@ void Timer(int value)
 	particles->Translate(-particles->GetTranslate());
 	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 25.0, 0.0));
 	glutPostRedisplay();
-    glutTimerFunc(30, Timer, 0);
+	
+	//if(environment->GetMario()->IsDead() == false)
+		glutTimerFunc(30, Timer, 0);
 }
 
 void reshape(int w, int h)
@@ -173,19 +175,29 @@ void keyPressed(unsigned char key, int x, int y)
 	switch(key)
 	{
 	case (char)13 :
-			Initialize();
-			glutDisplayFunc(Draw);
-			glutTimerFunc(30, Timer, 0);
+			if(!environment)
+			{
+				Initialize();
+				glutDisplayFunc(Draw);
+				glutTimerFunc(30, Timer, 0);
 
-			glutSpecialFunc(specialKey);
-			glutSpecialUpFunc(specialUpKey);
+				glutSpecialFunc(specialKey);
+				glutSpecialUpFunc(specialUpKey);
+			}
 			break;
 	case (char)32 :
 			if(environment != NULL) environment->GetMario()->Jump();
 			break;
 
 	case 'r' :
-			if(environment != NULL) Initialize();
+			if(environment != NULL) 
+			{
+				bool isDead = environment->GetMario()->IsDead();
+				Initialize();
+
+				if(isDead == true)
+					glutTimerFunc(30, Timer, 0);
+			}
 			break;
 	}
 }  

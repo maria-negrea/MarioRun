@@ -1,7 +1,7 @@
 #pragma once
 #include "WorldObject.h"
 #include "Updatable.h"
-#include <vector>
+#include "Road.h"
 
 class Camera;
 class Omi;
@@ -25,6 +25,8 @@ class Scene
 
 	/*!Objects that have colliders */
 	vector<WorldObject*> colliders;
+
+	//vector<OnRoadObject*> roadObjects;
 
 	/*! Removes an object from the updateObjects list */
 	void RemoveUpdatable(Updatable* object);

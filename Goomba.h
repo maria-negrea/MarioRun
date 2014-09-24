@@ -2,8 +2,9 @@
 #include "Head.h"
 #include "Torso.h"
 #include "Foot.h"
+#include "Enemy.h"
 
-class Goomba: public WorldObject, public Updatable
+class Goomba: public WorldObject, public Updatable, public Enemy
 {
 protected:
 	WorldObject* target;
@@ -19,4 +20,6 @@ public:
 	~Goomba(void);
 
 	void Damage();
+	bool IsDamaged();
+	void SetDamage();
 };

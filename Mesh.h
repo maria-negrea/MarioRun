@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include "WorldObject.h"
 #include "Textures.h"
 #include "AnimatedWorldObject.h"
 #include "ColoredPoint3D.h"

@@ -13,6 +13,8 @@ Particles::Particles(DirectionGenerator directionGenerator, TranslationGenerator
 	this->effect = ef;
 }
 
+
+
 Particles::~Particles(void)
 {
 }
@@ -35,7 +37,7 @@ void Particles::Update()
 
 	for(int i=0; i < particles.size(); i++) 
 	{
-		particles[i]->Update();
+		//particles[i]->Update();
 	}
 	for(int i=0; i < particles.size(); i++) 
 	{

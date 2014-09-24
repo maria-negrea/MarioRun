@@ -2,9 +2,6 @@
 
 #include "WorldObject.h"
 #include "Updatable.h"
-#include "Coin.h"
-#include "Goomba.h"
-#include "QuestionBlock.h"
 
 class OnRoadObject;
 

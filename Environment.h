@@ -1,4 +1,7 @@
 #pragma once
+#include <cmath>
+
+#include "Scene.h"
 #include "Plant.h"
 #include "Box.h"
 #include "Mario.h"
@@ -11,10 +14,7 @@
 #include "PlantTulip.h"
 #include "PlantHead.h"
 #include "PlantLeaf.h"
-#include "Road.h"
 #include "SnowMan.h"
-#include "Scene.h"
-#include <cmath>
 #include "PlantTulip.h"
 #include "Score.h"
 #include "SplitBox.h"

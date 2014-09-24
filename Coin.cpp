@@ -5,6 +5,8 @@ Coin::Coin(void)
 	length = 0.1;
 	width = 0.5;
 	height = 0.5;
+	angle = 10;
+	effect = false;
 }
 
 Coin::~Coin(void)
@@ -45,11 +47,21 @@ void Coin::DrawObject()
 }
 
 void Coin::Update() {
-	Rotate(Point3D(0.0, 10.0, 0.0));
+	Rotate(Point3D(0.0, angle, 0.0));
+
+	if(effect)
+		Translate(Point3D(0, 0.8, 0));
+
+	if(this->GetTranslate().y > 30)
+		scene->RemoveObject(this);
 }
 
-void Coin::Function(Mario *mario)
+bool Coin::Function(Mario *mario)
 {
-	scene->RemoveObject(this);
-	GlobalScore::GetInstance()->UpdateScore(200);
+	if(effect == false)
+		GlobalScore::GetInstance()->UpdateScore(200);
+	angle = 50;
+	effect = true;
+
+	return true;
 }

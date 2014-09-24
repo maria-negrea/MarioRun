@@ -70,9 +70,14 @@ void SplitBox::Split()
    	scene->RemoveObject(this);
 }
 
-void SplitBox::Function(Mario *mario)
+bool SplitBox::Function(Mario *mario)
 {
 	if(mario->IsBig())
+	{
 		Split();
+		return true;
+	}
+
+	return false;
 }
 

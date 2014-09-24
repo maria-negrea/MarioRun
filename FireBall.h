@@ -16,5 +16,5 @@ public:
 	~FireBall(void);
 	void DrawObject();
 	void Update();
-	void Function(Mario *mario);
+	bool Function(Mario *mario);
 };

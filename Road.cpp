@@ -16,7 +16,7 @@ Road::Road(void)
 
 	double angle = 10.234556;
 
-	for(int i = 0; i < roadSize+1; i++)
+	for(int i = 0; i < roadSize+2; i++)
 	{
 		Point3D newRoad = lastCurve.RotateY(angle);
 		lastCurve = newRoad;
@@ -88,93 +88,102 @@ void Road::SetOnRoadAngle(OnRoadObject* onRoadObject)
 {
 	int roadIndex = onRoadObject->GetIndex();
 
-	Point3D rotationDirection = (roadVector[roadIndex+1] - roadVector[roadIndex]);
-	Point3D relativObjPosition = (onRoadObject->GetTranslate()-roadVector[roadIndex]);
-
-	double angle = (rotationDirection).AngleBetween(Point3D(0,0,1));
-
-	if((rotationDirection).x < 0)
+	if(roadIndex <= roadSize)
 	{
-		angle = -angle;
+		Point3D rotationDirection = (roadVector[roadIndex+1] - roadVector[roadIndex]);
+		Point3D relativObjPosition = (onRoadObject->GetTranslate()-roadVector[roadIndex]);
+
+		double angle = (rotationDirection).AngleBetween(Point3D(0,0,1));
+
+		if((rotationDirection).x < 0)
+		{
+			angle = -angle;
+		}
+
+		relativObjPosition = relativObjPosition.RotateY(angle);
+
+		Point3D nextRotationDirection = (roadVector[roadIndex+2] - roadVector[roadIndex+1]);
+		rotationDirection = rotationDirection + (nextRotationDirection-rotationDirection)*relativObjPosition.z/rotationDirection.Magnitude();
+
+		angle = (rotationDirection).AngleBetween(Point3D(0,0,1));
+
+		if((rotationDirection).x < 0)
+		{
+			angle = -angle;
+		}
+
+		if(angle-onRoadObject->GetLastAngle() > 0.5)
+		{
+			cout<<angle-onRoadObject->GetLastAngle()<<endl;
+		}
+		onRoadObject->SetRotateY(angle);
+		onRoadObject->SetLastAngle(angle);
 	}
-
-	relativObjPosition = relativObjPosition.RotateY(angle);
-
-	Point3D nextRotationDirection = (roadVector[roadIndex+2] - roadVector[roadIndex+1]);
-	rotationDirection = rotationDirection + (nextRotationDirection-rotationDirection)*relativObjPosition.z/rotationDirection.Magnitude();
-
-	angle = (rotationDirection).AngleBetween(Point3D(0,0,1));
-
-	if((rotationDirection).x < 0)
-	{
-		angle = -angle;
-	}
-
-	if(angle-onRoadObject->GetLastAngle() > 0.5)
-	{
-		cout<<angle-onRoadObject->GetLastAngle()<<endl;
-	}
-	onRoadObject->SetRotateY(angle);
-	onRoadObject->SetLastAngle(angle);
 }
 
 bool Road::IsOnIndex(OnRoadObject* onRoadObject)
 {
 	int roadIndex = onRoadObject->GetIndex();
 
-	//cout<<roadIndex<<"X"<<endl;
-	Point2D p1 = Point2D(rightVector[roadIndex],View::Up);
-	Point2D p2 = Point2D(leftVector[roadIndex],View::Up);
-	Point2D p3 = Point2D(leftVector[roadIndex+1],View::Up);
-	Point2D p4 = Point2D(rightVector[roadIndex+1],View::Up);
+	if(roadIndex <= roadSize)
+	{
+		//cout<<roadIndex<<"X"<<endl;
+		Point2D p1 = Point2D(rightVector[roadIndex],View::Up);
+		Point2D p2 = Point2D(leftVector[roadIndex],View::Up);
+		Point2D p3 = Point2D(leftVector[roadIndex+1],View::Up);
+		Point2D p4 = Point2D(rightVector[roadIndex+1],View::Up);
 
-	Point2D check = Point2D(onRoadObject->GetTranslate(),View::Up);
+		Point2D check = Point2D(onRoadObject->GetTranslate(),View::Up);
 
-	Segment2D *polySegments = new Segment2D[4];
-	polySegments[0] = Segment2D(p1,p2);
-	polySegments[1] = Segment2D(p2,p3);
-	polySegments[2] = Segment2D(p3,p4);
-	polySegments[3] = Segment2D(p4,p1);
+		Segment2D *polySegments = new Segment2D[4];
+		polySegments[0] = Segment2D(p1,p2);
+		polySegments[1] = Segment2D(p2,p3);
+		polySegments[2] = Segment2D(p3,p4);
+		polySegments[3] = Segment2D(p4,p1);
 
-	Segment2D *lines = new Segment2D[4];
-	lines[0] = Segment2D(check,p1);
-	lines[1] = Segment2D(check,p2);
-	lines[2] = Segment2D(check,p3);
-	lines[3] = Segment2D(check,p4);
+		Segment2D *lines = new Segment2D[4];
+		lines[0] = Segment2D(check,p1);
+		lines[1] = Segment2D(check,p2);
+		lines[2] = Segment2D(check,p3);
+		lines[3] = Segment2D(check,p4);
 
-	if(lines[0].Intersects(polySegments[1]))
-	{
-		return false;
+		if(lines[0].Intersects(polySegments[1]))
+		{
+			return false;
+		}
+		if(lines[0].Intersects(polySegments[2]))
+		{
+			return false;
+		}
+		if(lines[1].Intersects(polySegments[2]))
+		{
+			return false;
+		}
+		if(lines[1].Intersects(polySegments[3]))
+		{
+			return false;
+		}
+		if(lines[2].Intersects(polySegments[3]))
+		{
+			return false;
+		}
+		if(lines[2].Intersects(polySegments[0]))
+		{
+			return false;
+		}
+		if(lines[3].Intersects(polySegments[0]))
+		{
+			return false;
+		}
+		if(lines[3].Intersects(polySegments[1]))
+		{
+			return false;
+		}
 	}
-	if(lines[0].Intersects(polySegments[2]))
+	else
 	{
-		return false;
+		int g = 0;
 	}
-	if(lines[1].Intersects(polySegments[2]))
-	{
-		return false;
-	}
-	if(lines[1].Intersects(polySegments[3]))
-	{
-		return false;
-	}
-	if(lines[2].Intersects(polySegments[3]))
-	{
-		return false;
-	}
-	if(lines[2].Intersects(polySegments[0]))
-	{
-		return false;
-	}
-	if(lines[3].Intersects(polySegments[0]))
-	{
-		return false;
-	}
-	if(lines[3].Intersects(polySegments[1]))
-	{
-		return false;
-	}
-
 	return true;
 }
 
@@ -184,45 +193,52 @@ Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 	double posZ = point.z-indexZ;
 	double posX = point.x;
 
-	if(posX < 0)
+	if(indexZ <= roadSize )
 	{
-		posX = -posX;
-	}
-			
-	if(point.x<0 && point.x-obstacleWidth/2<leftVector[indexZ].x)
-	{
-		point.x+=obstacleWidth/2;
-	}
-	if(point.x>0 && point.x+obstacleWidth/2>rightVector[indexZ].x)
-	{
-		point.x-=obstacleWidth/2;
-	}
-	Point3D intermediateZ = (roadVector[indexZ+1] - roadVector[indexZ]) * posZ;
+		if(posX < 0)
+		{
+			posX = -posX;
+		}
+				
+		if(point.x<0 && point.x-obstacleWidth/2<leftVector[indexZ].x)
+		{
+			point.x+=obstacleWidth/2;
+		}
+		if(point.x>0 && point.x+obstacleWidth/2>rightVector[indexZ].x)
+		{
+			point.x-=obstacleWidth/2;
+		}
+		Point3D intermediateZ = (roadVector[indexZ+1] - roadVector[indexZ]) * posZ;
 
-	int index=indexZ;
+		int index=indexZ;
 
-	Point3D intermediateX;
-	if(point.x<0)
-	{
-		intermediateX = (rightVector[index] - roadVector[indexZ]) * posX;
+		Point3D intermediateX;
+		if(point.x<0)
+		{
+			intermediateX = (rightVector[index] - roadVector[indexZ]) * posX;
+		}
+		else
+		{
+			intermediateX = (leftVector[index] - roadVector[indexZ]) * posX;
+		}
+
+		Point3D result = roadVector[indexZ] + intermediateZ + intermediateX;
+
+		if(result.x+obstacleWidth+2>leftVector[indexZ].x)
+		{
+			result.x-=obstacleWidth;
+		}
+		if(result.x-obstacleWidth-2>rightVector[indexZ].x)
+		{
+			result.x+=obstacleWidth;
+		}
+		return result;
 	}
 	else
 	{
-		intermediateX = (leftVector[index] - roadVector[indexZ]) * posX;
+		int g = 0;
 	}
-
-	Point3D result = roadVector[indexZ] + intermediateZ + intermediateX;
-
-	if(result.x+obstacleWidth+2>leftVector[indexZ].x)
-	{
-		result.x-=obstacleWidth;
-	}
-	if(result.x-obstacleWidth-2>rightVector[indexZ].x)
-	{
-		result.x+=obstacleWidth;
-	}
-	return result;
-
+	return Point3D();
 }
 
 void Road::AddRoadObject(OnRoadObject* object)

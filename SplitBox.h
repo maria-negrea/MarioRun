@@ -11,5 +11,5 @@ public:
 	~SplitBox(void);
 	void Split();
 	void DrawObject();
-	void Function(Mario *mario);
+	bool Function(Mario *mario);
 };

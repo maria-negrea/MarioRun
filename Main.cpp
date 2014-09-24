@@ -74,7 +74,7 @@ void Initialize()
 
 	GlobalScore::GetInstance()->SetScore(0);
 
-	environment->AddObject(particles);
+	//environment->AddObject(particles);
 
 	// LIGHTING TEST
 

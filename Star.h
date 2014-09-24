@@ -15,6 +15,6 @@ public:
 	~Star(void);
 	void DrawObject();
 	void Update();
-	void Function(Mario *mario);
+	bool Function(Mario *mario);
 	void Translate(Point3D translation);
 };

@@ -116,11 +116,13 @@ void Star::Update()
 		this->speed -= 0.01;
 }
 
-void Star::Function(Mario *mario)
+bool Star::Function(Mario *mario)
 {
 	scene->RemoveObject(this);
 	mario->SetInvulnerable();
 	GlobalScore::GetInstance()->UpdateScore(300);
+
+	return true;
 }
 
 void Star::Translate(Point3D translation)

@@ -14,10 +14,8 @@ void MarioCollider::Hit(Collision collision)
 	WorldObject* obj = collision.GetHitObject();
 	Item *newItem = dynamic_cast<Item*>(collision.GetHitObject());
 
-	if(newItem != NULL)
-	{
-		newItem->Function(mario);
-	}
+	if(newItem != NULL && newItem->Function(mario))
+	{}
 
 	else
 	{

@@ -18,5 +18,7 @@ public:
 	~Coin(void);
 	void DrawObject();
 	void Update();
-	void Function(Mario *mario);
+	bool Function(Mario *mario);
+	float angle;
+	bool effect;
 };

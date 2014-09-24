@@ -83,9 +83,11 @@ void FireBall::Update()
 	particles->Translate(Point3D(-particles->GetTranslate().x+translate.x, 0.0, -particles->GetTranslate().z+translate.z));
 }
 
-void FireBall::Function(Mario *mario)
+bool FireBall::Function(Mario *mario)
 {
 	scene->RemoveObject(this);
 	if(mario->GetBleep() == false && mario->IsBig() == true)
 		mario->SetSize();
+
+	return true;
 }

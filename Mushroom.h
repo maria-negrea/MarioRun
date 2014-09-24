@@ -20,6 +20,6 @@ public:
 	void DrawMushroom();
 
 	void Update();
-	void Function(Mario *mario);
+	bool Function(Mario *mario);
 };
 

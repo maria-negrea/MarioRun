@@ -7,7 +7,7 @@
 #include "GlobalScore.h"
 #include "OnRoadObject.h"
 
-class Star : public PhysicsObject, public OnRoadObject, public Item
+class Star : public OnRoadObject, public PhysicsObject, public Item
 {
 	GLfloat speed;
 public:

@@ -5,6 +5,9 @@
 class MarioCamera : public Camera, public Updatable
 {
 	WorldObject* follow;
+
+	GLfloat idealRotation;
+	Point3D idealPosition;
 public:
 	MarioCamera(WorldObject* follow);
 	~MarioCamera();

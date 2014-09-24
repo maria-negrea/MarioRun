@@ -1,6 +1,6 @@
 #include "Star.h"
 
-Star::Star(GLfloat width, GLfloat height, GLfloat length)
+Star::Star(GLfloat width, GLfloat height, GLfloat length):PhysicsObject(1.0)
 {
 	this->length = length;
 	this->width = width;
@@ -8,6 +8,8 @@ Star::Star(GLfloat width, GLfloat height, GLfloat length)
 	this->speed = 2;
 	
 	fallSpeed=1;
+
+	fallSpeed = 1;
 
 	road = NULL;
 }

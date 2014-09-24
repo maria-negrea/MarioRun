@@ -8,6 +8,7 @@ class OnRoadObject : virtual public WorldObject
 protected:
 	int roadIndex;
 	Road* road;
+	double lastAngle;
 public:
 	OnRoadObject(int roadIndex = 0);
 	~OnRoadObject();
@@ -18,6 +19,9 @@ public:
 
 	void SetIndex(int index);
 	void IncrementIndex();
+
+	void SetLastAngle(double angle);
+	double GetLastAngle();
 };
 
 #include "Road.h"

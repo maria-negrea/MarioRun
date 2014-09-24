@@ -3,6 +3,9 @@
 MarioCamera::MarioCamera(WorldObject* follow)
 {
 	this->follow = follow;
+
+	idealRotation = rotate.y;
+	idealPosition = translate;
 }
 
 MarioCamera::~MarioCamera(void)
@@ -11,6 +14,9 @@ MarioCamera::~MarioCamera(void)
 
 void MarioCamera::Update()
 {
-	translate = (follow->GetTranslate()-follow->GetForward()*40)+Point3D(0,10,0);
-	rotate.y = follow->GetRotate().y;
+	idealPosition = (follow->GetTranslate()-follow->GetForward()*40)+Point3D(0,10,0);
+	idealRotation = follow->GetRotate().y;
+
+	translate = translate+(idealPosition-translate)*0.3;
+	rotate.y = rotate.y+(idealRotation-rotate.y)*0.3;
 }

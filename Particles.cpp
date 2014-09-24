@@ -21,8 +21,10 @@ void Particles::DrawObject()
 {
 }
 
-void Particles::Update() {
-	for(int i=0; i < gen(); i++) {
+void Particles::Update() 
+{
+	for(int i=0; i < gen(); i++) 
+	{
 		ParticleObject* particle = new ParticleObject(directionGenerator(), translationGenerator(),translate, scale, Point3D(0.0, 0.0, 0.0), this->rain, angleGen);
 		if(rain == false)
 			particle->Rotate(Point3D(180,0,0));
@@ -31,11 +33,14 @@ void Particles::Update() {
 		scene->AddObject(particle);
 	}
 
-	for(int i=0; i < particles.size(); i++) {
+	for(int i=0; i < particles.size(); i++) 
+	{
 		particles[i]->Update();
 	}
-	for(int i=0; i < particles.size(); i++) {
-		if(particles[i]->GetLife() > 1.0) {
+	for(int i=0; i < particles.size(); i++) 
+	{
+		if(particles[i]->GetLife() > 1.0) 
+		{
 			this->effect(particles[i]->GetTranslate());
 			scene->RemoveObject(particles[i]);
 			particles.erase(particles.begin() + i);

@@ -1,7 +1,7 @@
 #include "Mushroom.h"
 #define PI 3.14
 
-Mushroom::Mushroom(GLfloat width, GLfloat height, GLfloat size)
+Mushroom::Mushroom(GLfloat width, GLfloat height, GLfloat size):PhysicsObject(0.5)
 {
 	this->width=width;
 	this->height=height;

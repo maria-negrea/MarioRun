@@ -57,14 +57,13 @@ int angleG() {
 	return 180;
 }
 
-void AfterEff(Point3D p) {
-	cout<<"buhu"<<p.y<<endl;
+void AfterEff(Point3D p) 
+{
 	Pond *pond = new Pond(environment->GetScene());
 	pond->Draw();
-	pond->Translate(Point3D(p.x, 0.01, p.z));
+	pond->Translate(Point3D(p.x, 0.02, p.z));
 	environment->AddObject(pond);
 }
-
 
 void Initialize()
 {
@@ -217,7 +216,7 @@ void InitializeTitleScreen()
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glEnable(GL_BLEND);
+	//glEnable(GL_BLEND);
 
 	glEnable(GL_DEPTH_TEST);
 

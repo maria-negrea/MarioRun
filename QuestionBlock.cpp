@@ -19,20 +19,22 @@ QuestionBlock::~QuestionBlock(void)
 
 #include "Star.h"
 void QuestionBlock::Hit()
-{ if(textureIndex==2)
 {
-	insideObject->AddCollider();
-	
-	insideObject->Rotate(rotate);
-	insideObject->SetTranslate(translate);
-	insideObject->Translate(Point3D(0,length,0));
-	scene->AddObject(insideObject);
+	if(textureIndex==2)
+	{
+		insideObject->AddCollider();
+		
+		insideObject->Rotate(rotate);
+		insideObject->Translate(translate);
+		insideObject->Translate(Point3D(0,length,0));
 
-	insideObject->SetIndex(roadIndex);
-	road->AddRoadObject(insideObject);
+		scene->AddObject(insideObject);
 
-	textureIndex=3;
-}
+		road->AddRoadObject(insideObject);
+		insideObject->SetIndex(roadIndex);
+
+		textureIndex=3;
+	}
 	else return;
 }
 

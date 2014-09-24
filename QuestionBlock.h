@@ -1,9 +1,9 @@
 #pragma once
-#include"OnRoadObject.h"
 #include"Textures.h"
 #include"Mushroom.h"
 
 class Road;
+class OnRoadObject;
 
 class QuestionBlock : public OnRoadObject
 {
@@ -19,3 +19,4 @@ public:
 };
 
 #include "Road.h"
+#include"OnRoadObject.h"

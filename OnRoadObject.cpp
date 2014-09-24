@@ -29,3 +29,13 @@ void OnRoadObject::SetRoad(Road* road)
 {
 	this->road = road;
 }
+
+void OnRoadObject::SetLastAngle(double angle)
+{
+	this->lastAngle = angle;
+}
+
+double OnRoadObject::GetLastAngle()
+{
+	return lastAngle;
+}

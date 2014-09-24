@@ -26,7 +26,7 @@ class Scene
 	/*!Objects that have colliders */
 	vector<WorldObject*> colliders;
 
-	vector<OnRoadObject*> roadObjects;
+	//vector<OnRoadObject*> roadObjects;
 
 	/*! Removes an object from the updateObjects list */
 	void RemoveUpdatable(Updatable* object);

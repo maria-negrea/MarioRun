@@ -74,7 +74,7 @@ void Initialize()
 
 	GlobalScore::GetInstance()->SetScore(0);
 
-	environment->AddObject(particles);
+	//environment->AddObject(particles);
 
 	// LIGHTING TEST
 
@@ -173,12 +173,15 @@ void keyPressed(unsigned char key, int x, int y)
 	switch(key)
 	{
 	case (char)13 :
-			Initialize();
-			glutDisplayFunc(Draw);
-			glutTimerFunc(30, Timer, 0);
+			if(!environment)
+			{
+				Initialize();
+				glutDisplayFunc(Draw);
+				glutTimerFunc(30, Timer, 0);
 
-			glutSpecialFunc(specialKey);
-			glutSpecialUpFunc(specialUpKey);
+				glutSpecialFunc(specialKey);
+				glutSpecialUpFunc(specialUpKey);
+			}
 			break;
 	case (char)32 :
 			if(environment != NULL) environment->GetMario()->Jump();

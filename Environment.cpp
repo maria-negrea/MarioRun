@@ -125,15 +125,6 @@ void Environment:: InitializeObstacles()
 				break;
 				
 			}
-			case 5:
-			{
-				Box* box=new Box(2, 2, 2);
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, box->width);
-				box->Translate(currentPosition);
-				lastZ=initialPoint.z;
-				obstacles.push_back(box);
-				break;
-			}
 		}
 		i=lastZ;
 

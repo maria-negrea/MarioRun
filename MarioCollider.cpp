@@ -19,7 +19,7 @@ void MarioCollider::Hit(Collision collision)
 
 	else
 	{
-		if(mario->GetInvulnerable() == false)
+		if(mario->GetInvulnerable() == false && mario->GetBleep() == false)
 		{
 			Collider::Hit(collision);
 			mario->Hit(collision);

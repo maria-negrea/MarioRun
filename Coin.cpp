@@ -56,10 +56,12 @@ void Coin::Update() {
 		scene->RemoveObject(this);
 }
 
-void Coin::Function(Mario *mario)
+bool Coin::Function(Mario *mario)
 {
 	if(effect == false)
 		GlobalScore::GetInstance()->UpdateScore(200);
 	angle = 50;
 	effect = true;
+
+	return true;
 }

@@ -7,6 +7,7 @@ Point3D AllDirections()
 	return Point3D(a*1.0, b*1.0, c*1.0).Normalize();
 }
 
+
 Point3D Planar()
 {
 	int a = rand() % 100-50, b = rand() % 100-50;
@@ -82,9 +83,11 @@ void FireBall::Update()
 	particles->Translate(Point3D(-particles->GetTranslate().x+translate.x, 0.0, -particles->GetTranslate().z+translate.z));
 }
 
-void FireBall::Function(Mario *mario)
+bool FireBall::Function(Mario *mario)
 {
 	scene->RemoveObject(this);
 	if(mario->GetBleep() == false && mario->IsBig() == true)
 		mario->SetSize();
+
+	return true;
 }

@@ -9,7 +9,7 @@ Mario::Mario():PhysicsObject(0.8)
 	hardCollider = true;
 	road = NULL;
 
-	jumpForce = 1.5;
+	jumpForce = 1.51;
 
 	length = 2;
 	width = 2;
@@ -255,7 +255,7 @@ void Mario::Translate(Point3D translation)
 	WorldObject::Translate(translation);
 	if(road != NULL)
 	{
-		Point3D offRoad = road->OffRoad(this);
+		road->OffRoad(this);
 	}
 }
 

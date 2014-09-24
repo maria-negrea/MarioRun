@@ -17,13 +17,14 @@ QuestionBlock::~QuestionBlock(void)
 {
 }
 
+#include "Star.h"
 void QuestionBlock::Hit()
 { if(textureIndex==2)
 {
 	insideObject->AddCollider();
 	
 	insideObject->Rotate(rotate);
-	insideObject->Translate(translate);
+	insideObject->SetTranslate(translate);
 	insideObject->Translate(Point3D(0,length,0));
 	scene->AddObject(insideObject);
 

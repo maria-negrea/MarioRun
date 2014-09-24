@@ -176,7 +176,7 @@ void Mushroom::Update()
 		this->speed -= 0.01;
 }
 
-void Mushroom::Function(Mario *mario)
+bool Mushroom::Function(Mario *mario)
 {
 	scene->RemoveObject(this);
 	
@@ -184,6 +184,8 @@ void Mushroom::Function(Mario *mario)
 		mario->SetSize();
 
 	GlobalScore::GetInstance()->UpdateScore(1000);
+
+	return true;
 }
 
 void Mushroom::Translate(Point3D translation)
@@ -191,6 +193,6 @@ void Mushroom::Translate(Point3D translation)
 	WorldObject::Translate(translation);
 	if(road != NULL)
 	{
-		Point3D offRoad = road->OffRoad(this);
+		road->OffRoad(this);
 	}
 }

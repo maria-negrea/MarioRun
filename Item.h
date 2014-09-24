@@ -7,7 +7,7 @@ class Item
 public:
 	Item(void);
 	~Item(void);
-	virtual void Function(Mario *mario) = 0;
+	virtual bool Function(Mario *mario) = 0;
 };
 
 #include "Mario.h"

@@ -70,9 +70,7 @@ void ParticleObject::Update() {
 		rotate.x = scene->GetCamera()->GetRotate().x;
 	}
 
-	scale.x = initialScale.x + (finalScale.x - initialScale.x)*life;
-	scale.y = initialScale.y + (finalScale.y - initialScale.y)*life;
-	scale.z = initialScale.z + (finalScale.z - initialScale.z)*life;
+	scale = initialScale + (finalScale - initialScale)*life;
 	if(this->angle != 180)
 		rotate.z = 0.0 + (angle - 0.0)*life;
 }

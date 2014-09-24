@@ -181,7 +181,6 @@ void keyPressed(unsigned char key, int x, int y)
 			glutSpecialFunc(specialKey);
 			glutSpecialUpFunc(specialUpKey);
 			break;
-
 	case (char)32 :
 			if(environment != NULL) environment->GetMario()->Jump();
 			break;

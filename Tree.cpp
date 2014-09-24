@@ -9,7 +9,7 @@ Tree::Tree(void)
 
 	width=bigRadius*2;
 	length=bigRadius*2;
-	height=20.0;
+	height=13.0;
 
 	int i=0;
 	for(double t=0.0; t<2*PI; t+=0.785)

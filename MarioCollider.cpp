@@ -21,11 +21,14 @@ void MarioCollider::Hit(Collision collision)
 	{
 		if(mario->GetInvulnerable() == false && mario->GetBleep() == false)
 		{
+			bool isBig = mario->IsBig();
 			Collider::Hit(collision);
 			mario->Hit(collision);
 
-			if(mario->IsBig() == false)
-				mario->SetDead();
+			Enemy* enemy = dynamic_cast<Enemy*>(collision.GetHitObject());
+
+			if(enemy != NULL && isBig == false && enemy->IsDamaged() == false)
+					mario->SetDead();
 		}
 	}
 }

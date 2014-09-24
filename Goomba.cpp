@@ -4,6 +4,9 @@
 
 Goomba::Goomba(void)
 {
+
+	isDamaged = false;
+
 	Head *head = new Head();
 	Torso *torso = new Torso();
 	speed=1.05;
@@ -105,4 +108,14 @@ void Goomba::Update()
 
 Goomba::~Goomba(void)
 {
+}
+
+void Goomba::SetDamage()
+{
+	isDamaged = true;
+}
+
+bool Goomba::IsDamaged()
+{
+	return isDamaged;
 }

@@ -3,6 +3,7 @@
 #include "Collider.h"
 #include "Mario.h"
 #include "Item.h"
+#include "Enemy.h"
 
 class MarioCollider : public Collider
 {

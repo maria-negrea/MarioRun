@@ -1,12 +1,11 @@
 #pragma once
-#include "WorldObject.h"
 #include "Updatable.h"
-#include "Road.h"
+#include "WorldObject.h"
+//#include "Road.h"
 
 class Camera;
 class Omi;
 
-using namespace std;
 
 /*! \brief
 *	A collection of all the objects on the screen and a camera for the perspective 
@@ -26,11 +25,11 @@ class Scene
 	/*!Objects that have colliders */
 	vector<WorldObject*> colliders;
 
-	vector<OnRoadObject*> roadObjects;
+	vector<Cutout*> cutouts;
 
 	/*! Removes an object from the updateObjects list */
 	void RemoveUpdatable(Updatable* object);
-
+	void RemoveCutout(Cutout* cutout);
 	void AddSpecialObject(WorldObject* object);
 public:
 	Scene();

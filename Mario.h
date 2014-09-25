@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Box.h"
 #include "QuestionBlock.h"
+#include "Particles.h"
 
 class Mario : public PhysicsObject, public OnRoadObject
 {
@@ -35,6 +36,8 @@ class Mario : public PhysicsObject, public OnRoadObject
 	Box* upperArmLeft;
 	Box* lowerArmLeft;
 	Box* leftHand;
+
+	Particles* dustTrail;
 
 	void RunAnimation();
 	void JumpAnimation();

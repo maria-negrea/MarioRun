@@ -3,6 +3,31 @@
 #include "Goomba.h"
 #include "Box.h"
 
+Point3D BackDirection()
+{
+	return Point3D((rand()%200-100)*0.01,(rand()%200-100)*0.01,-1);
+}
+
+Point3D Origin()
+{
+	return Point3D(0,0,0);
+}
+
+int DustGenerator() 
+{
+	return rand() % 4 + 1;
+}
+
+float RandomDirection()
+{
+	return rand()%360;
+}
+
+float VarySpeed()
+{
+	return rand()%300*0.01;
+}
+
 Mario::Mario():PhysicsObject(0.0)
 {
 	collider = new MarioCollider(this);
@@ -74,6 +99,8 @@ Mario::Mario():PhysicsObject(0.0)
 	upperLegLeft->AddChild(lowerLegLeft);
 	lowerLegLeft->AddChild(leftFoot);
 
+	dustTrail = NULL;
+
 	RunAnimation();
 }
 
@@ -142,7 +169,31 @@ void Mario::JumpAnimation()
 void Mario::Update()
 {
 	PhysicsObject::Update();
-	
+
+	if(scene != NULL)
+	{
+		if(dustTrail == NULL)
+		{
+			dustTrail = new Particles(BackDirection, 
+				Origin, 
+				DustGenerator, 
+				Point3D(1,1,1),
+				Point3D(0,0,0),
+				RandomDirection, 
+				NULL,
+				VarySpeed,
+				19);
+
+			scene->AddObject(dustTrail);
+		}
+	}
+
+	if(dustTrail != NULL)
+	{
+		dustTrail->SetTranslate(translate);
+		dustTrail->SetRotate(rotate);
+	}
+
 	forwardSpeed += acceleration;
 	if(forwardSpeed > maxSpeed)
 		forwardSpeed = maxSpeed;

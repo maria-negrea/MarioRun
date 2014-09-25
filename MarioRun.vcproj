@@ -207,6 +207,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Cutout.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CutoutObject.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Environment.cpp"
 				>
 			</File>
@@ -438,6 +446,14 @@
 			</File>
 			<File
 				RelativePath=".\ColoredPoint3D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Cutout.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CutoutObject.h"
 				>
 			</File>
 			<File

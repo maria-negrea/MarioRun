@@ -1,9 +1,7 @@
 #pragma once
 
-#include "WorldObject.h"
 #include "Updatable.h"
-
-class OnRoadObject;
+#include "OnRoadObject.h"
 
 class Road : public WorldObject, public Updatable
 { 
@@ -36,4 +34,3 @@ public:
 	GLfloat GetCurrentLength();
 };
 
-#include "OnRoadObject.h"

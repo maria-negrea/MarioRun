@@ -50,10 +50,10 @@ void Road::DrawObject()
 		}
 
 		glBegin(GL_QUADS);
-			glVertex3f(leftVector[i].x, 0.1, leftVector[i].z);
-			glVertex3f(rightVector[i].x, 0.1, rightVector[i].z);
-			glVertex3f(rightVector[i + 1].x, 0.1, rightVector[i + 1].z);
-			glVertex3f(leftVector[i + 1].x, 0.1, leftVector[i + 1].z);
+			glVertex3f(leftVector[i].x, 0.01, leftVector[i].z);
+			glVertex3f(rightVector[i].x, 0.01, rightVector[i].z);
+			glVertex3f(rightVector[i + 1].x, 0.01, rightVector[i + 1].z);
+			glVertex3f(leftVector[i + 1].x, 0.01, leftVector[i + 1].z);
 		glEnd();
 	}
 }
@@ -121,64 +121,69 @@ void Road::SetOnRoadAngle(OnRoadObject* onRoadObject)
 	}
 }
 
+bool CheckInPoly(Point3D p3D1,Point3D p3D2,Point3D p3D3,Point3D p3D4,Point3D check3D, View perspective)
+{
+	Point2D p1 = Point2D(p3D1,perspective);
+	Point2D p2 = Point2D(p3D2,perspective);
+	Point2D p3 = Point2D(p3D3,perspective);
+	Point2D p4 = Point2D(p3D4,perspective);
+
+	Point2D check = Point2D(check3D,perspective);
+
+	Segment2D *polySegments = new Segment2D[4];
+	polySegments[0] = Segment2D(p1,p2);
+	polySegments[1] = Segment2D(p2,p3);
+	polySegments[2] = Segment2D(p3,p4);
+	polySegments[3] = Segment2D(p4,p1);
+
+	Segment2D *lines = new Segment2D[4];
+	lines[0] = Segment2D(check,p1);
+	lines[1] = Segment2D(check,p2);
+	lines[2] = Segment2D(check,p3);
+	lines[3] = Segment2D(check,p4);
+
+	if(lines[0].Intersects(polySegments[1]))
+	{
+		return false;
+	}
+	if(lines[0].Intersects(polySegments[2]))
+	{
+		return false;
+	}
+	if(lines[1].Intersects(polySegments[2]))
+	{
+		return false;
+	}
+	if(lines[1].Intersects(polySegments[3]))
+	{
+		return false;
+	}
+	if(lines[2].Intersects(polySegments[3]))
+	{
+		return false;
+	}
+	if(lines[2].Intersects(polySegments[0]))
+	{
+		return false;
+	}
+	if(lines[3].Intersects(polySegments[0]))
+	{
+		return false;
+	}
+	if(lines[3].Intersects(polySegments[1]))
+	{
+		return false;
+	}
+	return true;
+}
+
 bool Road::IsOnIndex(OnRoadObject* onRoadObject)
 {
 	int roadIndex = onRoadObject->GetIndex();
 
 	if(roadIndex <= roadSize)
 	{
-		//cout<<roadIndex<<"X"<<endl;
-		Point2D p1 = Point2D(rightVector[roadIndex],View::Up);
-		Point2D p2 = Point2D(leftVector[roadIndex],View::Up);
-		Point2D p3 = Point2D(leftVector[roadIndex+1],View::Up);
-		Point2D p4 = Point2D(rightVector[roadIndex+1],View::Up);
-
-		Point2D check = Point2D(onRoadObject->GetTranslate(),View::Up);
-
-		Segment2D *polySegments = new Segment2D[4];
-		polySegments[0] = Segment2D(p1,p2);
-		polySegments[1] = Segment2D(p2,p3);
-		polySegments[2] = Segment2D(p3,p4);
-		polySegments[3] = Segment2D(p4,p1);
-
-		Segment2D *lines = new Segment2D[4];
-		lines[0] = Segment2D(check,p1);
-		lines[1] = Segment2D(check,p2);
-		lines[2] = Segment2D(check,p3);
-		lines[3] = Segment2D(check,p4);
-
-		if(lines[0].Intersects(polySegments[1]))
-		{
-			return false;
-		}
-		if(lines[0].Intersects(polySegments[2]))
-		{
-			return false;
-		}
-		if(lines[1].Intersects(polySegments[2]))
-		{
-			return false;
-		}
-		if(lines[1].Intersects(polySegments[3]))
-		{
-			return false;
-		}
-		if(lines[2].Intersects(polySegments[3]))
-		{
-			return false;
-		}
-		if(lines[2].Intersects(polySegments[0]))
-		{
-			return false;
-		}
-		if(lines[3].Intersects(polySegments[0]))
-		{
-			return false;
-		}
-		if(lines[3].Intersects(polySegments[1]))
-		{
-			return false;
-		}
+		return CheckInPoly(rightVector[roadIndex],leftVector[roadIndex],leftVector[roadIndex+1],rightVector[roadIndex+1],onRoadObject->GetTranslate(),View::Up);
 	}
 	else
 	{

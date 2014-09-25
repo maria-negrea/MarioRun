@@ -7,14 +7,15 @@ Road::Road(void)
 {
 	srand(time(NULL));
 
-	GLfloat width = 20;
-	GLfloat length = 40;
-	Point3D lastRoad(0, 0, -length/2);
-	roadSize=20;
+	width = 20;
+	length = 40;
 
-	Point3D lastCurve = Point3D(0,0,1);
+	lastRoad = Point3D(0, 0, -length/2);
+	lastCurve = Point3D(0,0,1);
 
-	double angle = 10.234556;
+	angle = 10.234556;
+
+	roadSize=30;
 
 	for(int i = 0; i < roadSize + 2; i++)
 	{
@@ -50,10 +51,10 @@ void Road::DrawObject()
 		}
 
 		glBegin(GL_QUADS);
-			glVertex3f(leftVector[i].x, 0.1, leftVector[i].z);
-			glVertex3f(rightVector[i].x, 0.1, rightVector[i].z);
-			glVertex3f(rightVector[i + 1].x, 0.1, rightVector[i + 1].z);
-			glVertex3f(leftVector[i + 1].x, 0.1, leftVector[i + 1].z);
+			glVertex3f(leftVector[i].x, 0.01, leftVector[i].z);
+			glVertex3f(rightVector[i].x, 0.01, rightVector[i].z);
+			glVertex3f(rightVector[i + 1].x, 0.01, rightVector[i + 1].z);
+			glVertex3f(leftVector[i + 1].x, 0.01, leftVector[i + 1].z);
 		glEnd();
 	}
 }
@@ -68,19 +69,30 @@ void Road::Update()
 	for(unsigned i = 0; i<onRoadObjects.size();i++)
 	{
 		int index = onRoadObjects[i]->GetIndex();
-		if(!IsOnIndex(onRoadObjects[i]))
+		if(index < 0 || index > onRoadObjects.size())
 		{
-			if(index > 1)
+			RemoveObject(onRoadObjects[i]);
+			i--;
+		}
+		else
+		{
+			if(!IsOnIndex(onRoadObjects[i]))
 			{
-				onRoadObjects[i]->SetIndex(index-1);
-			}
+				if(index > 1)
+				{
+					onRoadObjects[i]->SetIndex(index-1);
+				}
 
-			while(!IsOnIndex(onRoadObjects[i]))
+				while(!IsOnIndex(onRoadObjects[i]))
+				{
+					onRoadObjects[i]->IncrementIndex();
+				}
+			}
+			if(onRoadObjects[i]->IsLinked())
 			{
-				onRoadObjects[i]->IncrementIndex();
+				SetOnRoadAngle(onRoadObjects[i]);
 			}
 		}
-		SetOnRoadAngle(onRoadObjects[i]);
 	}
 }
 
@@ -114,11 +126,71 @@ void Road::SetOnRoadAngle(OnRoadObject* onRoadObject)
 
 		if(angle-onRoadObject->GetLastAngle() > 0.5)
 		{
-			cout<<angle-onRoadObject->GetLastAngle()<<endl;
+			//cout<<angle-onRoadObject->GetLastAngle()<<endl;
 		}
 		onRoadObject->SetRotateY(angle);
 		onRoadObject->SetLastAngle(angle);
 	}
+	else
+	{
+		RemoveObject(onRoadObject);
+	}
+}
+
+bool CheckInPoly(Point3D p3D1,Point3D p3D2,Point3D p3D3,Point3D p3D4,Point3D check3D, View perspective)
+{
+	Point2D p1 = Point2D(p3D1,perspective);
+	Point2D p2 = Point2D(p3D2,perspective);
+	Point2D p3 = Point2D(p3D3,perspective);
+	Point2D p4 = Point2D(p3D4,perspective);
+
+	Point2D check = Point2D(check3D,perspective);
+
+	Segment2D *polySegments = new Segment2D[4];
+	polySegments[0] = Segment2D(p1,p2);
+	polySegments[1] = Segment2D(p2,p3);
+	polySegments[2] = Segment2D(p3,p4);
+	polySegments[3] = Segment2D(p4,p1);
+
+	Segment2D *lines = new Segment2D[4];
+	lines[0] = Segment2D(check,p1);
+	lines[1] = Segment2D(check,p2);
+	lines[2] = Segment2D(check,p3);
+	lines[3] = Segment2D(check,p4);
+
+	if(lines[0].Intersects(polySegments[1]))
+	{
+		return false;
+	}
+	if(lines[0].Intersects(polySegments[2]))
+	{
+		return false;
+	}
+	if(lines[1].Intersects(polySegments[2]))
+	{
+		return false;
+	}
+	if(lines[1].Intersects(polySegments[3]))
+	{
+		return false;
+	}
+	if(lines[2].Intersects(polySegments[3]))
+	{
+		return false;
+	}
+	if(lines[2].Intersects(polySegments[0]))
+	{
+		return false;
+	}
+	if(lines[3].Intersects(polySegments[0]))
+	{
+		return false;
+	}
+	if(lines[3].Intersects(polySegments[1]))
+	{
+		return false;
+	}
+	return true;
 }
 
 bool Road::IsOnIndex(OnRoadObject* onRoadObject)
@@ -127,64 +199,25 @@ bool Road::IsOnIndex(OnRoadObject* onRoadObject)
 
 	if(roadIndex <= roadSize)
 	{
-		//cout<<roadIndex<<"X"<<endl;
-		Point2D p1 = Point2D(rightVector[roadIndex],View::Up);
-		Point2D p2 = Point2D(leftVector[roadIndex],View::Up);
-		Point2D p3 = Point2D(leftVector[roadIndex+1],View::Up);
-		Point2D p4 = Point2D(rightVector[roadIndex+1],View::Up);
-
-		Point2D check = Point2D(onRoadObject->GetTranslate(),View::Up);
-
-		Segment2D *polySegments = new Segment2D[4];
-		polySegments[0] = Segment2D(p1,p2);
-		polySegments[1] = Segment2D(p2,p3);
-		polySegments[2] = Segment2D(p3,p4);
-		polySegments[3] = Segment2D(p4,p1);
-
-		Segment2D *lines = new Segment2D[4];
-		lines[0] = Segment2D(check,p1);
-		lines[1] = Segment2D(check,p2);
-		lines[2] = Segment2D(check,p3);
-		lines[3] = Segment2D(check,p4);
-
-		if(lines[0].Intersects(polySegments[1]))
-		{
-			return false;
-		}
-		if(lines[0].Intersects(polySegments[2]))
-		{
-			return false;
-		}
-		if(lines[1].Intersects(polySegments[2]))
-		{
-			return false;
-		}
-		if(lines[1].Intersects(polySegments[3]))
-		{
-			return false;
-		}
-		if(lines[2].Intersects(polySegments[3]))
-		{
-			return false;
-		}
-		if(lines[2].Intersects(polySegments[0]))
-		{
-			return false;
-		}
-		if(lines[3].Intersects(polySegments[0]))
-		{
-			return false;
-		}
-		if(lines[3].Intersects(polySegments[1]))
-		{
-			return false;
-		}
+		return CheckInPoly(rightVector[roadIndex],leftVector[roadIndex],leftVector[roadIndex+1],rightVector[roadIndex+1],onRoadObject->GetTranslate(),View::Up);
 	}
 	else
 	{
-		int g = 0;
+		RemoveObject(onRoadObject);
 	}
 	return true;
+}
+
+void Road::RemoveObject(OnRoadObject* object)
+{
+	for (unsigned i=0; i<onRoadObjects.size(); ++i)
+	{
+		if(onRoadObjects[i] == object)
+		{
+			onRoadObjects.erase(onRoadObjects.begin()+i);
+			break;
+		}
+	}
 }
 
 Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
@@ -308,6 +341,23 @@ int Road:: GetRoadSize()
 
 void Road::GenerateRoad()
 {
+	roadVector.erase(roadVector.begin());
+	leftVector.erase(leftVector.begin());
+	rightVector.erase(rightVector.begin());
 
+	for(int i = 0; i < onRoadObjects.size(); i++)
+		if(onRoadObjects[i]->GetIndex() > 0)
+			onRoadObjects[i]->SetIndex(onRoadObjects[i]->GetIndex() - 1);
 
+	Point3D newRoad = lastCurve.RotateY(angle);
+	lastCurve = newRoad;
+
+	if(rand() % 6 == 5)
+		angle = rand() % 30 - 15;
+
+	leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
+    rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
+
+	roadVector.push_back(lastRoad);
+	lastRoad += newRoad*length;
 }

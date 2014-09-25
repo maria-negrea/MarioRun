@@ -9,10 +9,9 @@
 #include "Point3D.h"
 #include "Collider.h"
 
-class Scene;
-
 using namespace std;
 
+class Scene;
 
 class WorldObject
 {
@@ -85,4 +84,5 @@ public:
 	bool GetVisibility();
 };
 
+#include "Cutout.h"
 #include"Scene.h"

@@ -1,67 +1,47 @@
 #include "Environment.h"
-#include "Plant.h"
-#include "Box.h"
-#include "Textures.h"
-#include "Particles.h"
-#include "Input.h"
-#include "PlantTulip.h"
-#include "PlantHead.h"
-#include "PlantLeaf.h"
-#include "Road.h"
-#include "Omi.h"
-#include "Line.h"
-#include "Segment2D.h"
+
 #include "GlobalScore.h"
 #include "Pond.h"
 
 Scene *scene;
 Camera* mainCamera;
-Goomba* goomba;
-Mario* mario;
 
 Environment* environment;
 
 Omi* omi;
 Particles *particles;
-Point3D collision;
 
-Point3D Dir()
+Point3D RainDirection()
 {
-	int a = rand() % 100-50, b = (-1)*(rand() % 100 + 50), c = rand() % 100-50;
-	return Point3D(0.2, b*1.0, 0.2).Normalize();
+	return Point3D(0.2, -2.0, 0.2).Normalize();
 }
 
-Point3D Tran()
+Point3D RainTranslation()
 {
-	int a = rand() % 100-50, b = rand() % 100-50;
-	return Point3D(a*10.0, 0.0, b*10.0).Normalize()*20;
+	int size = 400;
+	int a = rand() % size-size/2, b = rand() % size-size/2;
+	return Point3D(a, 0.0, b);
 }
 
-int generator() {
-	return rand() % 10 + 1;
-}
-
-Point3D GetSquareOutside(Point3D pointIn, GLfloat angle)
+int RainGenerator() 
 {
-	GLfloat complementAngle=90.0-angle;
-	Point3D outside;
-	GLfloat l1=pointIn.x*sin(angle*PI/180), l2=pointIn.z*cos(complementAngle*PI/180);
-	outside.x=l1+l2;
-	outside.z=pointIn.z*sin(complementAngle*PI/180)+pointIn.x*cos(angle*PI/180);
-	outside.y=0;
-
-	return outside;
+	return rand() % 20 + 1;
 }
 
-int angleG() {
+float angleG() 
+{
 	return 180;
+}
+
+float ConstantSpeed()
+{
+	return 4.0;
 }
 
 void AfterEff(Point3D p) 
 {
-	Pond *pond = new Pond(environment->GetScene());
-	pond->Draw();
-	pond->Translate(Point3D(p.x, 0.02, p.z));
+	Pond *pond = new Pond();
+	pond->Translate(Point3D(p.x, p.y+rand()%100*0.001, p.z));
 	environment->AddObject(pond);
 }
 
@@ -70,13 +50,13 @@ void Initialize()
 	environment=new Environment();
 	environment->AddObjectsToScene();
 	
-	particles = new Particles(Dir, Tran, true, generator, Point3D(0.5, 0.5, 0.5), angleG, AfterEff);
+	particles = new Particles(RainDirection, RainTranslation, RainGenerator,Point3D(0.2,1,0.2),Point3D(0.2,1,0.2), angleG, AfterEff,ConstantSpeed, 20);//19
 
 	GlobalScore::GetInstance()->SetScore(0);
 
 	//environment->AddObject(particles);
 
-	// LIGHTING TEST
+	//LIGHTING TEST
 
 	//GLfloat light_position[] = { 1.0, 1.0, 10.0, 1.0};
 	//	
@@ -124,7 +104,7 @@ void Timer(int value)
 {
 	environment->GetScene()->Update();
 	particles->Translate(-particles->GetTranslate());
-	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 25.0, 0.0));
+	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 100.0, 0.0));
 	glutPostRedisplay();
 	
 	if(environment->GetMario()->IsDead() == false)

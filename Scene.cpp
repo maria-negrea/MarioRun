@@ -1,5 +1,7 @@
 #include "Scene.h"
 #include "Collider.h"
+#include "OnRoadObject.h"
+#include <algorithm> 
 
 Scene::Scene()
 {
@@ -8,6 +10,11 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+}
+
+bool SortByDepth(Cutout* a,Cutout* b)
+{
+	return a->GetDepth() > b->GetDepth();
 }
 
 void Scene::Render()
@@ -38,6 +45,16 @@ void Scene::Render()
 			sceneObjects[i]->Draw();
 	}
 
+	sort(cutouts.begin(), cutouts.end(), SortByDepth); 
+	//cout<<cutouts.size()<<endl;
+	for(unsigned i = 3; i<cutouts.size(); ++i)
+	{
+		 if(cutouts[i]->GetDepth() < 400)
+			cutouts[i]->DrawCutout();
+		 else
+			cutouts.erase(cutouts.begin()+i);
+	}
+	
 	glFlush();
 
 }
@@ -48,8 +65,11 @@ void Scene::Update()
 	{
 		updateObjects[i]->Update();
 	}
+}
 
-	OnRoadObject* mario = dynamic_cast<OnRoadObject*>(sceneObjects[predraw]);
+void Scene::DeleteUntil(WorldObject* untilObject)
+{
+	OnRoadObject* mario = dynamic_cast<OnRoadObject*>(untilObject);
 
 	for(int i = predraw+1; i < sceneObjects.size(); i++)
 	{
@@ -57,8 +77,10 @@ void Scene::Update()
 
 		if(obj != NULL)
 		{
-			if( mario->GetIndex() > obj->GetIndex() + 2)
+			if(obj->GetIndex() < 2)
+			{
 				RemoveObject(sceneObjects[i]);
+			}
 		}
 	}
 }
@@ -70,6 +92,18 @@ void Scene::RemoveUpdatable(Updatable* object)
 		if(updateObjects[i] == object)
 		{
 			updateObjects.erase(updateObjects.begin()+i);
+			break;
+		}
+	}
+}
+
+void Scene::RemoveCutout(Cutout* cutout)
+{
+	for (unsigned i=0; i<cutouts.size(); ++i)
+	{
+		if(cutouts[i] == cutout)
+		{
+			cutouts.erase(cutouts.begin()+i);
 			break;
 		}
 	}
@@ -101,8 +135,17 @@ void Scene::SetMainCamera(Camera* camera)
 
 void Scene::AddObject(WorldObject* object)
 {
-	sceneObjects.push_back(object);
 	object->SetScene(this);
+
+	Cutout* cutout = dynamic_cast<Cutout*>(object);
+	if(cutout == NULL)
+	{
+		sceneObjects.push_back(object);
+	}
+	else
+	{
+		cutouts.push_back(cutout);
+	}
 	AddSpecialObject(object);
 }
 
@@ -134,15 +177,23 @@ void Scene::AddSpecialObject(WorldObject* object)
 
 void Scene::RemoveObject(WorldObject* object)
 {
-	for (unsigned i=0; i<sceneObjects.size(); ++i)
+	Cutout* cutout = dynamic_cast<Cutout*>(object);
+	if(cutout == NULL)
 	{
-		if(sceneObjects[i] == object)
+		for (unsigned i=0; i<sceneObjects.size(); ++i)
 		{
-			sceneObjects.erase(sceneObjects.begin()+i);
-			break;
+			if(sceneObjects[i] == object)
+			{
+				sceneObjects.erase(sceneObjects.begin()+i);
+				break;
+			}
 		}
 	}
-
+	else
+	{
+		//cout<<"Q";
+		RemoveCutout(cutout);
+	}
 	Updatable* updatableObject = dynamic_cast<Updatable*>(object);
 	if(updatableObject != NULL)
 	{

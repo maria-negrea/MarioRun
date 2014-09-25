@@ -3,6 +3,31 @@
 #include "Goomba.h"
 #include "Box.h"
 
+Point3D BackDirection()
+{
+	return Point3D((rand()%200-100)*0.01,(rand()%200-100)*0.01,-1);
+}
+
+Point3D Origin()
+{
+	return Point3D(0,0,0);
+}
+
+int DustGenerator() 
+{
+	return rand() % 4 + 1;
+}
+
+float RandomDirection()
+{
+	return rand()%360;
+}
+
+float VarySpeed()
+{
+	return rand()%300*0.01;
+}
+
 Mario::Mario():PhysicsObject(0.0)
 {
 	collider = new MarioCollider(this);
@@ -94,6 +119,8 @@ Mario::Mario():PhysicsObject(0.0)
 	pelvis->AddChild(upperLegLeft);
 	upperLegLeft->AddChild(lowerLegLeft);
 	lowerLegLeft->AddChild(leftFoot);
+
+	dustTrail = NULL;
 
 	body->AddChild(upperArmRight);
 	upperArmRight->AddChild(lowerArmRight);
@@ -425,8 +452,33 @@ void Mario::DeadAnimation()
 
 void Mario::Update()
 {
+	cout<<roadIndex<<"\n";
 	PhysicsObject::Update();
-	
+
+	if(scene != NULL)
+	{
+		if(dustTrail == NULL)
+		{
+			dustTrail = new Particles(BackDirection, 
+				Origin, 
+				DustGenerator, 
+				Point3D(1,1,1),
+				Point3D(0,0,0),
+				RandomDirection, 
+				NULL,
+				VarySpeed,
+				21);
+
+			scene->AddObject(dustTrail);
+		}
+	}
+
+	if(dustTrail != NULL)
+	{
+		dustTrail->SetTranslate(translate);
+		dustTrail->SetRotate(rotate);
+	}
+
 	forwardSpeed += acceleration;
 	if(forwardSpeed > maxSpeed)
 		forwardSpeed = maxSpeed;
@@ -591,6 +643,11 @@ bool Mario::GetInvulnerable()
 void Mario::IncrementIndex()
 {
 	OnRoadObject::IncrementIndex();
+
+	scene->DeleteUntil(this);
+
+	if(this->GetIndex() == 3)
+		road->GenerateRoad();
 }
 
 void Mario::SetDead()

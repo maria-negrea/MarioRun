@@ -2,6 +2,7 @@
 #include <cmath>
 
 #include "Scene.h"
+
 #include "Plant.h"
 #include "Box.h"
 #include "Mario.h"
@@ -12,10 +13,7 @@
 #include "QuestionBlock.h"
 #include "Tree.h"
 #include "PlantTulip.h"
-#include "PlantHead.h"
-#include "PlantLeaf.h"
 #include "SnowMan.h"
-#include "PlantTulip.h"
 #include "Score.h"
 #include "SplitBox.h"
 #include "Star.h"

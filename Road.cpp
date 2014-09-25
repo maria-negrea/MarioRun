@@ -80,7 +80,10 @@ void Road::Update()
 				onRoadObjects[i]->IncrementIndex();
 			}
 		}
-		SetOnRoadAngle(onRoadObjects[i]);
+		if(onRoadObjects[i]->IsLinked())
+		{
+			SetOnRoadAngle(onRoadObjects[i]);
+		}
 	}
 }
 
@@ -195,6 +198,10 @@ bool Road::IsOnIndex(OnRoadObject* onRoadObject)
 Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 {
 	int indexZ= floor(point.z);	
+	/*if(indexZ>19)
+	{
+		cout<<"jhhg"<<endl;
+	}*/
 	double posZ = point.z-indexZ;
 	double posX = point.x;
 

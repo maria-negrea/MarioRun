@@ -6,6 +6,15 @@
 #include "QuestionBlock.h"
 #include "Particles.h"
 
+enum MarioAnimations
+{
+	None,
+	Run,
+	Jump, 
+	Hit, 
+	Dead
+};
+
 class Mario : public PhysicsObject, public OnRoadObject
 {
 	void DrawObject();
@@ -16,6 +25,9 @@ class Mario : public PhysicsObject, public OnRoadObject
 	bool isBig;
 	bool bleep;
 	bool invulnerable;
+	bool deadMario;
+
+	double dying;
 
 	double time;
 	double jumpForce;
@@ -24,15 +36,16 @@ class Mario : public PhysicsObject, public OnRoadObject
 	Box* neck;
 	Box* head;
 	Box* body;
-
 	Box* upperLegRight;
 	Box* lowerLegRight;
 	Box* rightFoot;
-
 	Box* upperLegLeft;
 	Box* lowerLegLeft;
 	Box* leftFoot;
 
+	Box* upperArmRight;
+	Box* lowerArmRight;
+	Box* rightHand;
 	Box* upperArmLeft;
 	Box* lowerArmLeft;
 	Box* leftHand;
@@ -41,6 +54,10 @@ class Mario : public PhysicsObject, public OnRoadObject
 
 	void RunAnimation();
 	void JumpAnimation();
+	void HitAnimation();
+	void DeadAnimation();
+
+	MarioAnimations animation;
 public:
 	Mario();
 	~Mario();
@@ -63,6 +80,9 @@ public:
 
 	bool GetInvulnerable();
 	void SetInvulnerable();
+
+	void SetDead();
+	bool IsDead();
 
 	void IncrementIndex();
 };

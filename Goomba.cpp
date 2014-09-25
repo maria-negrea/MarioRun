@@ -2,8 +2,11 @@
 #include "Pivot.h"
 #include "Input.h"
 
-Goomba::Goomba(void)
+Goomba::Goomba(void):OnRoadObject(false)
 {
+
+	isDamaged = false;
+
 	Head *head = new Head();
 	Torso *torso = new Torso();
 	speed=1.05;
@@ -93,7 +96,7 @@ void Goomba::Update()
 		{
 			Point3D point = target->GetTranslate()-GetTranslate();
 			point.y = 0;
-			if(point.Magnitude()<10)
+			if(point.Magnitude()<15)
 			{
 				Translate(GetForward()*speed);			
 				GLfloat angleToTarget = AngleBetween(point);
@@ -105,4 +108,14 @@ void Goomba::Update()
 
 Goomba::~Goomba(void)
 {
+}
+
+void Goomba::SetDamage()
+{
+	isDamaged = true;
+}
+
+bool Goomba::IsDamaged()
+{
+	return isDamaged;
 }

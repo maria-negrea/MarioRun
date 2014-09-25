@@ -31,6 +31,7 @@ class Scene
 	void RemoveUpdatable(Updatable* object);
 	void RemoveCutout(Cutout* cutout);
 	void AddSpecialObject(WorldObject* object);
+	int predraw ;
 public:
 	Scene();
 	~Scene();

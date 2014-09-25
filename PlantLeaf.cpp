@@ -12,7 +12,7 @@ PlantLeaf::~PlantLeaf(void)
 void PlantLeaf::DrawObject()
 {
 	
-	glEnable(GL_BLEND);
+	//glEnable(GL_BLEND);
 	//glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glDisable(GL_DEPTH_TEST);
 	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[5]); 
@@ -47,6 +47,6 @@ void PlantLeaf::DrawObject()
 	  
   glEnd();
 
-  glDisable(GL_BLEND);
+  //glDisable(GL_BLEND);
 // glEnable(GL_DEPTH_TEST);
 }

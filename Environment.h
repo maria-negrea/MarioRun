@@ -19,6 +19,8 @@
 #include "Star.h"
 #include "Fence.h"
 #include "FullMountain.h"
+#include "Sky.h"
+#include "Hole.h"
 
 class Environment: public Updatable
 {
@@ -33,13 +35,16 @@ protected:
 	vector<Coin*> coins;
 	vector<WorldObject*> obstacles;
 	vector<WorldObject*> offRoadObjects;
+	vector<WorldObject*> blocks;
 	Camera* mainCamera;
 	Score* score;
+	Sky* sky;
 
 public:
 	Environment(void);
 	vector<Coin*> GetCoins();
 	vector<WorldObject*> GetObstacles();
+	void InitializeRandomBlocks(double& lastZ);
 	void InitializeCoins(double& lastZ);
 	void InitializeObstacles();
 	void InitializeOffRoadObjects();
@@ -47,7 +52,7 @@ public:
 	void AddObject(WorldObject *obj);
 	Mario* GetMario();
 	Scene* GetScene();
-	void AddQuestionBlock(Point3D initialPoint);
+	void AddQuestionBlock(Point3D initialPoint, double& lastZ);
 	void Update();
 	~Environment(void);
 };

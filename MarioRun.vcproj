@@ -215,6 +215,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Enemy.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Environment.cpp"
 				>
 			</File>
@@ -252,6 +256,10 @@
 			</File>
 			<File
 				RelativePath=".\Head.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Hole.cpp"
 				>
 			</File>
 			<File
@@ -371,6 +379,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Sky.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SmallBox.cpp"
 				>
 			</File>
@@ -457,6 +469,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Enemy.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Environment.h"
 				>
 			</File>
@@ -494,6 +510,10 @@
 			</File>
 			<File
 				RelativePath=".\Head.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Hole.h"
 				>
 			</File>
 			<File
@@ -606,6 +626,10 @@
 			</File>
 			<File
 				RelativePath=".\Segment2D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Sky.h"
 				>
 			</File>
 			<File

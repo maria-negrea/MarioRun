@@ -12,8 +12,10 @@ FencePart::~FencePart(void)
 }
 void FencePart::DrawObject()
 {
+	glBindTexture(GL_TEXTURE_2D, 0); 
+	glColor4f(108/255.0, 56/255.0, 9/255.0,1.0);
 
-		glBegin(GL_QUADS);
+	glBegin(GL_QUADS);
  // front face
  // glTexCoord2f(0, 1);
   glVertex3f(0,height, 0);
@@ -168,9 +170,7 @@ void FencePart::DrawObject()
   glVertex3f(width, 0., length*0.7);
 
  glEnd();
-
-
-
+	glColor4f(1, 1, 1,1);
 }
 void FencePart::DrawFence()
 {

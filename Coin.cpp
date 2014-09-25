@@ -1,6 +1,6 @@
 #include "Coin.h"
 
-Coin::Coin(void)
+Coin::Coin(void):OnRoadObject(false)
 {
 	length = 0.1;
 	width = 0.5;

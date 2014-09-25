@@ -1,9 +1,10 @@
 #include "OnRoadObject.h"
 #include "Road.h"
 
-OnRoadObject::OnRoadObject(int roadIndex)
+OnRoadObject::OnRoadObject(bool directionLink, int roadIndex)
 {
 	this->roadIndex = roadIndex;
+	this->directionLink = directionLink;
 }
 
 OnRoadObject::~OnRoadObject(void)
@@ -38,4 +39,9 @@ void OnRoadObject::SetLastAngle(double angle)
 double OnRoadObject::GetLastAngle()
 {
 	return lastAngle;
+}
+
+bool OnRoadObject::IsLinked()
+{
+	return directionLink;
 }

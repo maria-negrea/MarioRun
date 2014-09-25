@@ -4,14 +4,15 @@
 #define PI 3.14
 PlantTulip::PlantTulip(GLfloat width, GLfloat height, GLfloat size)
 {
-	this->width=width;
+	
 	this->height=height;
 	this->size=size;
 	this->target=NULL;
 	contor=0;
 	head=new PlantHead(width, height, size);
 	leaf=new PlantLeaf(width, height, size);
-	head->Translate(Point3D(0.5, 3.3,0.4));
+	this->width=leaf->width;
+	head->Translate(Point3D(0.5, 1.5,0.4));
 	head->Rotate(Point3D(180, -20, 0));
 	leaf->Translate(Point3D(0, 0, -0.4));
 	this->AddChild(head);
@@ -33,8 +34,7 @@ void PlantTulip::SetTarget(WorldObject *newtarget)
 void PlantTulip::DrawTulip()
 {
 	GLfloat radius=sqrt(width*width+height*height)/8;
-    vector<Point3D>base; 
-	
+    vector<Point3D>base; 	
 
 	double initialsize=0;
 	
@@ -42,8 +42,6 @@ void PlantTulip::DrawTulip()
     double step=1./base.size();
     double j=0;
     glColor4f(0,1,0,1);	
-
-
 
 	for (double t = 0; t < 2 * PI; t = t + 1.0)
 		base.push_back(Point3D(radius*0.5*cos(t), initialsize,  radius*0.5*sin(t)));
@@ -57,7 +55,6 @@ void PlantTulip::DrawTulip()
    	for( k=0;k<base.size()-1;k++)
 	{
 		//body
-
 
 		glBegin(GL_TRIANGLES);
 		//	glTexCoord2f(j, 0.0f); 

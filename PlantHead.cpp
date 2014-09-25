@@ -13,7 +13,7 @@ PlantHead::~PlantHead(void)
 }
 void PlantHead::DrawObject()
 {
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[4]); 
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[21]); 
     glColor3f(1,1,1);
 	
 	GLfloat radius=sqrt(width*width+height*height)/3;
@@ -57,7 +57,6 @@ void PlantHead::DrawObject()
 			glVertex3f(0.8 * mouth[i].x, mouth[i].y-size*0.1 , 0.8*mouth[i].z);
 
        glEnd();
-
 
 		glBegin(GL_QUADS);
 		    glTexCoord2f(j,0.2f);

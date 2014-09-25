@@ -383,6 +383,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SnowManHead.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SplitBox.cpp"
 				>
 			</File>
@@ -622,6 +626,10 @@
 			</File>
 			<File
 				RelativePath=".\SnowMan.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SnowManHead.h"
 				>
 			</File>
 			<File

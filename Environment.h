@@ -23,6 +23,7 @@
 #include "FullMountain.h"
 #include "Sky.h"
 #include "Hole.h"
+#include "Pipe.h"
 
 class Environment: public Updatable
 {

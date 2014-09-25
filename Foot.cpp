@@ -1,8 +1,11 @@
 #include "Foot.h"
 #include "Textures.h"
 
-Foot::Foot(int mainTextureIndex)
+Foot::Foot(GLfloat width, GLfloat height, GLfloat length, int mainTextureIndex)
 {
+	this->width=width;
+	this->height=height;
+	this->length=length;
 	this->mainTextureIndex=mainTextureIndex;
 	verticesCount=16;
 	trianglesCount=(verticesCount/2+1)*4;
@@ -11,8 +14,8 @@ Foot::Foot(int mainTextureIndex)
 	int i=0;
 	for(double t=0.0; t<2*PI; t+=0.785)
 	{
-		vertices[i]=Point3D(0.8*cos(t), 0.0,  0.4*sin(t));
-		vertices[i+8]=Point3D(0.6*cos(t), 0.5,  0.2*sin(t));
+		vertices[i]=Point3D(width/2*cos(t), 0.0,  length/2*sin(t));
+		vertices[i+8]=Point3D(75/100.0*(width/2)*cos(t), height,  50/100.0*(length/2)*sin(t));
 		i++;
 	}
 	

@@ -47,10 +47,6 @@ void Environment:: InitializeCoins(double& lastZ)
 					currentPosition.y+= 3.0;
 
 				}
-				else
-				{
-					/*currentPosition.y+=cos(step)* 5.0;*/
-				}
 			
 			newCoin->Translate(currentPosition);
 			newCoin->Scale(Point3D(5.0, 5.0, 5.0));
@@ -117,13 +113,16 @@ void Environment:: InitializeObstacles()
 		{
 			case 1:
 			{
-				Point3D p1=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z), 0.0);
-				Point3D p2=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z+0.3), 0.0);
-				Point3D p3=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z+0.3), 0.0);
-				Point3D p4=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z), 0.0);
-				Hole* hole=new Hole(mario, p1, p2, p3, p4);
-				lastZ=initialPoint.z+0.3;
-				obstacles.push_back(hole);
+				if((int)type%2==0)
+				{
+					Point3D p1=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z), 0.0);
+					Point3D p2=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z+0.3), 0.0);
+					Point3D p3=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z+0.3), 0.0);
+					Point3D p4=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z), 0.0);
+					Hole* hole=new Hole(mario, p1, p2, p3, p4);
+					lastZ=initialPoint.z+0.3;
+					obstacles.push_back(hole);
+				}
 
 				break;
 			}
@@ -135,12 +134,6 @@ void Environment:: InitializeObstacles()
 					initialPoint.x-=5.0/20;
 					AddQuestionBlock(initialPoint, lastZ);
 				}
-				/*else
-					if(initialPoint.x+5.0/20 < 1.0)
-					{
-						initialPoint.x+=5.0/20;
-						AddQuestionBlock(initialPoint);
-					}*/
 				break;
 			}
 			case 3:
@@ -191,35 +184,36 @@ void Environment:: InitializeOffRoadObjects()
 		double type=rand()%25+1.0;
 		cout<<"*******************************************"<<endl;
 		Point3D initialPoint; 
-		initialPoint.x=GetRandomGLfloat(1.0, 3.0);
+		
 		initialPoint.z=lastZ+rand()%2+0.1;
 		cout<<type<<endl;
 		switch((int)sqrt(type))
 		{
 			case 1:
 			{
-				PlantTulip* plant=new PlantTulip(2,2,2);
+				initialPoint.x=GetRandomGLfloat(1.0, 3.0);
+				Pipe* pipe=new Pipe(1,3,1);
+				pipe->Scale(Point3D(1, 1, 1));
 				if(initialPoint.x<0)
 				{
-					initialPoint.x-=plant->width;
-					/*initialPoint.x=-1-plant->width/20.0;*/
+					initialPoint.x=-1-pipe->width/20.0;
 				}
 				else
 				{
-					initialPoint.x+=plant->width;
-					/*initialPoint.x=1+plant->width/20.0;*/
+					initialPoint.x=1+pipe->width/20.0;
 				}
-				//plant->SetTarget(mario);
+				//pipe->SetTarget(mario);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
-				plant->Translate(currentPosition);
-				plant->Scale(Point3D(3, 3, 3));
-				lastZ=initialPoint.z/*+plant->length/20*/;
-				offRoadObjects.push_back(plant);
+				pipe->Translate(currentPosition);
+				
+				lastZ=initialPoint.z+pipe->length/20.0;
+				offRoadObjects.push_back(pipe);
 				cout<<"PLANT"<<endl;
 				break;				
 			}
 			case 2:
 			{
+				initialPoint.x=GetRandomGLfloat(1.0, 3.0);
 				int value=rand()%2;
 				Point3D currentPosition;
 				Point3D fenceDirection;
@@ -249,7 +243,7 @@ void Environment:: InitializeOffRoadObjects()
 
 				fence->Rotate(Point3D(0, angle-90, 0));
 
-				lastZ=initialPoint.z/*+fence->length/20*/;
+				lastZ=initialPoint.z+fence->length/20.0;
 				offRoadObjects.push_back(fence);
 				cout<<"FENCE"<<endl;
 				fenceIndex+=rand()%4;
@@ -258,7 +252,7 @@ void Environment:: InitializeOffRoadObjects()
 			}
 			case 3:
 			{
-				
+				initialPoint.x=GetRandomGLfloat(1.5, 2.0);
 				Tree*tree=new Tree();
 				if(initialPoint.x<0)
 				{
@@ -271,13 +265,14 @@ void Environment:: InitializeOffRoadObjects()
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
 				tree->Scale(Point3D(2,2,2));
 				tree->Translate(currentPosition);
-				lastZ=initialPoint.z/*+tree->length/20*/;
+				lastZ=initialPoint.z+tree->length/20.0;
 				offRoadObjects.push_back(tree);
 				cout<<"TREE"<<endl;
 				break;
 			}
 			case 4:
 			{
+				initialPoint.x=GetRandomGLfloat(2.0, 3.0);
 				FullMountain* mountain=new FullMountain(200, 200, 200);
 				if(initialPoint.x<0)
 				{

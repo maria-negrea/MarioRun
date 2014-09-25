@@ -13,8 +13,8 @@ Goomba::Goomba(void)
 
 	AddCollider();
 	hardCollider = true;
-	Foot *leftFoot = new Foot(6);
-	Foot *rightFoot = new Foot(6);
+	Foot *leftFoot = new Foot(0.8, 0.5, 0.4, 6);
+	Foot *rightFoot = new Foot(0.8, 0.5, 0.4, 6);
 
 	width=head->GetBigRadius()*2;
 	length=head->GetSmallRadius()*2;

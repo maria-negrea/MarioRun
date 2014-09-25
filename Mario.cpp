@@ -2,6 +2,7 @@
 #include "MarioCollider.h"
 #include "Goomba.h"
 #include "Box.h"
+#include "Mesh.h"
 
 Point3D BackDirection()
 {
@@ -28,7 +29,7 @@ float VarySpeed()
 	return rand()%300*0.01;
 }
 
-Mario::Mario():PhysicsObject(0.0)
+Mario::Mario():PhysicsObject(0.0),OnRoadObject(true)
 {
 	collider = new MarioCollider(this);
 	hardCollider = true;
@@ -71,7 +72,6 @@ Mario::Mario():PhysicsObject(0.0)
 
      rightHand=new Box(0.4,0.25,0.5);
 	 rightHand->Translate(Point3D(0,0.85,0));
-
 
 
 	 upperArmLeft=new Box(0.4,0.6,0.4);
@@ -129,6 +129,11 @@ Mario::Mario():PhysicsObject(0.0)
 	body->AddChild(upperArmLeft);
 	upperArmLeft->AddChild(lowerArmLeft);
 	lowerArmLeft->AddChild(leftHand);
+
+	mesh = new Mesh("Mario.txt");
+	mesh->Scale(Point3D(-0.94,-0.94,-0.94));
+	mesh->Translate(Point3D(0,10,0));
+	AddChild(mesh);
 
 	RunAnimation();
 }
@@ -487,9 +492,11 @@ void Mario::Update()
 		Translate(GetForward()*forwardSpeed);
 
 		if(Input::GetLeft())
+		//	Rotate(Point3D(0,4,0));
 			this->MoveLeft();
 
 		if(Input::GetRight())
+		//	Rotate(Point3D(0,4,0));
 			this->MoveRight();
 
 		if(translate.y == 0)

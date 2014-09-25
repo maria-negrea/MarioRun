@@ -71,6 +71,7 @@ void Scene::DeleteUntil(WorldObject* untilObject)
 {
 	OnRoadObject* mario = dynamic_cast<OnRoadObject*>(untilObject);
 
+	cout<<"ST"<<endl;
 	for(int i = predraw+1; i < sceneObjects.size(); i++)
 	{
 		OnRoadObject* obj = dynamic_cast<OnRoadObject*>(sceneObjects[i]);
@@ -83,6 +84,7 @@ void Scene::DeleteUntil(WorldObject* untilObject)
 			}
 		}
 	}
+	cout<<"END"<<endl;
 }
 
 void Scene::RemoveUpdatable(Updatable* object)

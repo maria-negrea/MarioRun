@@ -106,7 +106,7 @@ void Timer(int value)
 	glutPostRedisplay();
 	
 	if(environment->GetMario()->IsDead() == false)
-		glutTimerFunc(30, Timer, 0);
+		glutTimerFunc(0.001, Timer, 0);
 }
 
 void reshape(int w, int h)
@@ -157,7 +157,7 @@ void keyPressed(unsigned char key, int x, int y)
 			//{
 				Initialize();
 				glutDisplayFunc(Draw);
-				glutTimerFunc(30, Timer, 0);
+				glutTimerFunc(5, Timer, 0);
 
 				glutSpecialFunc(specialKey);
 				glutSpecialUpFunc(specialUpKey);

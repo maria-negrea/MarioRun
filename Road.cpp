@@ -232,24 +232,24 @@ void Road::RemoveObject(OnRoadObject* object)
 
 Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 {
-	int indexZ= floor(point.z);	
+	int indexZ = floor(point.z);
 	double posZ = point.z-indexZ;
 	double posX = point.x;
 
-	if(indexZ <= roadSize )
+	if(indexZ < roadSize)
 	{
 		if(posX < 0)
 		{
 			posX = -posX;
 		}
 				
-		if(point.x<0 && point.x-obstacleWidth/2<leftVector[indexZ].x)
+		if(point.x<0 && point.x-obstacleWidth/40<leftVector[indexZ].x)
 		{
-			point.x+=obstacleWidth/2;
+			point.x+=obstacleWidth/40;
 		}
-		if(point.x>0 && point.x+obstacleWidth/2>rightVector[indexZ].x)
+		if(point.x>0 && point.x+obstacleWidth/40>rightVector[indexZ].x)
 		{
-			point.x-=obstacleWidth/2;
+			point.x-=obstacleWidth/40;
 		}
 		Point3D intermediateZ = (roadVector[indexZ+1] - roadVector[indexZ]) * posZ;
 
@@ -267,13 +267,13 @@ Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 
 		Point3D result = roadVector[indexZ] + intermediateZ + intermediateX;
 
-		if(result.x+obstacleWidth+2>leftVector[indexZ].x)
+		if(result.x+obstacleWidth/20+2.0/20.>leftVector[indexZ].x)
 		{
-			result.x-=obstacleWidth;
+			result.x-=obstacleWidth/20;
 		}
-		if(result.x-obstacleWidth-2>rightVector[indexZ].x)
+		if(result.x-obstacleWidth/20-2./20.>rightVector[indexZ].x)
 		{
-			result.x+=obstacleWidth;
+			result.x+=obstacleWidth/20;
 		}
 		return result;
 	}
@@ -281,7 +281,6 @@ Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 	{
 		int g = 0;
 	}
-	return Point3D();
 }
 
 void Road::AddRoadObject(OnRoadObject* object)
@@ -348,9 +347,6 @@ int Road:: GetRoadSize()
 void Road::GenerateRoad()
 {
 	isNewRoad=true;
-	roadVector.erase(roadVector.begin());
-	leftVector.erase(leftVector.begin());
-	rightVector.erase(rightVector.begin());
 
 	for(int i = 0; i < onRoadObjects.size(); i++)
 	{
@@ -364,6 +360,10 @@ void Road::GenerateRoad()
 			i--;
 		}
 	}
+
+	roadVector.erase(roadVector.begin());
+	leftVector.erase(leftVector.begin());
+	rightVector.erase(rightVector.begin());
 
 	PutRoadPiece();
 }

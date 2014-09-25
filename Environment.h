@@ -43,6 +43,7 @@ protected:
 	Camera* mainCamera;
 	Score* score;
 	Sky* sky;
+	int count;
 
 public:
 	Environment(void);

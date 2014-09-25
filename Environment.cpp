@@ -1,9 +1,11 @@
 #include "Environment.h"
 #include "Coin.h"
 #include "QuestionBlock.h"
+#include<fstream>
 
 Environment::Environment()
 {
+	count=0;
 	sky=new Sky(3000);
 	score=new Score();
 	mario = new Mario(this);
@@ -18,7 +20,14 @@ Environment::Environment()
 	mainCamera = new MarioCamera(mario);
 	scene->SetMainCamera(mainCamera);
 
-	InitializeObstacles(0, road->GetRoadSize());
+	scene->AddObject(score);
+	scene->AddObject(road);
+	scene->AddObject(new Ground);
+	scene->AddObject(sky);
+	//scene->AddObject(particles);
+	scene->AddObject(mario);
+
+	InitializeObstacles(0, 29);
 	InitializeOffRoadObjects(0, road->GetRoadSize());
 }
 
@@ -30,12 +39,12 @@ void Environment:: InitializeCoins(double& lastZ)
 
 	double step=PI/10.0;
 	int value=rand()%2;
-	if(lastZ+1.5<road->GetRoadSize()-2)
+	if(lastZ + (1.5 / 20)<road->GetRoadSize())
 	{
 		for(int i = 0; i < 10; i++)
 		{
 			Coin *newCoin = new Coin(0.5, 0.5, 0.1);
-			initialPoint.z=lastZ+ 0.15;
+			initialPoint.z=lastZ + 1.5 / 20;
 			lastZ=initialPoint.z+newCoin->width/40.0;
 			initialPoint.y+=0.5;
 			Point3D currentPosition=road->GetOnRoadPosition(initialPoint, newCoin->width);			
@@ -49,12 +58,18 @@ void Environment:: InitializeCoins(double& lastZ)
 					currentPosition.y+= 3.0;
 
 				}
+
+			std::ofstream outfile;
+			outfile.open("CoinsCoordinates.cpp", std::ios_base::app);
+			outfile << initialPoint<<"              "<<endl;
+			outfile.close();
 			
 			newCoin->Translate(currentPosition);
 			newCoin->Scale(Point3D(5.0, 5.0, 5.0));
 			newCoin->AddCollider();
 			road->AddRoadObject(newCoin);
-			obstacles.push_back(newCoin);
+			scene->AddObject(newCoin);
+			//obstacles.push_back(newCoin);
 			step+=PI/10.0;
 		} 
 	}
@@ -69,7 +84,7 @@ void Environment:: InitializeRandomBlocks(double& lastZ)
 
 	double stepZ=2.5/20;
 	
-	if(lastZ+stepZ<road->GetRoadSize()-2)
+	if(lastZ+stepZ<road->GetRoadSize())
 	{
 		for(int i = 0; i < 4; i++)
 		{
@@ -80,6 +95,7 @@ void Environment:: InitializeRandomBlocks(double& lastZ)
 				AddQuestionBlock(initialPoint, lastZ);
 				lastZ+=stepZ;
 			}
+
 			else
 			{
 				SplitBox* splitBox=new SplitBox(5, 5, 5);
@@ -89,7 +105,8 @@ void Environment:: InitializeRandomBlocks(double& lastZ)
 				splitBox->Translate(currentPosition);
 				lastZ+=stepZ;
 				road->AddRoadObject(splitBox);
-				obstacles.push_back(splitBox);
+				scene->AddObject(splitBox);
+				//obstacles.push_back(splitBox);
 			}
 		}
 		
@@ -100,17 +117,19 @@ void Environment::AddObject(WorldObject *obj) {
 	scene->AddObject(obj);
 }
 
-void Environment:: InitializeObstacles(double firstLimit, double lastLimit)
+void Environment::InitializeObstacles(double firstLimit, double lastLimit)
 {
-	obstacles.clear();
-	double lastZ=0.0;
-	while(firstLimit<lastLimit-2)
+	//obstacles.clear();
+	double lastZ=firstLimit;
+
+	while(firstLimit<lastLimit)
 	{
-		double type=rand()%48;
+		double type = rand() % 48 + 1;
 		//cout<<type<<endl;
 		Point3D initialPoint; 
-		initialPoint.x=GetRandomGLfloat(0.0, 1.0);
-		initialPoint.z=lastZ+rand()%3+0.1;
+		initialPoint.x = GetRandomGLfloat(0.0, 1.0);
+		initialPoint.z = lastZ+0.2;
+
 		switch((int)sqrt(type))
 		{
 			case 1:
@@ -123,7 +142,14 @@ void Environment:: InitializeObstacles(double firstLimit, double lastLimit)
 					Point3D p4=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z), 0.0);
 					Hole* hole=new Hole(mario, p1, p2, p3, p4);
 					lastZ=initialPoint.z+0.4;
-					obstacles.push_back(hole);
+					scene->AddObject(hole);
+					road->AddRoadObject(hole);
+					//obstacles.push_back(hole);
+
+					std::ofstream outfile;
+					outfile.open("HoleCoordinates.cpp", std::ios_base::app);
+					outfile << initialPoint<<"              "<<endl;	
+					outfile.close();
 				}
 
 				break;
@@ -133,7 +159,7 @@ void Environment:: InitializeObstacles(double firstLimit, double lastLimit)
 				InitializeRandomBlocks(lastZ);				
 				break;
 			}
-			case 3:
+			/*case 3:
 			{
 				if((int)type%2==0)
 				{
@@ -143,14 +169,15 @@ void Environment:: InitializeObstacles(double firstLimit, double lastLimit)
 					goomba->Translate(currentPosition);
 					lastZ=initialPoint.z+goomba->length/20.0;
 					road->AddRoadObject(goomba);
+					scene->AddObject(goomba);
 					obstacles.push_back(goomba);
 					break;
 				}
 				
-			}
+			}*/
 			case 4:
 			{
-				InitializeCoins(lastZ);
+ 				InitializeCoins(lastZ);
 				break;
 			}
 			case 5:
@@ -159,9 +186,15 @@ void Environment:: InitializeObstacles(double firstLimit, double lastLimit)
 				splitBox->AddCollider();
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, splitBox->width);
 				splitBox->Translate(currentPosition);
-				lastZ=initialPoint.z+splitBox->length/20.0;
+				lastZ = initialPoint.z+splitBox->length/20.0;
 				road->AddRoadObject(splitBox);
-				obstacles.push_back(splitBox);
+				scene->AddObject(splitBox);
+
+				std::ofstream outfile;
+				outfile.open("SplitBoxCoordinates.cpp", std::ios_base::app);
+				outfile << initialPoint<<"              "<<endl;			
+				outfile.close();
+				//obstacles.push_back(splitBox);
 				break;				
 			}
 			case 6:
@@ -176,14 +209,13 @@ void Environment:: InitializeObstacles(double firstLimit, double lastLimit)
 			}
 		}
 		firstLimit=lastZ;
-
 	}
 }
 
 void Environment:: InitializeOffRoadObjects(double firstLimit, double lastLimit)
 {
 	offRoadObjects.clear();
-	double lastZ=0.0;
+	double lastZ=firstLimit;
 	int fenceIndex=rand()%3;
 	while(firstLimit<lastLimit-2)
 	{
@@ -300,7 +332,6 @@ void Environment:: InitializeOffRoadObjects(double firstLimit, double lastLimit)
 		}
 
 		firstLimit=lastZ;
-
 	}
 }
 
@@ -321,9 +352,16 @@ void Environment:: AddQuestionBlock(Point3D initialPoint, double& lastZ)
 	}
 	Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
 	currentPosition.y=12;
-	questionBlock->Translate(currentPosition);	
-	obstacles.push_back(questionBlock);
+	questionBlock->SetTranslate(currentPosition);
+	scene->AddObject(questionBlock);
+	//obstacles.push_back(questionBlock);
+	lastZ += 0.1;
 	lastZ=initialPoint.z+questionBlock->length/20.0;
+
+	std::ofstream outfile;
+	outfile.open("QuestionBlockCoordinates.cpp", std::ios_base::app);
+	outfile << initialPoint<<"              "<<endl;	
+	outfile.close();
 }
 
 vector<WorldObject*> Environment:: GetObstacles()
@@ -338,18 +376,12 @@ vector<Coin*> Environment:: GetCoins()
 
 void Environment:: AddObjectsToScene()
 {	
-	scene->AddObject(score);
-	scene->AddObject(road);
-	scene->AddObject(new Ground);
-	scene->AddObject(sky);
-	//scene->AddObject(particles);
-	scene->AddObject(mario);
 //	scene->AddObject(goomba);
 
-	for(int i = 0; i < obstacles.size(); i++)
+	/*for(int i = 0; i < obstacles.size(); i++)
 		scene->AddObject(obstacles[i]);
 	for(int i = 0; i < offRoadObjects.size(); i++)
-		scene->AddObject(offRoadObjects[i]);
+		scene->AddObject(offRoadObjects[i]);*/
 
 	road->AddRoadObject(mario);
 }
@@ -370,10 +402,12 @@ void Environment:: Update()
 
 void Environment:: GenerateEnvironment()
 {
-	InitializeObstacles(road->GetRoadSize()-1, road->GetRoadSize());
-	InitializeOffRoadObjects(road->GetRoadSize()-1, road->GetRoadSize());
+	count++;
+	InitializeObstacles(29, 30);
+	//InitializeOffRoadObjects(road->GetRoadSize()-1, road->GetRoadSize());
 }
 
 Environment::~Environment(void)
 {
+
 }

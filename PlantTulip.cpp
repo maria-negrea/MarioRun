@@ -12,7 +12,7 @@ PlantTulip::PlantTulip(GLfloat width, GLfloat height, GLfloat size)
 	head=new PlantHead(width, height, size);
 	leaf=new PlantLeaf(width, height, size);
 	this->width=leaf->width;
-	head->Translate(Point3D(0.5, 1.5,0.4));
+	head->Translate(Point3D(0.5, height,0.4));
 	head->Rotate(Point3D(180, -20, 0));
 	leaf->Translate(Point3D(0, 0, -0.4));
 	this->AddChild(head);

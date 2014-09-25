@@ -3,8 +3,9 @@
 #include "Goomba.h"
 #include "Box.h"
 
-Mario::Mario():PhysicsObject(0.0)
+Mario::Mario(Environmental* enviroment):PhysicsObject(0.0)
 {
+	this->environment=enviroment;
 	collider = new MarioCollider(this);
 	hardCollider = true;
 	road = NULL;
@@ -589,6 +590,15 @@ bool Mario::GetInvulnerable()
 void Mario::IncrementIndex()
 {
 	OnRoadObject::IncrementIndex();
+
+	scene->DeleteUntil(this);
+
+	if(this->GetIndex() == 3)
+	{
+		road->GenerateRoad();
+		environment->GenerateEnvironment();
+	}
+
 }
 
 void Mario::SetDead()

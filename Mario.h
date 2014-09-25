@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Box.h"
 #include "QuestionBlock.h"
+#include "Environmental.h"
 
 enum MarioAnimations
 {
@@ -55,8 +56,9 @@ class Mario : public PhysicsObject, public OnRoadObject
 	void DeadAnimation();
 
 	MarioAnimations animation;
+	Environmental* environment;
 public:
-	Mario();
+	Mario(Environmental* enviroment);
 	~Mario();
 
 	void MoveRight();

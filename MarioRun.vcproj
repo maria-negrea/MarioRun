@@ -223,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Environmental.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Fence.cpp"
 				>
 			</File>
@@ -478,6 +482,10 @@
 			</File>
 			<File
 				RelativePath=".\Environment.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Environmental.h"
 				>
 			</File>
 			<File

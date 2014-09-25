@@ -23,8 +23,10 @@
 #include "FullMountain.h"
 #include "Sky.h"
 #include "Hole.h"
+#include "Pipe.h"
+#include "Environmental.h"
 
-class Environment: public Updatable
+class Environment: public Updatable, public Environmental
 {
 protected:
 	Mario* mario;
@@ -48,13 +50,14 @@ public:
 	vector<WorldObject*> GetObstacles();
 	void InitializeRandomBlocks(double& lastZ);
 	void InitializeCoins(double& lastZ);
-	void InitializeObstacles();
-	void InitializeOffRoadObjects();
+	void InitializeObstacles(double firstLimit, double lastLimit);
+	void InitializeOffRoadObjects(double firstLimit, double lastLimit);
 	void AddObjectsToScene();
 	void AddObject(WorldObject *obj);
 	Mario* GetMario();
 	Scene* GetScene();
 	void AddQuestionBlock(Point3D initialPoint, double& lastZ);
 	void Update();
+	void GenerateEnvironment();
 	~Environment(void);
 };

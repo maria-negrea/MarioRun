@@ -42,48 +42,51 @@ void QuestionBlock::SetIndex(int newIndex)
 {
 	this->textureIndex=newIndex;
 }
+
 void QuestionBlock::DrawObject()
 {
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
+glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
   glBegin(GL_QUADS);
  // front face
-  glTexCoord2f(0, 1);glVertex3f(0.-width/2,length*0.75, 0-height/2);
-  glTexCoord2f(1,1);glVertex3f(width/2 ,length*0.75, 0-height/2);
-  glTexCoord2f(1,0);glVertex3f(width/2, 0., 0-height/2);
-  glTexCoord2f(0, 0);glVertex3f(0.-width/2, 0., 0-height/2);
+  glTexCoord2f(1,1);glVertex3f(0. ,length*0.75, 0);
+  glTexCoord2f(0,1);glVertex3f(width ,length*0.75, 0);
+  glTexCoord2f(0,0);glVertex3f(width, 0., 0);
+  glTexCoord2f(1, 0);glVertex3f(0., 0., 0);
 
  //right face
-  glTexCoord2f(0, 1);glVertex3f(width/2,length*0.75,0-height/2);
-  glTexCoord2f(1, 1);glVertex3f(width/2,length*0.75, height/2);
-  glTexCoord2f(1, 0);glVertex3f(width/2, 0., height/2);
-  glTexCoord2f(0, 0);glVertex3f(width/2, 0., 0-height/2);
+  glTexCoord2f(1, 1);glVertex3f(width, length*0.75,0);
+  glTexCoord2f(0, 1);glVertex3f(width, length*0.75, height);
+   glTexCoord2f(0, 0);glVertex3f(width, 0., height);
+  glTexCoord2f(1, 0);glVertex3f(width, 0., 0);
+ 
+ 
 
  // left face
-  glTexCoord2f(0, 1);glVertex3f(0.-width/2,length*0.75, 0-height/2);
-  glTexCoord2f(1, 1);glVertex3f(0.-width/2,length*0.75, height/2);
-  glTexCoord2f(1, 0);glVertex3f(0.-width/2, 0., height/2);
-  glTexCoord2f(0, 0);glVertex3f(0.-width/2, 0., 0-height/2);
+  glTexCoord2f(0, 1);glVertex3f(0., length*0.75, 0);
+  glTexCoord2f(1, 1);glVertex3f(0., length*0.75, height);
+  glTexCoord2f(1, 0);glVertex3f(0., 0., height);
+  glTexCoord2f(0, 0);glVertex3f(0., 0., 0);
 
  // back face
-  glTexCoord2f(0, 1);glVertex3f(0.-width/2,length*0.75, height/2);
-  glTexCoord2f(1, 1);glVertex3f(width/2,length*0.75, height/2);
-  glTexCoord2f(1, 0);glVertex3f(width/2, 0., height/2);
-  glTexCoord2f(0, 0);glVertex3f(0.-width/2, 0., height/2);
+  glTexCoord2f(0, 1);glVertex3f(0., length*0.75, height);
+  glTexCoord2f(1, 1);glVertex3f(width, length*0.75, height);
+  glTexCoord2f(1, 0);glVertex3f(width, 0., height);
+  glTexCoord2f(0, 0);glVertex3f(0., 0., height);
 
-//  top face
-  glTexCoord2f(0, 1);glVertex3f(0.-width/2,length*0.75, 0-height/2);
-  glTexCoord2f(1, 1);glVertex3f(width/2,length*0.75, -height/2);
-  glTexCoord2f(1, 0);glVertex3f(width/2,length*0.75, height/2);
-  glTexCoord2f(0, 0);glVertex3f(0.-width/2,length*0.75, height/2);
+ // top face
+  glTexCoord2f(0, 1);glVertex3f(0., length*0.75, 0);
+  glTexCoord2f(1, 1);glVertex3f(width, length*0.75, 0);
+  glTexCoord2f(1, 0);glVertex3f(width, length*0.75, height);
+  glTexCoord2f(0, 0);glVertex3f(0., length*0.75, height);
 
  // bottom face
-  glTexCoord2f(0, 1);glVertex3f(0.-width/2, 0., 0-height/2);
-  glTexCoord2f(1, 1);glVertex3f(width/2 ,0., 0-height/2);
-  glTexCoord2f(1, 0);glVertex3f(width/2, 0., height/2);
-  glTexCoord2f(0, 0);glVertex3f(0.-width/2, 0., height/2);
+  glTexCoord2f(0, 1);glVertex3f(0., 0., 0);
+  glTexCoord2f(1, 1);glVertex3f(width ,0., 0);
+  glTexCoord2f(1, 0);glVertex3f(width, 0., height);
+  glTexCoord2f(0, 0);glVertex3f(0., 0., height);
  glEnd();
 
 
-  glEnd();
+  
   
 }

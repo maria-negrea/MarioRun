@@ -223,6 +223,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Environmental.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Fence.cpp"
 				>
 			</File>
@@ -395,6 +399,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SnowManHead.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SplitBox.cpp"
 				>
 			</File>
@@ -478,6 +486,10 @@
 			</File>
 			<File
 				RelativePath=".\Environment.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Environmental.h"
 				>
 			</File>
 			<File
@@ -646,6 +658,10 @@
 			</File>
 			<File
 				RelativePath=".\SnowMan.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SnowManHead.h"
 				>
 			</File>
 			<File

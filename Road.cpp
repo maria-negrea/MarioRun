@@ -33,6 +33,8 @@ Road::Road(void)
 		//roadVector.push_back(lastRoad);
 		//lastRoad += newRoad*length;
 	}
+
+	isNewRoad=true;
 }
 
 Road::~Road(void)
@@ -42,21 +44,20 @@ Road::~Road(void)
 
 void Road::DrawObject()
 {
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[24]);
 	for(int i = 0; i < rightVector.size() - 1; i++)
 	{
-		glColor3f(1.0,1.0,1.0);
-		for(unsigned j = 0; j<onRoadObjects.size();j++)
+		/*for(unsigned j = 0; j<onRoadObjects.size();j++)
 		{
 			if(i == onRoadObjects[j]->GetIndex())
 				glColor3f(1.0,0.0,0.0);
-		}
+		}*/
 
 		glBegin(GL_QUADS);
-			glVertex3f(leftVector[i].x, 0.01, leftVector[i].z);
-			glVertex3f(rightVector[i].x, 0.01, rightVector[i].z);
-			glVertex3f(rightVector[i + 1].x, 0.01, rightVector[i + 1].z);
-			glVertex3f(leftVector[i + 1].x, 0.01, leftVector[i + 1].z);
+			glTexCoord2f(0,0.f);glVertex3f(leftVector[i].x, 0.01, leftVector[i].z);
+			glTexCoord2f(0,1.f);glVertex3f(rightVector[i].x, 0.01, rightVector[i].z);
+			glTexCoord2f(1,1.f);glVertex3f(rightVector[i + 1].x, 0.01, rightVector[i + 1].z);
+			glTexCoord2f(1,0.f);glVertex3f(leftVector[i + 1].x, 0.01, leftVector[i + 1].z);
 		glEnd();
 	}
 }
@@ -231,24 +232,24 @@ void Road::RemoveObject(OnRoadObject* object)
 
 Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 {
-	int indexZ= floor(point.z);	
+	int indexZ = floor(point.z);
 	double posZ = point.z-indexZ;
 	double posX = point.x;
 
-	if(indexZ <= roadSize )
+	if(indexZ < roadSize)
 	{
 		if(posX < 0)
 		{
 			posX = -posX;
 		}
 				
-		if(point.x<0 && point.x-obstacleWidth/2<leftVector[indexZ].x)
+		if(point.x<0 && point.x-obstacleWidth/40<leftVector[indexZ].x)
 		{
-			point.x+=obstacleWidth/2;
+			point.x+=obstacleWidth/40;
 		}
-		if(point.x>0 && point.x+obstacleWidth/2>rightVector[indexZ].x)
+		if(point.x>0 && point.x+obstacleWidth/40>rightVector[indexZ].x)
 		{
-			point.x-=obstacleWidth/2;
+			point.x-=obstacleWidth/40;
 		}
 		Point3D intermediateZ = (roadVector[indexZ+1] - roadVector[indexZ]) * posZ;
 
@@ -266,13 +267,13 @@ Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 
 		Point3D result = roadVector[indexZ] + intermediateZ + intermediateX;
 
-		if(result.x+obstacleWidth+2>leftVector[indexZ].x)
+		if(result.x+obstacleWidth/20+2.0/20.>leftVector[indexZ].x)
 		{
-			result.x-=obstacleWidth;
+			result.x-=obstacleWidth/20;
 		}
-		if(result.x-obstacleWidth-2>rightVector[indexZ].x)
+		if(result.x-obstacleWidth/20-2./20.>rightVector[indexZ].x)
 		{
-			result.x+=obstacleWidth;
+			result.x+=obstacleWidth/20;
 		}
 		return result;
 	}
@@ -280,7 +281,6 @@ Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 	{
 		int g = 0;
 	}
-	return Point3D();
 }
 
 void Road::AddRoadObject(OnRoadObject* object)
@@ -346,9 +346,7 @@ int Road:: GetRoadSize()
 
 void Road::GenerateRoad()
 {
-	roadVector.erase(roadVector.begin());
-	leftVector.erase(leftVector.begin());
-	rightVector.erase(rightVector.begin());
+	isNewRoad=true;
 
 	for(int i = 0; i < onRoadObjects.size(); i++)
 	{
@@ -362,6 +360,10 @@ void Road::GenerateRoad()
 			i--;
 		}
 	}
+
+	roadVector.erase(roadVector.begin());
+	leftVector.erase(leftVector.begin());
+	rightVector.erase(rightVector.begin());
 
 	PutRoadPiece();
 }

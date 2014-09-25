@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Box.h"
 #include "QuestionBlock.h"
+#include "Environmental.h"
 #include "Particles.h"
 #include "Mesh.h"
 
@@ -33,10 +34,13 @@ class Mario : public PhysicsObject, public OnRoadObject
 	bool deadMario;
 	bool drown;
 
+	double dying;
+
 	double time;
 	double jumpForce;
-	double dying;
+
 	bool startGame;
+
 
 	Box* pelvis;
 	Box* neck;
@@ -55,11 +59,9 @@ class Mario : public PhysicsObject, public OnRoadObject
 	Box* upperArmLeft;
 	Box* lowerArmLeft;
 	Box* leftHand;
-
 	Mesh* mesh;
 
 	Particles* dustTrail;
-
 	void RunAnimation();
 	void JumpAnimation();
 	void HitAnimation();
@@ -70,8 +72,9 @@ class Mario : public PhysicsObject, public OnRoadObject
 	void WaveAnimation();
 
 	MarioAnimations animation;
+	Environmental* environment;
 public:
-	Mario();
+	Mario(Environmental* enviroment);
 	~Mario();
 
 	void MoveRight();

@@ -1,11 +1,11 @@
 #pragma once
-#include "WorldObject.h"
+#include "OnRoadObject.h"
 #include "Textures.h"
 #include "Mario.h"
 #include "Segment2D.h"
 #include "Line.h"
 
-class Hole: public WorldObject, public Updatable
+class Hole: public OnRoadObject, public Updatable
 {
 	Point3D p1, p2, p3, p4;
 	int textureIndex;

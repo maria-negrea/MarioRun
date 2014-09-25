@@ -29,8 +29,9 @@ float VarySpeed()
 	return rand()%300*0.01;
 }
 
-Mario::Mario():PhysicsObject(0.0),OnRoadObject(true)
+Mario::Mario(Environmental* enviroment):PhysicsObject(0.0),OnRoadObject(true)
 {
+	this->environment=enviroment;
 	collider = new MarioCollider(this);
 	hardCollider = true;
 	road = NULL;
@@ -121,8 +122,6 @@ Mario::Mario():PhysicsObject(0.0),OnRoadObject(true)
 	pelvis->AddChild(upperLegLeft);
 	upperLegLeft->AddChild(lowerLegLeft);
 	lowerLegLeft->AddChild(leftFoot);
-
-	dustTrail = NULL;
 
 	body->AddChild(upperArmRight);
 	upperArmRight->AddChild(lowerArmRight);
@@ -813,10 +812,8 @@ void Mario::Update()
 		}
 	}
 
-	else if(deadMario == true)
-	{
+	else
 		dying += 0.05;
-	}
 
 	if(bleep == true && drown == false)
 	{
@@ -842,7 +839,10 @@ void Mario::Update()
 	scene->DeleteUntil(this);
 
 	if(this->GetIndex() == 3)
+	{
 		road->GenerateRoad();
+		environment->GenerateEnvironment();
+	}
 }
 
 void Mario::Hit(Collision collision)

@@ -8,6 +8,7 @@
 #include <vector>
 #include "Point3D.h"
 #include "Collider.h"
+#include "Textures.h"
 
 using namespace std;
 

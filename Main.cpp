@@ -1,12 +1,11 @@
+#include "MarioCamera.h"
 #include "Environment.h"
 
 #include "GlobalScore.h"
 #include "Pond.h"
-#include "Gameover.h"
 
 Scene *scene;
 Camera* mainCamera;
-Gameover *game = new Gameover(10, 10, 10);
 
 Environment* environment;
 
@@ -73,53 +72,12 @@ void Initialize()
 
 	if(isDead == true)
 		glutTimerFunc(20, Timer, 0);
-
-	//environment->AddObject(particles);
-
-	//LIGHTING TEST
-
-	//GLfloat light_position[] = { 1.0, 1.0, 10.0, 1.0};
-	//	
-	//GLfloat light_ambient[] = { 0.0, 0.0, 0.0, 1.0 };
-	//GLfloat light_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
-	//GLfloat light_specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	////GLfloat spec[] = {253/255.0, 173/255.0, 0, 1};
-	//GLfloat spec[] = {1.0, 1.0, 1.0, 1};
-	//GLfloat em[] = {0, 0, 0, 1};
-
-	////glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-	////glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-	//
-	////glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-	////glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
-	////glEnable(GL_LIGHTING);
-
-	//glEnable(GL_LIGHT0);
-	//glEnable(GL_DEPTH_TEST);
-
-	//// /LIGHTING TEST
-
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//
-	//glEnable(GL_BLEND);
-	//GLfloat mat_amb_diff[] = { 0.1, 0.5, 0.8, 1.0 };
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, 
- //           mat_amb_diff);
-	//glColorMaterial ( GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE ) ;
-	//glEnable ( GL_COLOR_MATERIAL ) ;
-	//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	////glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
-	////glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, em);
-	//glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
 }
 
 void Draw()
 {
 	environment->GetScene()->Render();
 }
-
 
 void reshape(int w, int h)
 {

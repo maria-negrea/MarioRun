@@ -62,7 +62,7 @@ void Scene::Render()
 void Scene::Update()
 {
 	for(unsigned i=0;i<updateObjects.size();++i)
-	{
+	{		
 		updateObjects[i]->Update();
 	}
 }
@@ -77,7 +77,7 @@ void Scene::DeleteUntil(WorldObject* untilObject)
 
 		if(obj != NULL)
 		{
-			if(obj->GetIndex() < 2)
+			if(obj->GetIndex() < 1)
 			{
 				RemoveObject(sceneObjects[i]);
 			}
@@ -191,7 +191,6 @@ void Scene::RemoveObject(WorldObject* object)
 	}
 	else
 	{
-		//cout<<"Q";
 		RemoveCutout(cutout);
 	}
 	Updatable* updatableObject = dynamic_cast<Updatable*>(object);

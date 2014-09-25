@@ -1,6 +1,6 @@
 #include "Coin.h"
 
-Coin::Coin(GLfloat width, GLfloat height, GLfloat length):OnRoadObject()
+Coin::Coin(GLfloat width, GLfloat height, GLfloat length):OnRoadObject(false)
 {
 	this->width=width;
 	this->height=height;

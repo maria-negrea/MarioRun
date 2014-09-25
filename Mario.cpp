@@ -2,8 +2,34 @@
 #include "MarioCollider.h"
 #include "Goomba.h"
 #include "Box.h"
+#include "Mesh.h"
 
-Mario::Mario(Environmental* enviroment):PhysicsObject(0.0)
+Point3D BackDirection()
+{
+	return Point3D((rand()%200-100)*0.01,(rand()%200-100)*0.01,-1);
+}
+
+Point3D Origin()
+{
+	return Point3D(0,0,0);
+}
+
+int DustGenerator() 
+{
+	return rand() % 4 + 1;
+}
+
+float RandomDirection()
+{
+	return rand()%360;
+}
+
+float VarySpeed()
+{
+	return rand()%300*0.01;
+}
+
+Mario::Mario(Environmental* enviroment):PhysicsObject(0.0),OnRoadObject(true)
 {
 	this->environment=enviroment;
 	collider = new MarioCollider(this);
@@ -47,7 +73,6 @@ Mario::Mario(Environmental* enviroment):PhysicsObject(0.0)
 
      rightHand=new Box(0.4,0.25,0.5);
 	 rightHand->Translate(Point3D(0,0.85,0));
-
 
 
 	 upperArmLeft=new Box(0.4,0.6,0.4);
@@ -104,6 +129,11 @@ Mario::Mario(Environmental* enviroment):PhysicsObject(0.0)
 	upperArmLeft->AddChild(lowerArmLeft);
 	lowerArmLeft->AddChild(leftHand);
 
+	mesh = new Mesh("Mario.txt");
+	mesh->Scale(Point3D(-0.94,-0.94,-0.94));
+	mesh->Translate(Point3D(0,10,0));
+	AddChild(mesh);
+
 	RunAnimation();
 }
 
@@ -118,11 +148,14 @@ void Mario::DrawObject()
 
 void Mario::Jump()
 {
-	if(IsGrounded())
+	if(!IsDead())
 	{
-		fallSpeed += 1.5;
+		if(IsGrounded())
+		{
+			fallSpeed += 1.5;
+		}
+		JumpAnimation();
 	}
-	JumpAnimation();
 }
 
 
@@ -437,9 +470,11 @@ void Mario::Update()
 		Translate(GetForward()*forwardSpeed);
 
 		if(Input::GetLeft())
+		//	Rotate(Point3D(0,4,0));
 			this->MoveLeft();
 
 		if(Input::GetRight())
+		//	Rotate(Point3D(0,4,0));
 			this->MoveRight();
 
 		if(translate.y == 0)
@@ -486,6 +521,14 @@ void Mario::Update()
 			bleep = false;
 			invulnerable = false;
 		}
+	}
+
+	scene->DeleteUntil(this);
+
+	if(this->GetIndex() == 3)
+	{
+		road->GenerateRoad();
+		environment->GenerateEnvironment();
 	}
 }
 
@@ -590,15 +633,6 @@ bool Mario::GetInvulnerable()
 void Mario::IncrementIndex()
 {
 	OnRoadObject::IncrementIndex();
-
-	scene->DeleteUntil(this);
-
-	if(this->GetIndex() == 3)
-	{
-		road->GenerateRoad();
-		environment->GenerateEnvironment();
-	}
-
 }
 
 void Mario::SetDead()

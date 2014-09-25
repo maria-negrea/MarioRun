@@ -27,6 +27,7 @@ protected:
 	int trianglesCount;
 public:
 	Mesh();
+	Mesh(char* file);
 	Mesh(Point3D* vertices, Triangle* triangles, int verticesCount,int trianglesCount);
 	void DrawObject();
 	~Mesh();

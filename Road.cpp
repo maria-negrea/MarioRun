@@ -2,6 +2,7 @@
 #include "Road.h"
 #include "Point2D.h"
 #include "Segment2D.h"
+#include "Mario.h"
 
 Road::Road(void)
 {
@@ -19,17 +20,18 @@ Road::Road(void)
 
 	for(int i = 0; i < roadSize + 2; i++)
 	{
-		Point3D newRoad = lastCurve.RotateY(angle);
-		lastCurve = newRoad;
+		PutRoadPiece();
+		//Point3D newRoad = lastCurve.RotateY(angle);
+		//lastCurve = newRoad;
 
-		if(i % 5 == 0)
-			angle = rand() % 30 - 15;
+		//if(i % 5 == 0)
+		//	angle = rand() % 30 - 15;
 
-		leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
-		rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
+		//leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
+		//rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
 
-		roadVector.push_back(lastRoad);
-		lastRoad += newRoad*length;
+		//roadVector.push_back(lastRoad);
+		//lastRoad += newRoad*length;
 	}
 
 	isNewRoad=true;
@@ -69,35 +71,44 @@ void Road::Update()
 {
 	for(unsigned i = 0; i<onRoadObjects.size();i++)
 	{
+		unsigned prevI = i;
+
 		int index = onRoadObjects[i]->GetIndex();
-		if(index < 0 || index > onRoadObjects.size())
+		if(index < 0 || index > roadSize)
 		{
 			RemoveObject(onRoadObjects[i]);
 			i--;
 		}
 		else
 		{
-			if(!IsOnIndex(onRoadObjects[i]))
+			if(!IsOnIndex(onRoadObjects[i],i))
 			{
 				if(index > 1)
 				{
 					onRoadObjects[i]->SetIndex(index-1);
 				}
-
-				while(!IsOnIndex(onRoadObjects[i]))
+						
+				while(!IsOnIndex(onRoadObjects[i],i))
 				{
+					if(i != prevI)
+					{
+						break;
+					}
 					onRoadObjects[i]->IncrementIndex();
 				}
 			}
-			if(onRoadObjects[i]->IsLinked())
+			if(i == prevI)
 			{
-				SetOnRoadAngle(onRoadObjects[i]);
+				if(onRoadObjects[i]->IsLinked())
+				{
+					SetOnRoadAngle(onRoadObjects[i],i);
+				}
 			}
 		}
 	}
 }
 
-void Road::SetOnRoadAngle(OnRoadObject* onRoadObject)
+void Road::SetOnRoadAngle(OnRoadObject* onRoadObject,unsigned &i)
 {
 	int roadIndex = onRoadObject->GetIndex();
 
@@ -125,16 +136,13 @@ void Road::SetOnRoadAngle(OnRoadObject* onRoadObject)
 			angle = -angle;
 		}
 
-		if(angle-onRoadObject->GetLastAngle() > 0.5)
-		{
-			//cout<<angle-onRoadObject->GetLastAngle()<<endl;
-		}
 		onRoadObject->SetRotateY(angle);
 		onRoadObject->SetLastAngle(angle);
 	}
 	else
 	{
 		RemoveObject(onRoadObject);
+		i--;
 	}
 }
 
@@ -194,7 +202,7 @@ bool CheckInPoly(Point3D p3D1,Point3D p3D2,Point3D p3D3,Point3D p3D4,Point3D che
 	return true;
 }
 
-bool Road::IsOnIndex(OnRoadObject* onRoadObject)
+bool Road::IsOnIndex(OnRoadObject* onRoadObject, unsigned &i)
 {
 	int roadIndex = onRoadObject->GetIndex();
 
@@ -205,6 +213,7 @@ bool Road::IsOnIndex(OnRoadObject* onRoadObject)
 	else
 	{
 		RemoveObject(onRoadObject);
+		i--;
 	}
 	return true;
 }
@@ -224,10 +233,6 @@ void Road::RemoveObject(OnRoadObject* object)
 Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 {
 	int indexZ= floor(point.z);	
-	/*if(indexZ>19)
-	{
-		cout<<"jhhg"<<endl;
-	}*/
 	double posZ = point.z-indexZ;
 	double posX = point.x;
 
@@ -348,9 +353,23 @@ void Road::GenerateRoad()
 	rightVector.erase(rightVector.begin());
 
 	for(int i = 0; i < onRoadObjects.size(); i++)
+	{
 		if(onRoadObjects[i]->GetIndex() > 0)
+		{
 			onRoadObjects[i]->SetIndex(onRoadObjects[i]->GetIndex() - 1);
+		}
+		else
+		{
+			RemoveObject(onRoadObjects[i]);
+			i--;
+		}
+	}
 
+	PutRoadPiece();
+}
+
+void Road::PutRoadPiece()
+{
 	Point3D newRoad = lastCurve.RotateY(angle);
 	lastCurve = newRoad;
 

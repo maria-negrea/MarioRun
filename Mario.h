@@ -5,6 +5,7 @@
 #include "Box.h"
 #include "QuestionBlock.h"
 #include "Particles.h"
+#include "Mesh.h"
 
 enum MarioAnimations
 {
@@ -15,7 +16,8 @@ enum MarioAnimations
 	Dead, 
 	SpecialRun,
 	Drown, 
-	Slide
+	Slide,
+	Wave
 };
 
 class Mario : public PhysicsObject, public OnRoadObject
@@ -29,10 +31,12 @@ class Mario : public PhysicsObject, public OnRoadObject
 	bool bleep;
 	bool invulnerable;
 	bool deadMario;
+	bool drown;
 
 	double time;
 	double jumpForce;
 	double dying;
+	bool startGame;
 
 	Box* pelvis;
 	Box* neck;
@@ -52,6 +56,8 @@ class Mario : public PhysicsObject, public OnRoadObject
 	Box* lowerArmLeft;
 	Box* leftHand;
 
+	Mesh* mesh;
+
 	Particles* dustTrail;
 
 	void RunAnimation();
@@ -61,6 +67,7 @@ class Mario : public PhysicsObject, public OnRoadObject
 	void SpecialRunAnimation();
 	void DrownAnimation();
 	void SlideAnimation();
+	void WaveAnimation();
 
 	MarioAnimations animation;
 public:
@@ -88,6 +95,10 @@ public:
 
 	void SetDead();
 	bool IsDead();
+
+	void SetDrown();
+	void StartGame();
+	bool GameStatus();
 
 	void IncrementIndex();
 };

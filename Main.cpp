@@ -47,14 +47,32 @@ void AfterEff(Point3D p)
 	environment->AddObject(pond);
 }
 
-void Initialize()
+void Timer(int value)
 {
+	environment->GetScene()->Update();
+	particles->Translate(-particles->GetTranslate());
+	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 100.0, 0.0));
+	glutPostRedisplay();
+	
+	if(environment->GetMario()->IsDead() == false)
+		glutTimerFunc(20, Timer, 0);
+}
+
+void Initialize()
+{	
+	bool isDead = false;
+	if(environment)
+		isDead = environment->GetMario()->IsDead();
+
 	environment=new Environment();
 	environment->AddObjectsToScene();
 	
 	particles = new Particles(RainDirection, RainTranslation, RainGenerator,Point3D(0.2,1,0.2),Point3D(0.2,1,0.2), angleG, AfterEff,ConstantSpeed, 20);//19
 
 	GlobalScore::GetInstance()->SetScore(0);
+
+	if(isDead == true)
+		glutTimerFunc(20, Timer, 0);
 
 	//environment->AddObject(particles);
 
@@ -102,22 +120,6 @@ void Draw()
 	environment->GetScene()->Render();
 }
 
-void Timer(int value)
-{
-	environment->GetScene()->Update();
-	particles->Translate(-particles->GetTranslate());
-	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 100.0, 0.0));
-	glutPostRedisplay();
-	
-	if(environment->GetMario()->IsDead() == false)
-		glutTimerFunc(30, Timer, 0);
-	else
-	{
-		environment->GetScene()->AddObject(game);
-		environment->GetScene()->Update();
-		glutPostRedisplay();
-	}
-}
 
 void reshape(int w, int h)
 {
@@ -163,64 +165,31 @@ void keyPressed(unsigned char key, int x, int y)
 	switch(key)
 	{
 	case (char)13 :
-			if(!environment)
-			{
-				Initialize();
-				glutDisplayFunc(Draw);
-				glutTimerFunc(30, Timer, 0);
-
-				glutSpecialFunc(specialKey);
-				glutSpecialUpFunc(specialUpKey);
-			}
+			environment->GetMario()->StartGame();
 			break;
 	case (char)32 :
-			if(environment != NULL) environment->GetMario()->Jump();
+			if(environment->GetMario()->GameStatus()) environment->GetMario()->Jump();
 			break;
-
 	case 'r' :
-			if(environment != NULL) 
-			{
-				bool isDead = environment->GetMario()->IsDead();
-				Initialize();
-
-				if(isDead == true)
-					glutTimerFunc(30, Timer, 0);
-			}
+			Initialize();
 			break;
 	}
-}  
-
-void DrawTitleScreen()
-{
-	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glPushMatrix();
-	glTranslatef(0, 0, -2);
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[11]);
-	glBegin(GL_QUADS);
-		glTexCoord2f(0, 1); glVertex3f(-1, 1, 0);
-		glTexCoord2f(1, 1); glVertex3f(1, 1, 0);
-		glTexCoord2f(1, 0); glVertex3f(1, -1, 0);
-		glTexCoord2f(0, 0); glVertex3f(-1, -1, 0);
-	glEnd();
-
-	glPopMatrix();
-
-	glFlush();
 }
 
-void InitializeTitleScreen()
+void InitialState()
 {
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//glEnable(GL_BLEND);
 
 	glEnable(GL_DEPTH_TEST);
 
 	Textures::GetInstance()->LoadGLTextures();
+
+	Initialize();
+	glutTimerFunc(20, Timer, 0);
 }
 
 
@@ -232,9 +201,11 @@ int main(int argc, char** argv)
 	glutInitWindowPosition(200, 200);
 	glutCreateWindow("Mario");
 
-	InitializeTitleScreen();
-	glutDisplayFunc(DrawTitleScreen);
+	InitialState();
+	glutDisplayFunc(Draw);
 
+	glutSpecialFunc(specialKey);
+	glutSpecialUpFunc(specialUpKey);
 	glutKeyboardFunc(keyPressed);
 
 	glutReshapeFunc(reshape);

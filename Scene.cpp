@@ -41,11 +41,11 @@ void Scene::Render()
 	 //Draws the objects on screen
 	for(unsigned i = predraw; i<sceneObjects.size(); ++i)
 	{
-		if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 1000 * (sceneObjects[i]->width + 0.1))
+		if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 1000 * (sceneObjects[i]->width + 1))
 			sceneObjects[i]->Draw();
 	}
 
-	sort(cutouts.begin(), cutouts.end(), SortByDepth); 
+	sort(cutouts.begin(), cutouts.end(), SortByDepth);
 	//cout<<cutouts.size()<<endl;
 	for(unsigned i = 3; i<cutouts.size(); ++i)
 	{
@@ -62,7 +62,7 @@ void Scene::Render()
 void Scene::Update()
 {
 	for(unsigned i=0;i<updateObjects.size();++i)
-	{
+	{		
 		updateObjects[i]->Update();
 	}
 }
@@ -191,7 +191,6 @@ void Scene::RemoveObject(WorldObject* object)
 	}
 	else
 	{
-		//cout<<"Q";
 		RemoveCutout(cutout);
 	}
 	Updatable* updatableObject = dynamic_cast<Updatable*>(object);

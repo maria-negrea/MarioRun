@@ -84,6 +84,7 @@ void Hole:: Update()
 {
 	if(mario->GetTranslate().y==0 && CheckInPoly(p1, p2, p3, p4, mario->GetTranslate(), View::Up))
 	{
+		mario->SetDrown();
 		mario->SetDead();
 	}
 }

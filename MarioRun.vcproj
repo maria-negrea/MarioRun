@@ -688,6 +688,10 @@
 			>
 		</Filter>
 		<File
+			RelativePath=".\Mario.txt"
+			>
+		</File>
+		<File
 			RelativePath=".\SOIL.lib"
 			>
 		</File>

@@ -28,6 +28,7 @@ class Mario : public PhysicsObject, public OnRoadObject
 
 	double time;
 	double jumpForce;
+	double dying;
 
 	Box* pelvis;
 	Box* neck;

@@ -25,6 +25,8 @@ Mario::Mario():PhysicsObject(0.0)
 	invulnerable = false;
 	deadMario = false;
 
+	dying = 0;
+
 	pelvis = new Box(1,0.5,1);
 
 	pelvis->Translate(Point3D(0,2.5,0));
@@ -461,6 +463,11 @@ void Mario::Update()
 		}
 	}
 
+	else if(deadMario == true)
+	{
+		dying += 0.05;
+	}
+
 	if(bleep == true)
 	{
 		if(invulnerable == false && time < 3)
@@ -594,5 +601,8 @@ void Mario::SetDead()
 
 bool Mario::IsDead()
 {
-	return deadMario;
+	if(dying > 4.0)
+		return true;
+
+	return false;
 }

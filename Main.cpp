@@ -155,15 +155,15 @@ void keyPressed(unsigned char key, int x, int y)
 	switch(key)
 	{
 	case (char)13 :
-			if(!environment)
-			{
+			//if(!environment)
+			//{
 				Initialize();
 				glutDisplayFunc(Draw);
 				glutTimerFunc(30, Timer, 0);
 
 				glutSpecialFunc(specialKey);
 				glutSpecialUpFunc(specialUpKey);
-			}
+			//}
 			break;
 	case (char)32 :
 			if(environment != NULL) environment->GetMario()->Jump();

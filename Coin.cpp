@@ -54,7 +54,6 @@ void Coin::Update() {
 	if(this->GetTranslate().y > 30)
 	{
 		scene->RemoveObject(this);
-		road->RemoveObject(this);
 	}
 }
 

@@ -12,8 +12,8 @@ private:
 
 	vector<OnRoadObject*> onRoadObjects;
 
-	bool IsOnIndex(OnRoadObject* onRoadObject);
-	void SetOnRoadAngle(OnRoadObject* onRoadObject);
+	bool IsOnIndex(OnRoadObject* onRoadObject,unsigned &i);
+	void SetOnRoadAngle(OnRoadObject* onRoadObject,unsigned &i);
 
 	int roadSize;
 
@@ -23,6 +23,7 @@ private:
 	Point3D lastCurve;
 
     double angle;
+	void PutRoadPiece();
 public:
 	Road(void);
 	~Road(void);

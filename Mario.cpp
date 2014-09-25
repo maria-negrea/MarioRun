@@ -149,11 +149,14 @@ void Mario::DrawObject()
 
 void Mario::Jump()
 {
-	if(IsGrounded())
+	if(!IsDead())
 	{
-		fallSpeed += 1.5;
+		if(IsGrounded())
+		{
+			fallSpeed += 1.5;
+		}
+		JumpAnimation();
 	}
-	JumpAnimation();
 }
 
 
@@ -457,7 +460,6 @@ void Mario::DeadAnimation()
 
 void Mario::Update()
 {
-	cout<<roadIndex<<"\n";
 	PhysicsObject::Update();
 
 	if(scene != NULL)
@@ -547,6 +549,13 @@ void Mario::Update()
 			invulnerable = false;
 		}
 	}
+
+	scene->DeleteUntil(this);
+
+	if(this->GetIndex() == 3)
+		road->GenerateRoad();
+
+	cout<<roadIndex<<" ";
 }
 
 void Mario::Hit(Collision collision)
@@ -650,11 +659,6 @@ bool Mario::GetInvulnerable()
 void Mario::IncrementIndex()
 {
 	OnRoadObject::IncrementIndex();
-
-	scene->DeleteUntil(this);
-
-	if(this->GetIndex() == 3)
-		road->GenerateRoad();
 }
 
 void Mario::SetDead()

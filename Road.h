@@ -16,16 +16,26 @@ private:
 	void SetOnRoadAngle(OnRoadObject* onRoadObject);
 
 	int roadSize;
+
+	GLfloat width;
+	GLfloat length;
+	Point3D lastRoad;
+	Point3D lastCurve;
+
+    double angle;
 public:
 	Road(void);
 	~Road(void);
 	void DrawObject();
+	void GenerateRoad();
 	Point3D GetOnRoadPosition(Point3D point, GLfloat obstacleWidth);	
 	vector<Point3D> GetRoad();
 	vector<Point3D> GetLeft();
 	vector<Point3D> GetRight();
 	void SetRoadObject(WorldObject* object);
 	int GetRoadSize();
+
+	void RemoveObject(OnRoadObject* object);
 
 	void AddRoadObject(OnRoadObject* object);
 	void Update();

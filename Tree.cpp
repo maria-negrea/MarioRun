@@ -15,7 +15,7 @@ Tree::Tree(void)
 	for(double t=0.0; t<2*PI; t+=0.785)
 	{		
 		vertices[i]=Point3D(bigRadius*cos(t), 23.07/100*height,  smallRadius*sin(t));
-		cout<<vertices[i]<<endl;
+		//cout<<vertices[i]<<endl;
 		vertices[i+8]=Point3D(60.0/100*bigRadius*cos(t), 46.15/100*height, 60.0/100*smallRadius*sin(t));
 		vertices[i+16]=Point3D(80.0/100*bigRadius*cos(t), 46.15/100*height,  80.0/100*smallRadius*sin(t));
 		vertices[i+24]=Point3D(40.0/100*bigRadius*cos(t), 69.23/100*height, 40.0/100*smallRadius*sin(t));
@@ -115,7 +115,7 @@ Tree::Tree(void)
 void Tree:: InitializeStemVertices(char* fileName, int i)
 {
 	ifstream file(fileName);
-	cout<<"Stem area"<<endl;
+	//cout<<"Stem area"<<endl;
 	while(!file.eof())
 	{
 		Point3D point;

@@ -457,6 +457,7 @@ void Mario::DeadAnimation()
 
 void Mario::Update()
 {
+	cout<<roadIndex<<"\n";
 	PhysicsObject::Update();
 
 	if(scene != NULL)
@@ -521,8 +522,10 @@ void Mario::Update()
 		}
 	}
 
-	else
+	else if(deadMario == true)
+	{
 		dying += 0.05;
+	}
 
 	if(bleep == true)
 	{
@@ -647,6 +650,11 @@ bool Mario::GetInvulnerable()
 void Mario::IncrementIndex()
 {
 	OnRoadObject::IncrementIndex();
+
+	scene->DeleteUntil(this);
+
+	if(this->GetIndex() == 3)
+		road->GenerateRoad();
 }
 
 void Mario::SetDead()
@@ -657,7 +665,7 @@ void Mario::SetDead()
 
 bool Mario::IsDead()
 {
-	if(dying > 4)
+	if(dying > 4.0)
 		return true;
 
 	return false;

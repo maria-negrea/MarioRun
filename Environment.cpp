@@ -109,7 +109,7 @@ void Environment:: InitializeObstacles()
 	while(i<road->GetRoadSize()-2)
 	{
 		double type=rand()%35;
-		cout<<type<<endl;
+		//cout<<type<<endl;
 		Point3D initialPoint; 
 		initialPoint.x=GetRandomGLfloat(0.0, 1.0);
 		initialPoint.z=lastZ+rand()%3+0.1;
@@ -189,11 +189,11 @@ void Environment:: InitializeOffRoadObjects()
 	while(i<road->GetRoadSize()-2)
 	{
 		double type=rand()%25+1.0;
-		cout<<"*******************************************"<<endl;
+		//cout<<"*******************************************"<<endl;
 		Point3D initialPoint; 
 		initialPoint.x=GetRandomGLfloat(1.0, 3.0);
 		initialPoint.z=lastZ+rand()%2+0.1;
-		cout<<type<<endl;
+		//cout<<type<<endl;
 		switch((int)sqrt(type))
 		{
 			case 1:
@@ -215,7 +215,7 @@ void Environment:: InitializeOffRoadObjects()
 				plant->Scale(Point3D(3, 3, 3));
 				lastZ=initialPoint.z/*+plant->length/20*/;
 				offRoadObjects.push_back(plant);
-				cout<<"PLANT"<<endl;
+				//cout<<"PLANT"<<endl;
 				break;				
 			}
 			case 2:
@@ -251,7 +251,7 @@ void Environment:: InitializeOffRoadObjects()
 
 				lastZ=initialPoint.z/*+fence->length/20*/;
 				offRoadObjects.push_back(fence);
-				cout<<"FENCE"<<endl;
+				//cout<<"FENCE"<<endl;
 				fenceIndex+=rand()%4;
 				break;
 
@@ -273,7 +273,7 @@ void Environment:: InitializeOffRoadObjects()
 				tree->Translate(currentPosition);
 				lastZ=initialPoint.z/*+tree->length/20*/;
 				offRoadObjects.push_back(tree);
-				cout<<"TREE"<<endl;
+				//cout<<"TREE"<<endl;
 				break;
 			}
 			case 4:
@@ -293,7 +293,7 @@ void Environment:: InitializeOffRoadObjects()
 				mountain->Rotate(Point3D(0, 180, 0));
 				lastZ=initialPoint.z+ mountain->length/20.0;
 				offRoadObjects.push_back(mountain);
-				cout<<"MOUNTAIN"<<endl;
+				//cout<<"MOUNTAIN"<<endl;
 				break;
 			}
 		}
@@ -342,7 +342,7 @@ void Environment:: AddObjectsToScene()
 	scene->AddObject(new Ground);
 	scene->AddObject(sky);
 	//scene->AddObject(particles);
-	scene->AddObject(mario);	
+	scene->AddObject(mario);
 //	scene->AddObject(goomba);
 
 	for(int i = 0; i < obstacles.size(); i++)

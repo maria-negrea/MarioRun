@@ -7,16 +7,17 @@ Road::Road(void)
 {
 	srand(time(NULL));
 
-	GLfloat width = 20;
-	GLfloat length = 40;
-	Point3D lastRoad(0, 0, -length/2);
+	width = 20;
+	length = 40;
+
+	lastRoad = Point3D(0, 0, -length/2);
+	lastCurve = Point3D(0,0,1);
+
+	angle = 10.234556;
+
 	roadSize=20;
 
-	Point3D lastCurve = Point3D(0,0,1);
-
-	double angle = 10.234556;
-
-	for(int i = 0; i < roadSize+2; i++)
+	for(int i = 0; i < roadSize + 2; i++)
 	{
 		Point3D newRoad = lastCurve.RotateY(angle);
 		lastCurve = newRoad;
@@ -24,7 +25,15 @@ Road::Road(void)
 		if(i % 5 == 0)
 			angle = rand() % 30 - 15;
 
+		cout<<"Q"<<endl;
+		Point3D p = newRoad.RotateY(-90.0)*width + lastRoad;
+		cout<<"HE"<<endl;
+		cout<<p.x<<" "<<p.y<<" "<<p.z<<" "<<endl;
+		if(i == 7)
+		{
+		}
 		leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
+		cout<<"P"<<endl;
 		rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
 
 		roadVector.push_back(lastRoad);
@@ -68,21 +77,29 @@ void Road::Update()
 	for(unsigned i = 0; i<onRoadObjects.size();i++)
 	{
 		int index = onRoadObjects[i]->GetIndex();
-		if(!IsOnIndex(onRoadObjects[i]))
+		if(index < 0 || index > onRoadObjects.size())
 		{
-			if(index > 1)
-			{
-				onRoadObjects[i]->SetIndex(index-1);
-			}
-
-			while(!IsOnIndex(onRoadObjects[i]))
-			{
-				onRoadObjects[i]->IncrementIndex();
-			}
+			RemoveObject(onRoadObjects[i]);
+			i--;
 		}
-		if(onRoadObjects[i]->IsLinked())
+		else
 		{
-			SetOnRoadAngle(onRoadObjects[i]);
+			if(!IsOnIndex(onRoadObjects[i]))
+			{
+				if(index > 1)
+				{
+					onRoadObjects[i]->SetIndex(index-1);
+				}
+
+				while(!IsOnIndex(onRoadObjects[i]))
+				{
+					onRoadObjects[i]->IncrementIndex();
+				}
+			}
+			if(onRoadObjects[i]->IsLinked())
+			{
+				SetOnRoadAngle(onRoadObjects[i]);
+			}
 		}
 	}
 }
@@ -117,10 +134,14 @@ void Road::SetOnRoadAngle(OnRoadObject* onRoadObject)
 
 		if(angle-onRoadObject->GetLastAngle() > 0.5)
 		{
-			cout<<angle-onRoadObject->GetLastAngle()<<endl;
+			//cout<<angle-onRoadObject->GetLastAngle()<<endl;
 		}
 		onRoadObject->SetRotateY(angle);
 		onRoadObject->SetLastAngle(angle);
+	}
+	else
+	{
+		RemoveObject(onRoadObject);
 	}
 }
 
@@ -190,9 +211,21 @@ bool Road::IsOnIndex(OnRoadObject* onRoadObject)
 	}
 	else
 	{
-		int g = 0;
+		RemoveObject(onRoadObject);
 	}
 	return true;
+}
+
+void Road::RemoveObject(OnRoadObject* object)
+{
+	for (unsigned i=0; i<onRoadObjects.size(); ++i)
+	{
+		if(onRoadObjects[i] == object)
+		{
+			onRoadObjects.erase(onRoadObjects.begin()+i);
+			break;
+		}
+	}
 }
 
 Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
@@ -312,4 +345,27 @@ GLfloat Road:: GetCurrentLength()
 int Road:: GetRoadSize()
 {
 	return roadSize;
+}
+
+void Road::GenerateRoad()
+{
+	roadVector.erase(roadVector.begin());
+	leftVector.erase(leftVector.begin());
+	rightVector.erase(rightVector.begin());
+
+	for(int i = 0; i < onRoadObjects.size(); i++)
+		if(onRoadObjects[i]->GetIndex() > 0)
+			onRoadObjects[i]->SetIndex(onRoadObjects[i]->GetIndex() - 1);
+
+	Point3D newRoad = lastCurve.RotateY(angle);
+	lastCurve = newRoad;
+
+	if(rand() % 6 == 5)
+		angle = rand() % 30 - 15;
+
+	leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
+    rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
+
+	roadVector.push_back(lastRoad);
+	lastRoad += newRoad*length;
 }

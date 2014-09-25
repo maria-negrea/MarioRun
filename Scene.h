@@ -42,6 +42,8 @@ public:
 	/*! Updates all the objects that need updating */
 	void Update();
 
+	void DeleteUntil(WorldObject* untilObject);
+
 	Camera* GetCamera();
 	
 	void SetMainCamera(Camera* camera);

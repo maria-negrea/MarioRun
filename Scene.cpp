@@ -46,7 +46,7 @@ void Scene::Render()
 	}
 
 	sort(cutouts.begin(), cutouts.end(), SortByDepth); 
-	cout<<cutouts.size()<<endl;
+	//cout<<cutouts.size()<<endl;
 	for(unsigned i = 3; i<cutouts.size(); ++i)
 	{
 		 if(cutouts[i]->GetDepth() < 400)
@@ -65,8 +65,11 @@ void Scene::Update()
 	{
 		updateObjects[i]->Update();
 	}
+}
 
-	OnRoadObject* mario = dynamic_cast<OnRoadObject*>(sceneObjects[predraw]);
+void Scene::DeleteUntil(WorldObject* untilObject)
+{
+	OnRoadObject* mario = dynamic_cast<OnRoadObject*>(untilObject);
 
 	for(int i = predraw+1; i < sceneObjects.size(); i++)
 	{
@@ -74,8 +77,10 @@ void Scene::Update()
 
 		if(obj != NULL)
 		{
-			if( mario->GetIndex() > obj->GetIndex() + 2)
+			if(obj->GetIndex() < 2)
+			{
 				RemoveObject(sceneObjects[i]);
+			}
 		}
 	}
 }
@@ -186,7 +191,7 @@ void Scene::RemoveObject(WorldObject* object)
 	}
 	else
 	{
-		cout<<"Q";
+		//cout<<"Q";
 		RemoveCutout(cutout);
 	}
 	Updatable* updatableObject = dynamic_cast<Updatable*>(object);
@@ -209,7 +214,7 @@ void Scene::CollisionCheck(WorldObject* object,Point3D direction)
 {
 	for(unsigned i=0;i<colliders.size();++i)
 	{
-		if(object != colliders[i] && (object->GetTranslate() - colliders[i]->GetTranslate()).Magnitude() < 20)
+		if(object != colliders[i] && (object->GetTranslate() - colliders[i]->GetTranslate()).Magnitude() < 10)
 		{
 			Collision collision = colliders[i]->GetCollider()->Check(object);
 			if(collision.IsCollision())

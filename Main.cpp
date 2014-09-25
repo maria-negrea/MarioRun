@@ -127,7 +127,7 @@ void Timer(int value)
 	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 25.0, 0.0));
 	glutPostRedisplay();
 	
-	//if(environment->GetMario()->IsDead() == false)
+	if(environment->GetMario()->IsDead() == false)
 		glutTimerFunc(30, Timer, 0);
 }
 
@@ -136,7 +136,7 @@ void reshape(int w, int h)
 	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0, (GLfloat) w/(GLfloat) h, 0.1, 1000.0);
+	gluPerspective(60.0, (GLfloat) w/(GLfloat) h, 0.1, 10000.0);
 }
 
 void specialKey(int key, int x, int y)

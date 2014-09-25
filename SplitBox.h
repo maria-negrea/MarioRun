@@ -1,10 +1,10 @@
 #pragma once
-#include"WorldObject.h"
+#include"OnRoadObject.h"
 #include"Textures.h"
 #include"SmallBox.h"
 #include"Item.h"
 
-class SplitBox : public WorldObject, public Item
+class SplitBox : public OnRoadObject, public Item
 {
 public:
 	SplitBox(GLfloat width, GLfloat height, GLfloat length);

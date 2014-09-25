@@ -3,8 +3,9 @@
 #include "Torso.h"
 #include "Foot.h"
 #include "Enemy.h"
+#include "OnRoadObject.h"
 
-class Goomba: public WorldObject, public Updatable, public Enemy
+class Goomba: public OnRoadObject, public Updatable, public Enemy
 {
 protected:
 	WorldObject* target;

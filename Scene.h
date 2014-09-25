@@ -32,6 +32,7 @@ class Scene
 	void RemoveUpdatable(Updatable* object);
 
 	void AddSpecialObject(WorldObject* object);
+	int predraw ;
 public:
 	Scene();
 	~Scene();

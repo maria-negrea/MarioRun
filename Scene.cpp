@@ -3,6 +3,7 @@
 
 Scene::Scene()
 {
+	predraw = 4;
 }
 
 Scene::~Scene()
@@ -27,12 +28,13 @@ void Scene::Render()
 		lightSources[i]->Illuminate();
 	}*/
 
-	for(unsigned i = 0; i < 3; i++)
+	for(unsigned i = 0; i < predraw; i++)
 		sceneObjects[i]->Draw();
+
 	 //Draws the objects on screen
-	for(unsigned i = 3; i<sceneObjects.size(); ++i)
+	for(unsigned i = predraw; i<sceneObjects.size(); ++i)
 	{
-		 if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 400)
+		 if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 1000)
 			sceneObjects[i]->Draw();
 	}
 
@@ -47,15 +49,16 @@ void Scene::Update()
 		updateObjects[i]->Update();
 	}
 
-	OnRoadObject* mario = dynamic_cast<OnRoadObject*>(sceneObjects[3]);
+	OnRoadObject* mario = dynamic_cast<OnRoadObject*>(sceneObjects[predraw]);
 
-	for(int i = 4; i < sceneObjects.size(); i++)
+	for(int i = predraw+1; i < sceneObjects.size(); i++)
 	{
 		OnRoadObject* obj = dynamic_cast<OnRoadObject*>(sceneObjects[i]);
 
-		if(obj != NULL && mario->GetIndex() > obj->GetIndex() + 2)
+		if(obj != NULL)
 		{
-			RemoveObject(sceneObjects[i]);
+			if( mario->GetIndex() > obj->GetIndex() + 2)
+				RemoveObject(sceneObjects[i]);
 		}
 	}
 }

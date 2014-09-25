@@ -26,6 +26,8 @@ class Mario : public PhysicsObject, public OnRoadObject
 	bool invulnerable;
 	bool deadMario;
 
+	double dying;
+
 	double time;
 	double jumpForce;
 

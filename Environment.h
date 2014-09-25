@@ -22,6 +22,7 @@
 #include "Fence.h"
 #include "FullMountain.h"
 #include "Sky.h"
+#include "Hole.h"
 
 class Environment: public Updatable
 {
@@ -53,7 +54,7 @@ public:
 	void AddObject(WorldObject *obj);
 	Mario* GetMario();
 	Scene* GetScene();
-	void AddQuestionBlock(Point3D initialPoint);
+	void AddQuestionBlock(Point3D initialPoint, double& lastZ);
 	void Update();
 	~Environment(void);
 };

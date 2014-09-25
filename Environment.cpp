@@ -2,7 +2,7 @@
 
 Environment::Environment(void)
 {
-	sky=new Sky(30);
+	sky=new Sky(3000);
 	score=new Score();
 	mario = new Mario();
 	mario->Translate(Point3D(0.1,0.0,0.0));
@@ -11,11 +11,6 @@ Environment::Environment(void)
 	snowMan->Translate(Point3D(0, 0, 10));	
 
 	road = new Road();
-	//newRoad->SetRoadObject(mario);
-
-	//goomba=new Goomba();
-	//goomba->SetTarget(mario);
-	//goomba->Translate(Point3D(-5, 0, 20));
 
 	scene = new Scene();
 	mainCamera = new MarioCamera(mario);
@@ -27,7 +22,6 @@ Environment::Environment(void)
 
 void Environment:: InitializeCoins(double& lastZ)
 {
-	coins.clear();
 	GLfloat groupX = GetRandomGLfloat(0.0, 1.0);
 	Point3D initialPoint; 
 	initialPoint.x=groupX;
@@ -40,12 +34,12 @@ void Environment:: InitializeCoins(double& lastZ)
 		{
 			Coin *newCoin = new Coin;
 			initialPoint.z=lastZ+ 0.15;
-			lastZ=initialPoint.z;
+			lastZ=initialPoint.z+newCoin->length/40.0;
 			initialPoint.y+=0.5;
 			Point3D currentPosition=road->GetOnRoadPosition(initialPoint, newCoin->width);			
 			if(value==0)
 			{
-				currentPosition.y+=sin(step)* 5.0+ 3.0;
+				currentPosition.y+=sin(step)* 10.0+ 3.0;
 			}
 			else
 				if(value==1)
@@ -61,6 +55,7 @@ void Environment:: InitializeCoins(double& lastZ)
 			newCoin->Translate(currentPosition);
 			newCoin->Scale(Point3D(5.0, 5.0, 5.0));
 			newCoin->AddCollider();
+			road->AddRoadObject(newCoin);
 			obstacles.push_back(newCoin);
 			step+=PI/10.0;
 		}
@@ -69,15 +64,14 @@ void Environment:: InitializeCoins(double& lastZ)
 
 void Environment:: InitializeRandomBlocks(double& lastZ)
 {
-	blocks.clear();
 	GLfloat groupX = GetRandomGLfloat(0.0, 1.0);
 	Point3D initialPoint; 
 	initialPoint.x=groupX;
 	initialPoint.y=3.0;
 
-	double step=PI/10.0;
+	double stepZ=2.5/20;
 	
-	if(lastZ+5.0/20<road->GetRoadSize()-2)
+	if(lastZ+stepZ<road->GetRoadSize()-2)
 	{
 		for(int i = 0; i < 4; i++)
 		{
@@ -85,16 +79,18 @@ void Environment:: InitializeRandomBlocks(double& lastZ)
  			int value=rand()%2;
 			if(value==0)
 			{
-				AddQuestionBlock(initialPoint);
-				lastZ=initialPoint.z+5.0/20;
+				AddQuestionBlock(initialPoint, lastZ);
+				lastZ=initialPoint.z+stepZ;
 			}
 			else
 			{
 				SplitBox* splitBox=new SplitBox(5, 5, 5);
 				splitBox->AddCollider();
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, splitBox->width);
+				currentPosition.y=12.0;
 				splitBox->Translate(currentPosition);
-				lastZ=initialPoint.z+5.0/20;
+				lastZ=initialPoint.z+stepZ;
+				road->AddRoadObject(splitBox);
 				obstacles.push_back(splitBox);
 			}
 		}
@@ -112,7 +108,7 @@ void Environment:: InitializeObstacles()
 	double lastZ=0.0;
 	while(i<road->GetRoadSize()-2)
 	{
-		double type=rand()%25+1.0;
+		double type=rand()%35;
 		cout<<type<<endl;
 		Point3D initialPoint; 
 		initialPoint.x=GetRandomGLfloat(0.0, 1.0);
@@ -121,11 +117,23 @@ void Environment:: InitializeObstacles()
 		{
 			case 1:
 			{
-				AddQuestionBlock(initialPoint);
+				Point3D p1=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z), 0.0);
+				Point3D p2=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z+0.3), 0.0);
+				Point3D p3=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z+0.3), 0.0);
+				Point3D p4=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z), 0.0);
+				Hole* hole=new Hole(mario, p1, p2, p3, p4);
+				lastZ=initialPoint.z+0.3;
+				obstacles.push_back(hole);
+
+				break;
+			}
+			case 2:
+			{
+				AddQuestionBlock(initialPoint, lastZ);
 				if(initialPoint.x-5.0/20 > -1.0)
 				{
 					initialPoint.x-=5.0/20;
-					AddQuestionBlock(initialPoint);
+					AddQuestionBlock(initialPoint, lastZ);
 				}
 				/*else
 					if(initialPoint.x+5.0/20 < 1.0)
@@ -133,36 +141,36 @@ void Environment:: InitializeObstacles()
 						initialPoint.x+=5.0/20;
 						AddQuestionBlock(initialPoint);
 					}*/
-				lastZ=initialPoint.z+5.0/20;
 				break;
 			}
-			case 2:
+			case 3:
 			{
 				Goomba* goomba=new Goomba();
 				goomba->SetTarget(mario);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, goomba->width);				
 				goomba->Translate(currentPosition);
-				lastZ=initialPoint.z;
+				lastZ=initialPoint.z+goomba->length/20.0;
+				road->AddRoadObject(goomba);
 				obstacles.push_back(goomba);
 				break;
 			}
-			case 3:
+			case 4:
 			{
 				InitializeCoins(lastZ);
 				break;
 			}
-			case 4:
+			case 5:
 			{
 				SplitBox* splitBox=new SplitBox(5, 5, 5);
 				splitBox->AddCollider();
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, splitBox->width);
 				splitBox->Translate(currentPosition);
-				lastZ=initialPoint.z;
+				lastZ=initialPoint.z+splitBox->length/20.0;
+				road->AddRoadObject(splitBox);
 				obstacles.push_back(splitBox);
-				break;
-				
+				break;				
 			}
-			case 5:
+			case 6:
 			{
 				InitializeRandomBlocks(lastZ);
 				break;
@@ -194,10 +202,12 @@ void Environment:: InitializeOffRoadObjects()
 				if(initialPoint.x<0)
 				{
 					initialPoint.x-=plant->width;
+					/*initialPoint.x=-1-plant->width/20.0;*/
 				}
 				else
 				{
 					initialPoint.x+=plant->width;
+					/*initialPoint.x=1+plant->width/20.0;*/
 				}
 				//plant->SetTarget(mario);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
@@ -220,32 +230,15 @@ void Environment:: InitializeOffRoadObjects()
 				}
 				else
 				{
-					currentPosition=road->GetRight()[fenceIndex];
-					fenceDirection=(road->GetRight()[fenceIndex+1]-road->GetRight()[fenceIndex])*1.05;
+					fenceDirection=(road->GetRight()[fenceIndex+1]-road->GetRight()[fenceIndex]);
+					currentPosition=road->GetRight()[fenceIndex]+(road->GetRight()[fenceIndex]-road->GetLeft()[fenceIndex])*0.075;
 				}
-
-				//if(value==0)
-				//{
-				//	currentPosition.x-=3.0/20; 
-				//}
-				//else
-				//{
-				//	currentPosition.x-=3.0/20;
-				//}
 
 				GLfloat fenceWidth=2;
 
 				GLfloat fenceSize=fenceDirection.Magnitude()/(fenceWidth+0.8);
 
 				Fence* fence=new Fence(fenceWidth, 10 , 3, fenceSize);
-				if(value==0)
-				{
-					currentPosition.x+=3.0;
-				}
-				else
-				{
-					currentPosition.x-=3.0;
-				}
 
 				fence->Translate(currentPosition);
 				GLfloat angle= fenceDirection.AngleBetween(Point3D(0, 0, 1));                                                              
@@ -285,19 +278,20 @@ void Environment:: InitializeOffRoadObjects()
 			}
 			case 4:
 			{
-				FullMountain* mountain=new FullMountain(15, 15, 15);
+				FullMountain* mountain=new FullMountain(200, 200, 200);
 				if(initialPoint.x<0)
 				{
-					initialPoint.x-=mountain->length/20;
+					initialPoint.x-=mountain->length/20.0+5;
 				}
 				else
 				{
-					initialPoint.x+=mountain->length/20;
+					initialPoint.x+=mountain->length/20.0+5;
 				}
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
+				
 				mountain->Translate(currentPosition);
 				mountain->Rotate(Point3D(0, 180, 0));
-				lastZ=initialPoint.z+ mountain->length/20;
+				lastZ=initialPoint.z+ mountain->length/20.0;
 				offRoadObjects.push_back(mountain);
 				cout<<"MOUNTAIN"<<endl;
 				break;
@@ -309,7 +303,7 @@ void Environment:: InitializeOffRoadObjects()
 	}
 }
 
-void Environment:: AddQuestionBlock(Point3D initialPoint)
+void Environment:: AddQuestionBlock(Point3D initialPoint, double& lastZ)
 {
 	int value=rand()%2;
 	QuestionBlock*questionBlock;
@@ -328,6 +322,7 @@ void Environment:: AddQuestionBlock(Point3D initialPoint)
 	currentPosition.y=12;
 	questionBlock->Translate(currentPosition);	
 	obstacles.push_back(questionBlock);
+	lastZ=initialPoint.z+questionBlock->length/20;
 }
 
 vector<WorldObject*> Environment:: GetObstacles()
@@ -341,11 +336,11 @@ vector<Coin*> Environment:: GetCoins()
 }
 
 void Environment:: AddObjectsToScene()
-{
-	/*scene->AddObject(sky);*/
+{	
 	scene->AddObject(score);
 	scene->AddObject(road);
 	scene->AddObject(new Ground);
+	scene->AddObject(sky);
 	//scene->AddObject(particles);
 	scene->AddObject(mario);	
 //	scene->AddObject(goomba);

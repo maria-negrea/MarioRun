@@ -22,6 +22,7 @@ public:
 	Road(void);
 	~Road(void);
 	void DrawObject();
+	void GenerateRoad();
 	Point3D GetOnRoadPosition(Point3D point, GLfloat obstacleWidth);	
 	vector<Point3D> GetRoad();
 	vector<Point3D> GetLeft();

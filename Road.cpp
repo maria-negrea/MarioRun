@@ -16,7 +16,7 @@ Road::Road(void)
 
 	double angle = 10.234556;
 
-	for(int i = 0; i < roadSize+2; i++)
+	for(int i = 0; i < roadSize + 2; i++)
 	{
 		Point3D newRoad = lastCurve.RotateY(angle);
 		lastCurve = newRoad;
@@ -304,4 +304,10 @@ GLfloat Road:: GetCurrentLength()
 int Road:: GetRoadSize()
 {
 	return roadSize;
+}
+
+void Road::GenerateRoad()
+{
+
+
 }

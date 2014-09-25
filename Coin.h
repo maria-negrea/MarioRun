@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WorldObject.h"
+#include "OnRoadObject.h"
 #include <math.h>
 #include <vector>
 #include "Textures.h"
@@ -8,7 +8,7 @@
 #include "Item.h"
 #include "GlobalScore.h"
 
-class Coin : public WorldObject, public Updatable, public Item
+class Coin : public OnRoadObject, public Updatable, public Item
 {
 public:
 	Coin(void);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="MarioRun"
 	ProjectGUID="{C5637012-B966-4629-B823-326131B0A9BC}"
 	RootNamespace="MarioRun"
@@ -251,6 +251,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Hole.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Input.cpp"
 				>
 			</File>
@@ -490,6 +494,10 @@
 			</File>
 			<File
 				RelativePath=".\Head.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Hole.h"
 				>
 			</File>
 			<File

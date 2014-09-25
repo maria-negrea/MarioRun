@@ -1,6 +1,6 @@
 #include "Coin.h"
 
-Coin::Coin(void)
+Coin::Coin(void):OnRoadObject(false)
 {
 	length = 0.1;
 	width = 0.5;
@@ -52,7 +52,10 @@ void Coin::Update() {
 		Translate(Point3D(0, 0.8, 0));
 
 	if(this->GetTranslate().y > 30)
+	{
 		scene->RemoveObject(this);
+		/*road->RemoveObject(this);*/
+	}
 }
 
 bool Coin::Function(Mario *mario)

@@ -13,7 +13,7 @@ PlantHead::~PlantHead(void)
 }
 void PlantHead::DrawObject()
 {
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[21]); 
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[22]); 
     glColor3f(1,1,1);
 	
 	GLfloat radius=sqrt(width*width+height*height)/3;

@@ -32,7 +32,7 @@ void Pipe::DrawObject()
 	double pas = 1./pipe.size();
 	double j = 0;
 
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[20]);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[23]);
 
 	for(int i = 0; i < pipe.size() - 1; i++)
 	{

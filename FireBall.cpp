@@ -76,8 +76,8 @@ void FireBall::Update()
 {
 	if(particles == NULL)
 	{
-		particles = new Particles(AllDirections, BoxPosition, false, gen, Point3D(3.0, 3.0, 3.0), angleGen, AfterE);
-		scene->AddObject(particles);
+		//particles = new Particles(AllDirections, BoxPosition, false, gen, Point3D(3.0, 3.0, 3.0), angleGen, AfterE, 14);
+		//scene->AddObject(particles);
 	}
 	Translate(GetForward()*5);
 	particles->Translate(Point3D(-particles->GetTranslate().x+translate.x, 0.0, -particles->GetTranslate().z+translate.z));

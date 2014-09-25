@@ -13,7 +13,7 @@ class Textures
 {
 private:
 	static Textures *instance; /** <static instance of the class used for Singleton */
-    GLuint textures[22]; /** <vector containing all the textures */
+    GLuint textures[24]; /** <vector containing all the textures */
 	Textures();
 public:
 	/** Destructor */

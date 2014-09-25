@@ -1,9 +1,7 @@
 #pragma once
 #include"Textures.h"
 #include"Mushroom.h"
-
-class Road;
-class OnRoadObject;
+#include "Road.h"
 
 class QuestionBlock : public OnRoadObject
 {
@@ -18,5 +16,3 @@ public:
 	void SetIndex(int newIndex);
 };
 
-#include "Road.h"
-#include"OnRoadObject.h"

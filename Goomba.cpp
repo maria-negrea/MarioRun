@@ -2,7 +2,7 @@
 #include "Pivot.h"
 #include "Input.h"
 
-Goomba::Goomba(void)
+Goomba::Goomba(void):OnRoadObject(false)
 {
 
 	isDamaged = false;

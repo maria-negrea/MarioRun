@@ -1,16 +1,15 @@
 #pragma once
-#include "WorldObject.h"
 #include "Updatable.h"
 #include "Scene.h"
+#include "CutoutObject.h"
 
-class Pond : public WorldObject, public Updatable
+class Pond : public CutoutObject, public Updatable
 {
 private:
 	void DrawObject();
-	Scene *scene;
-	int life, step;
+	GLfloat life;
 public:
-	Pond(Scene *scene);
+	Pond();
 	~Pond();
 	void Update();
 };

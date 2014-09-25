@@ -61,7 +61,7 @@ void Environment:: InitializeCoins(double& lastZ)
 
 			std::ofstream outfile;
 			outfile.open("CoinsCoordinates.cpp", std::ios_base::app);
-			outfile << initialPoint<<"              "<<endl;
+			outfile << initialPoint<<"              "<<count<<endl;
 			outfile.close();
 			
 			newCoin->Translate(currentPosition);
@@ -148,7 +148,7 @@ void Environment::InitializeObstacles(double firstLimit, double lastLimit)
 
 					std::ofstream outfile;
 					outfile.open("HoleCoordinates.cpp", std::ios_base::app);
-					outfile << initialPoint<<"              "<<endl;	
+					outfile << initialPoint<<"              "<<count<<endl;
 					outfile.close();
 				}
 
@@ -192,7 +192,7 @@ void Environment::InitializeObstacles(double firstLimit, double lastLimit)
 
 				std::ofstream outfile;
 				outfile.open("SplitBoxCoordinates.cpp", std::ios_base::app);
-				outfile << initialPoint<<"              "<<endl;			
+				outfile << initialPoint<<"              "<<count<<endl;			
 				outfile.close();
 				//obstacles.push_back(splitBox);
 				break;				
@@ -360,7 +360,7 @@ void Environment:: AddQuestionBlock(Point3D initialPoint, double& lastZ)
 
 	std::ofstream outfile;
 	outfile.open("QuestionBlockCoordinates.cpp", std::ios_base::app);
-	outfile << initialPoint<<"              "<<endl;	
+	outfile << initialPoint<<"              "<<count<<endl;	
 	outfile.close();
 }
 
@@ -403,6 +403,7 @@ void Environment:: Update()
 void Environment:: GenerateEnvironment()
 {
 	count++;
+	cout<<"**************************************************************"<<count<<endl;
 	InitializeObstacles(29, 30);
 	//InitializeOffRoadObjects(road->GetRoadSize()-1, road->GetRoadSize());
 }

@@ -2,6 +2,7 @@
 
 Environment::Environment(void)
 {
+	game = new Gameover(10,10,10);
 	sky=new Sky(3000);
 	score=new Score();
 	mario = new Mario();
@@ -258,7 +259,6 @@ void Environment:: InitializeOffRoadObjects()
 			}
 			case 3:
 			{
-				
 				Tree*tree=new Tree();
 				if(initialPoint.x<0)
 				{
@@ -337,13 +337,15 @@ vector<Coin*> Environment:: GetCoins()
 
 void Environment:: AddObjectsToScene()
 {	
+	//scene->AddObject(game);
 	scene->AddObject(score);
 	scene->AddObject(road);
 	scene->AddObject(new Ground);
 	scene->AddObject(sky);
+	scene->AddObject(game);
 	//scene->AddObject(particles);
 	scene->AddObject(mario);
-//	scene->AddObject(goomba);
+    //scene->AddObject(goomba);
 
 	for(int i = 0; i < obstacles.size(); i++)
 		scene->AddObject(obstacles[i]);

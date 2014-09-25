@@ -12,7 +12,10 @@ enum MarioAnimations
 	Run,
 	Jump, 
 	Hit, 
-	Dead
+	Dead, 
+	SpecialRun,
+	Drown, 
+	Slide
 };
 
 class Mario : public PhysicsObject, public OnRoadObject
@@ -55,6 +58,9 @@ class Mario : public PhysicsObject, public OnRoadObject
 	void JumpAnimation();
 	void HitAnimation();
 	void DeadAnimation();
+	void SpecialRunAnimation();
+	void DrownAnimation();
+	void SlideAnimation();
 
 	MarioAnimations animation;
 public:

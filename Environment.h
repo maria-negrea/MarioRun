@@ -21,6 +21,7 @@
 #include "FullMountain.h"
 #include "Sky.h"
 #include "Hole.h"
+#include "Gameover.h"
 
 class Environment: public Updatable
 {
@@ -39,6 +40,7 @@ protected:
 	Camera* mainCamera;
 	Score* score;
 	Sky* sky;
+	Gameover *game;
 
 public:
 	Environment(void);

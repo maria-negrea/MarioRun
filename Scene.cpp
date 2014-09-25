@@ -5,7 +5,7 @@
 
 Scene::Scene()
 {
-	predraw = 4;
+	predraw = 5;
 }
 
 Scene::~Scene()
@@ -41,7 +41,7 @@ void Scene::Render()
 	 //Draws the objects on screen
 	for(unsigned i = predraw; i<sceneObjects.size(); ++i)
 	{
-		 if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 1000)
+		if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 1000 * (sceneObjects[i]->width + 0.1))
 			sceneObjects[i]->Draw();
 	}
 
@@ -77,7 +77,7 @@ void Scene::DeleteUntil(WorldObject* untilObject)
 
 		if(obj != NULL)
 		{
-			if(obj->GetIndex() < 2)
+			if(obj->GetIndex() < 1)
 			{
 				RemoveObject(sceneObjects[i]);
 			}

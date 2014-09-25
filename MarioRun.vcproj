@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="MarioRun"
 	ProjectGUID="{C5637012-B966-4629-B823-326131B0A9BC}"
 	RootNamespace="MarioRun"
@@ -240,6 +240,10 @@
 			</File>
 			<File
 				RelativePath=".\FullMountain.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Gameover.cpp"
 				>
 			</File>
 			<File
@@ -494,6 +498,10 @@
 			</File>
 			<File
 				RelativePath=".\FullMountain.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Gameover.h"
 				>
 			</File>
 			<File

@@ -2,9 +2,11 @@
 
 #include "GlobalScore.h"
 #include "Pond.h"
+#include "Gameover.h"
 
 Scene *scene;
 Camera* mainCamera;
+Gameover *game = new Gameover(10, 10, 10);
 
 Environment* environment;
 
@@ -109,6 +111,12 @@ void Timer(int value)
 	
 	if(environment->GetMario()->IsDead() == false)
 		glutTimerFunc(30, Timer, 0);
+	else
+	{
+		environment->GetScene()->AddObject(game);
+		environment->GetScene()->Update();
+		glutPostRedisplay();
+	}
 }
 
 void reshape(int w, int h)

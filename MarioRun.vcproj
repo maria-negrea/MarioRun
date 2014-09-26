@@ -183,6 +183,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Bone.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\BoneBind.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Box.cpp"
 				>
 			</File>
@@ -379,6 +387,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Skin.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Sky.cpp"
 				>
 			</File>
@@ -434,6 +446,14 @@
 			</File>
 			<File
 				RelativePath=".\AnimationStep.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Bone.h"
+				>
+			</File>
+			<File
+				RelativePath=".\BoneBind.h"
 				>
 			</File>
 			<File
@@ -626,6 +646,10 @@
 			</File>
 			<File
 				RelativePath=".\Segment2D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Skin.h"
 				>
 			</File>
 			<File

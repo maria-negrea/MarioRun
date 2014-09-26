@@ -248,7 +248,7 @@ void Textures::LoadGLTextures()
 
 	textures[18] = SOIL_load_OGL_texture
         (
-        "Assets/Skybox.bmp",
+        "Assets/puddle.png",
         SOIL_LOAD_AUTO,
         SOIL_CREATE_NEW_ID,
         SOIL_FLAG_INVERT_Y

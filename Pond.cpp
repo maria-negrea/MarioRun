@@ -15,7 +15,7 @@ Pond::~Pond()
 
 void Pond::DrawObject() {
 	glEnable(GL_BLEND);
-	//glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glDisable(GL_DEPTH_TEST);
 	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[18]);
 	glColor4f ( 1.0, 1.0, 1.0, 1.0);

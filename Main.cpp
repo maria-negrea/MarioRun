@@ -1,4 +1,5 @@
 #include "Environment.h"
+#include "Skin.h"
 
 #include "GlobalScore.h"
 #include "Pond.h"
@@ -45,6 +46,11 @@ void AfterEff(Point3D p)
 	environment->AddObject(pond);
 }
 
+
+Torso* bone1 = new Torso();
+Torso* bone2 = new Torso();
+Torso* bone3 = new Torso();
+
 void Initialize()
 {
 	environment=new Environment();
@@ -54,7 +60,53 @@ void Initialize()
 
 	GlobalScore::GetInstance()->SetScore(0);
 
-	//environment->AddObject(particles);
+	Skin* skinTest = new Skin("skinTest.txt",false);
+
+	bone1->AddChild(bone2);
+	bone2->AddChild(bone3);
+
+	bone2->Translate(Point3D(3.5,0,0));
+	bone3->Translate(Point3D(3.5,0,0));
+
+	bone1->Translate(Point3D(0,19,1));
+	skinTest->Translate(Point3D(0,18,0));
+	environment->AddObject(skinTest);
+	environment->AddObject(bone1);
+
+	vector<int> skinPoints1;
+	skinPoints1.push_back(0);
+	skinPoints1.push_back(1);
+	skinPoints1.push_back(4);
+	skinPoints1.push_back(5);
+	skinPoints1.push_back(8);
+	skinPoints1.push_back(9);
+	skinPoints1.push_back(12);
+	skinPoints1.push_back(13);
+	skinTest->AddBind(bone1,skinPoints1);
+
+	vector<int> skinPoints2;
+	skinPoints2.push_back(2);
+	skinPoints2.push_back(3);
+	skinPoints2.push_back(7);
+	skinPoints2.push_back(6);
+	skinPoints2.push_back(10);
+	skinPoints2.push_back(11);
+	skinPoints2.push_back(14);
+	skinPoints2.push_back(15);
+	skinTest->AddBind(bone2,skinPoints2);
+
+	vector<int> skinPoints3;
+	skinPoints3.push_back(16);
+	skinPoints3.push_back(17);
+	skinPoints3.push_back(18);
+	skinPoints3.push_back(19);
+	skinPoints3.push_back(20);
+	skinPoints3.push_back(21);
+	skinPoints3.push_back(22);
+	skinPoints3.push_back(23);
+	skinTest->AddBind(bone3,skinPoints3);
+
+	environment->AddObject(particles);
 
 	//LIGHTING TEST
 
@@ -125,12 +177,26 @@ void specialKey(int key, int x, int y)
 	{
 		case GLUT_KEY_LEFT:
 			Input::SetLeft(true);
+			bone2->Rotate(Point3D(0,0,-4));
 			break;
 		case GLUT_KEY_RIGHT:
 			Input::SetRight(true);
+			bone2->Rotate(Point3D(0,0,4));
+			break;
+		case GLUT_KEY_UP:
+			bone1->Rotate(Point3D(0,0,-4));
+			break;
+		case GLUT_KEY_DOWN:
+			bone1->Rotate(Point3D(0,0,4));
+			break;
+		case GLUT_KEY_F1:
+			bone3->Rotate(Point3D(0,0,4));
 			break;
 		case GLUT_KEY_F2:
-			exit(0);
+			bone3->Rotate(Point3D(0,0,-4));
+			break;
+		case GLUT_KEY_F3:
+			bone2->Rotate(Point3D(4,0,0));
 			break;
 	}
 	glutPostRedisplay();
@@ -165,12 +231,12 @@ void keyPressed(unsigned char key, int x, int y)
 				glutSpecialUpFunc(specialUpKey);
 			//}
 			break;
-	case (char)32 :
+	case (char)32:
 			if(environment != NULL) environment->GetMario()->Jump();
+			bone1->Translate(Point3D(0,1,0));
 			break;
-
 	case 'r' :
-			if(environment != NULL) 
+			if(environment != NULL)
 			{
 				bool isDead = environment->GetMario()->IsDead();
 				Initialize();

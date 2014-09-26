@@ -56,9 +56,11 @@ public:
 	vector<Point3D> GetBoundingBox();
 
 	Point3D GetTranslate();
+	Point3D GetFullTranslate();
 	void SetTranslate(Point3D translate);
 
 	Point3D GetRotate();
+	Point3D GetFullRotate();
 	void SetRotateY(GLfloat rotateY);
 	void SetRotate(Point3D rotate);
 

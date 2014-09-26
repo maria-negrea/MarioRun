@@ -10,8 +10,8 @@ CutoutObject::~CutoutObject(void)
 
 float CutoutObject::GetDepth()
 {
-	//return -translate.y;
-	return (scene->GetCamera()->GetTranslate()-translate).Magnitude();
+	return -translate.y;
+	//return (scene->GetCamera()->GetTranslate()-translate).Magnitude();
 }
 
 void CutoutObject::DrawCutout()

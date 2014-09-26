@@ -120,7 +120,7 @@ void Tree:: InitializeStemVertices(char* fileName, int i)
 	{
 		Point3D point;
 		file>>point;
-		cout<<point<<endl;
+		/*cout<<point<<endl;*/
 		vertices[i++]=point;
 	}
 	

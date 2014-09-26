@@ -39,6 +39,11 @@ void WorldObject::Draw()
 		{
 			children[i]->Draw();
 		}
+		//if(scene != NULL)
+		//{
+		//	GLfloat mag = (scene->GetCamera()->GetTranslate()-translate).Magnitude()*0.01;
+		//	glColor4f(1.0/mag,1.0/mag,1.0/mag,1.0);
+		//}
 		DrawObject();
 	}
 	ModifyPerspectiveBack();
@@ -118,6 +123,16 @@ void WorldObject::Rotate(Point3D rotation)
 	rotate += rotation;
 }
 
+Point3D WorldObject::GetFullRotate()
+{
+	if(parent != NULL)
+	{
+		return parent->GetFullRotate()+rotate;
+	}
+	return Point3D(rotate.x,360-rotate.y,rotate.z);
+}
+
+
 void WorldObject::Scale(Point3D s) 
 {
 	scale += s;
@@ -125,6 +140,16 @@ void WorldObject::Scale(Point3D s)
 
 Point3D WorldObject::GetTranslate()
 {
+	return translate;
+}
+
+Point3D WorldObject::GetFullTranslate()
+{
+	if(parent != NULL)
+	{
+		Point3D rot = parent->GetFullRotate();
+		return parent->GetFullTranslate()+translate.RotateZ(rot.z).RotateX(rot.x).RotateY(rot.y);
+	}
 	return translate;
 }
 

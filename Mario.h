@@ -5,7 +5,7 @@
 #include "Box.h"
 #include "QuestionBlock.h"
 #include "Particles.h"
-#include "Mesh.h"
+#include "Skin.h"
 
 enum MarioAnimations
 {
@@ -50,7 +50,7 @@ class Mario : public PhysicsObject, public OnRoadObject
 	Box* lowerArmLeft;
 	Box* leftHand;
 
-	Mesh* mesh;
+	Skin* mesh;
 
 	Particles* dustTrail;
 

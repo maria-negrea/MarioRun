@@ -1,11 +1,11 @@
 #include "Environment.h"
+#include "Skin.h"
 
 Environment::Environment(void)
 {
 	sky=new Sky(3000);
 	score=new Score();
 	mario = new Mario();
-	mario->Translate(Point3D(0.1,0.0,0.0));
 
 	snowMan=new SnowMan();
 	snowMan->Translate(Point3D(0, 0, 10));	

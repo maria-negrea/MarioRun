@@ -110,6 +110,7 @@ Tree::Tree(void)
 
 	InitializeStemTriangles(index, j);
 
+
 		
 }
 
@@ -149,7 +150,7 @@ void Tree:: InitializeStemTriangles(int i, int j)
 
 void Tree:: Update()
 {
-	for(int i=0;i<trianglesCount;i++)
+	for(int i=0;i<96;i++)
 	{
 		if(WorldObject::isSummer==true)
 		{

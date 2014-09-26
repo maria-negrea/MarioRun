@@ -45,7 +45,14 @@ void QuestionBlock::SetIndex(int newIndex)
 
 void QuestionBlock::DrawObject()
 {
-glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
+	if(WorldObject::isSummer)
+	{
+		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[2]);
+	}
+	if(WorldObject::isWinter)
+	{
+		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[33]);
+	}
   glBegin(GL_QUADS);
  // front face
   glTexCoord2f(1,1);glVertex3f(0. ,length*0.75, 0);

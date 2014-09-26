@@ -2,8 +2,9 @@
 #include "Textures.h"
 
 
-Pond::Pond()
+Pond::Pond(int textureIndex)
 {
+	this->textureIndex=textureIndex;
 	rotate.y = rand()%360;
 	scale = Point3D(0.2,0.2,0.2);
 	life = 0.0;
@@ -17,7 +18,7 @@ void Pond::DrawObject() {
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glDisable(GL_DEPTH_TEST);*/
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[20]);
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
 	glColor4f ( 1.0, 1.0, 1.0, 1.0);
 	glBegin(GL_QUADS);
 

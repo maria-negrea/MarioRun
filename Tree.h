@@ -4,7 +4,7 @@
 #include "Indexable.h"
 #include "Updatable.h"
 
-class Tree: public Mesh, public Indexable, public Updatable
+class Tree: public Mesh, public Indexable
 {
 	int textureIndex;
 public:

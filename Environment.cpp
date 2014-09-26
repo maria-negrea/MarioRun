@@ -170,7 +170,7 @@ void Environment::InitializeObstacles(double firstLimit, double lastLimit)
 					lastZ=initialPoint.z+goomba->length/20.0;
 					road->AddRoadObject(goomba);
 					scene->AddObject(goomba);
-					obstacles.push_back(goomba);
+					//obstacles.push_back(goomba);
 					break;
 				}
 				

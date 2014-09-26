@@ -12,7 +12,14 @@ FencePart::~FencePart(void)
 }
 void FencePart::DrawObject()
 {
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[26]);
+	if(WorldObject::isSummer)
+	{
+		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[26]);
+	}
+	if(WorldObject::isWinter)
+	{
+		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[35]);
+	}
 	/*glBindTexture(GL_TEXTURE_2D, 0); 
 	glColor4f(108/255.0, 56/255.0, 9/255.0,1.0);*/
 

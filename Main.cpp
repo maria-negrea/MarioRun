@@ -41,7 +41,7 @@ float ConstantSpeed()
 
 void AfterEff(Point3D p) 
 {
-	Pond *pond = new Pond();
+	Pond *pond = new Pond(particles->textureIndex);
 	pond->Translate(Point3D(p.x, p.y+rand()%100*0.001, p.z));
 	environment->AddObject(pond);
 }
@@ -52,7 +52,7 @@ void Timer(int value)
 	if(particles ==NULL)
 	{	
 		cout<<"HERE";
-		particles = new Particles(RainDirection, RainTranslation, RainGenerator,Point3D(0.2,1,0.2),Point3D(0.2,1,0.2), angleG, AfterEff,ConstantSpeed, 20);//19	
+		particles = new Particles(RainDirection, RainTranslation, RainGenerator,Point3D(0.5,1,0.5),Point3D(0.5,1,0.5), angleG, AfterEff,ConstantSpeed, 20);//19	
 		environment->AddObject(particles);
 	}
 	if(WorldObject::isSummer==true)

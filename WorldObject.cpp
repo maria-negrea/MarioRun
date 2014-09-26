@@ -267,3 +267,4 @@ void WorldObject::SetRotate(Point3D rotate)
 {
 	this->rotate = rotate;
 }
+

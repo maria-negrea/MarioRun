@@ -11,9 +11,10 @@ private:
 	int contor;
 	PlantHead *head;
 	PlantLeaf *leaf;
+	Scene* scene;
 	
 public:
-	PlantTulip(GLfloat width, GLfloat height, GLfloat length);
+	PlantTulip(Scene* scene, GLfloat width, GLfloat height, GLfloat length);
 	~PlantTulip(void);
 	void DrawObject();
 	void DrawTulip();

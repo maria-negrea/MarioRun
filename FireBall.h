@@ -10,9 +10,10 @@ class FireBall:public WorldObject, public Updatable, public Item
 private:
 	GLfloat radius;
 	double distanceTravelled;
-	Particles *particles;
+	//Particles *particles;
+	Scene* scene;
 public:
-	FireBall(GLfloat radius);
+	FireBall(Scene* scene, GLfloat radius);
 	~FireBall(void);
 	void DrawObject();
 	void Update();

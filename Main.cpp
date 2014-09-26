@@ -49,6 +49,22 @@ void AfterEff(Point3D p)
 void Timer(int value)
 {
 	environment->GetScene()->Update();
+	if(particles ==NULL)
+	{	
+		cout<<"HERE";
+		particles = new Particles(RainDirection, RainTranslation, RainGenerator,Point3D(0.2,1,0.2),Point3D(0.2,1,0.2), angleG, AfterEff,ConstantSpeed, 20);//19	
+		environment->AddObject(particles);
+	}
+	if(WorldObject::isSummer==true)
+	{
+		particles->textureIndex=20;
+		
+	}
+	if(WorldObject::isWinter==true)
+	{
+		particles->textureIndex=34;
+	}
+	
 	particles->Translate(-particles->GetTranslate());
 	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 100.0, 0.0));
 	glutPostRedisplay();
@@ -65,10 +81,10 @@ void Initialize()
 		isDead = environment->GetMario()->IsDead();
 
 	environment=new Environment();
-	environment->AddObjectsToScene();
+	environment->AddObjectsToScene();	
 	
-	particles = new Particles(RainDirection, RainTranslation, RainGenerator,Point3D(0.2,1,0.2),Point3D(0.2,1,0.2), angleG, AfterEff,ConstantSpeed, 20);//19
-
+	
+	
 	GlobalScore::GetInstance()->SetScore(0);
 	WorldObject::isSummer=true;
 	WorldObject::isWinter=false;

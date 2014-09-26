@@ -151,11 +151,11 @@ void Tree:: Update()
 {
 	for(int i=0;i<trianglesCount;i++)
 	{
-		if(WorldObject::isSummer)
+		if(WorldObject::isSummer==true)
 		{
 			triangles[i].textureIndex=9;
 		}
-		if(WorldObject::isWinter)
+		if(WorldObject::isWinter==true)
 		{
 			triangles[i].textureIndex=29;
 		}		

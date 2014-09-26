@@ -304,7 +304,7 @@ vector<Point3D> Road::GetRight()
 
 void Road::OffRoad(OnRoadObject* onRoadObject)
 {
-	GLfloat width = 19;
+	GLfloat width = 17;
 	int roadIndex = onRoadObject->GetIndex();
 
 	Point3D reachPosition = onRoadObject->GetTranslate();

@@ -23,8 +23,9 @@ private:
 	AngleGenerator angleGen;
 	AfterEffect effect;
 	SpeedGenerator speedGenerator;
-	int textureIndex;
+	
 public:
+	int textureIndex;
 	Particles(DirectionGenerator directionGenerator, 
 			TranslationGenerator translationGenerator, 
 			NumberGenerator genm, 

@@ -6,7 +6,6 @@
 Environment::Environment()
 {
 	count=0;
-
 	sky=new Sky(30000);
 	score=new Score();
 	mario = new Mario(this);
@@ -136,23 +135,23 @@ void Environment::InitializeObstacles(double firstLimit, double lastLimit)
 		{
 			case 1:
 			{
-				if((int)type%2==0)
-				{
-					Point3D p1=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z), 0.0);
-					Point3D p2=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z+0.3), 0.0);
-					Point3D p3=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z+0.3), 0.0);
-					Point3D p4=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z), 0.0);
-					Hole* hole=new Hole(mario, p1, p2, p3, p4);
-					lastZ=initialPoint.z+0.4;
-					scene->AddObject(hole);
-					road->AddRoadObject(hole);
-					//obstacles.push_back(hole);
+				//if((int)type%2==0)
+				//{
+				//	Point3D p1=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z), 0.0);
+				//	Point3D p2=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z+0.3), 0.0);
+				//	Point3D p3=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z+0.3), 0.0);
+				//	Point3D p4=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z), 0.0);
+				//	Hole* hole=new Hole(mario, p1, p2, p3, p4);
+				//	lastZ=initialPoint.z+0.4;
+				//	scene->AddObject(hole);
+				//	road->AddRoadObject(hole);
+				//	//obstacles.push_back(hole);
 
-					std::ofstream outfile;
-					outfile.open("HoleCoordinates.cpp", std::ios_base::app);
-					outfile << initialPoint<<"           "<<count<<endl;	
-					outfile.close();
-				}
+				//	std::ofstream outfile;
+				//	outfile.open("HoleCoordinates.cpp", std::ios_base::app);
+				//	outfile << initialPoint<<"           "<<count<<endl;	
+				//	outfile.close();
+				//}
 				break;
 			}
 			case 2:
@@ -184,14 +183,6 @@ void Environment::InitializeObstacles(double firstLimit, double lastLimit)
 			case 5:
 			{
 				GLfloat size=5.0;
-				/*if((int)type%2==0)
-				{
-					size=5.0;
-				}
-				else
-				{
-					size=30.0;
-				}*/
 				SplitBox* splitBox=new SplitBox(size, 5, size);
 				splitBox->AddCollider();
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, splitBox->width);
@@ -239,7 +230,7 @@ void Environment:: InitializeOffRoadObjects(double firstLimit, double lastLimit)
 			case 1:
 			{
 				initialPoint.x=GetRandomGLfloat(1.0, 3.0);
-				Pipe* pipe=new Pipe(1,3,1);
+				Pipe* pipe=new Pipe(scene, 1,3,1);
 				pipe->Scale(Point3D(1, 1, 1));
 				if(initialPoint.x<0)
 				{
@@ -249,7 +240,7 @@ void Environment:: InitializeOffRoadObjects(double firstLimit, double lastLimit)
 				{
 					initialPoint.x=1+pipe->width/20.0;
 				}
-				//pipe->SetTarget(mario);
+				pipe->SetTarget(mario);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
 				pipe->Translate(currentPosition);
 				
@@ -412,13 +403,13 @@ vector<Coin*> Environment:: GetCoins()
 }
 
 void Environment:: AddObjectsToScene()
-{	
+{
 	//scene->AddObject(game);
 	//scene->AddObject(score);
 	//scene->AddObject(road);
 	//scene->AddObject(new Ground);
 	//scene->AddObject(sky);
-	////scene->AddObject(particles);
+	//scene->AddObject(particles);
 	//scene->AddObject(mario);
     //scene->AddObject(goomba);
 //	scene->AddObject(goomba);
@@ -488,3 +479,5 @@ Environment::~Environment(void)
 {
 
 }
+
+

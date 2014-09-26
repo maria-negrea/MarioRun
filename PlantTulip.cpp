@@ -2,8 +2,9 @@
 #include "Particles.h"
 
 #define PI 3.14
-PlantTulip::PlantTulip(GLfloat width, GLfloat height, GLfloat length)
+PlantTulip::PlantTulip(Scene* scene, GLfloat width, GLfloat height, GLfloat length)
 {
+	 this->scene=scene;
 	 this->width=width;
 	 this->height=height;
 	 this->length=length;
@@ -104,7 +105,7 @@ void PlantTulip::Update()
 
 		  if(contor==30)
 		  {
-			  FireBall *fireBall=new FireBall(0.5);
+			  FireBall *fireBall=new FireBall(scene, 0.5);
 			  fireBall->AddCollider();
 			  scene->AddObject(fireBall);
 			  fireBall->Translate(GetRight()*0.5+GetForward()*1);

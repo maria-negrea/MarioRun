@@ -56,32 +56,42 @@ void FencePart::DrawObject()
  glEnd();
 
  glBegin(GL_TRIANGLES);
-
+ glTexCoord2f(0,1);
  glVertex3f(width, height,length);
+ glTexCoord2f(1,1);
  glVertex3f(0, height, length);
+ glTexCoord2f(1,0);
  glVertex3f(width/2, height/2, length*1.3);
 
  glEnd();
 
- glBegin(GL_TRIANGLES);
-
+  glBegin(GL_TRIANGLES);
+  glTexCoord2f(0,1);
   glVertex3f(0,0, length);
+  glTexCoord2f(1,1);
   glVertex3f(0,height, length);
+  glTexCoord2f(1,0);
   glVertex3f(width/2, height/2, length*1.3);
 
  glEnd();
 
   glBegin(GL_TRIANGLES);
-    glVertex3f(0, 0, length);
-	glVertex3f(width, 0, length);
-	glVertex3f(width/2, height/2, length*1.3);
-  
+  glTexCoord2f(0,1);
+  glVertex3f(0, 0, length);
+  glTexCoord2f(1,1);
+  glVertex3f(width, 0, length);
+  glTexCoord2f(1,0);
+  glVertex3f(width/2, height/2, length*1.3);
+ 
   glEnd();
 
   glBegin(GL_TRIANGLES);
-    glVertex3f(width,0, length);
-	glVertex3f(width, height, length);
-	glVertex3f(width/2, height/2, length*1.3);
+  glTexCoord2f(0,1);
+  glVertex3f(width,0, length);
+  glTexCoord2f(1,1);
+  glVertex3f(width, height, length);
+  glTexCoord2f(1,0);
+  glVertex3f(width/2, height/2, length*1.3);
 
  glEnd();
 
@@ -147,7 +157,7 @@ void FencePart::DrawObject()
   glVertex3f(width, 0., length*0.7);
 
  glEnd();
-	glColor4f(1, 1, 1,1);
+	/*glColor4f(1, 1, 1,1);*/
 }
 void FencePart::DrawFence()
 {

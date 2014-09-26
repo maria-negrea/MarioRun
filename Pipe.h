@@ -8,7 +8,7 @@ class Pipe : public WorldObject, public Indexable
 {
 	PlantTulip* plant;
 public:
-	Pipe(GLfloat width, GLfloat height, GLfloat length);
+	Pipe(Scene* scene, GLfloat width, GLfloat height, GLfloat length);
 	~Pipe(void);
 	void SetTarget(WorldObject* target);
 	void DrawObject();

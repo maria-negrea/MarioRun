@@ -23,9 +23,9 @@
 #include "FullMountain.h"
 #include "Sky.h"
 #include "Hole.h"
-
 #include "Pipe.h"
 #include "Environmental.h"
+#include "Pond.h"
 
 class Environment: public Updatable, public Environmental
 {
@@ -45,8 +45,10 @@ protected:
 	Score* score;
 	Sky* sky;
 	int count;
+	
 
 public:
+	Particles *particles;
 	Environment(void);
 	vector<Coin*> GetCoins();
 	vector<WorldObject*> GetObstacles();

@@ -48,17 +48,21 @@ void ParticleObject::DrawObject() {
 
 	//glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glDisable(GL_DEPTH_TEST);
+	if(textureIndex==34)
+	{
+		cout<<"BINGO"<<endl;
 
+	}
 	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
-	glColor4f ( 1.0, 1.0, 1.0, 1.0);
+	/*glColor4f ( 1.0, 1.0, 1.0, 1.0);*/
 	glBegin(GL_QUADS);
-		glTexCoord2f(0, 0);glVertex3f(-1.5, 1.5,  0.0);
-		glTexCoord2f(1, 0);glVertex3f( 1.5, 1.5,  0.0);
-		glTexCoord2f(1, 1);glVertex3f( 1.5, -1.5, 0.0);
-		glTexCoord2f(0, 1);glVertex3f(-1.5, -1.5, 0.0);
+		glTexCoord2f(0.3, 0.3);glVertex3f(-1.5, 1.5,  0.0);
+		glTexCoord2f(0.3, 0.6);glVertex3f( 1.5, 1.5,  0.0);
+		glTexCoord2f(0.6, 0.6);glVertex3f( 1.5, -1.5, 0.0);
+		glTexCoord2f(0.6, 0.3);glVertex3f(-1.5, -1.5, 0.0);
 	glEnd();
-	glColor4f ( 1.0, 1.0, 1.0, 1.0);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	/*glColor4f ( 1.0, 1.0, 1.0, 1.0);
+	glBindTexture(GL_TEXTURE_2D, 0);*/
 
 	glDisable(GL_BLEND);
 	//glEnable(GL_DEPTH_TEST);

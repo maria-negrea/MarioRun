@@ -21,17 +21,6 @@ Road::Road(void)
 	for(int i = 0; i < roadSize + 2; i++)
 	{
 		PutRoadPiece();
-		//Point3D newRoad = lastCurve.RotateY(angle);
-		//lastCurve = newRoad;
-
-		//if(i % 5 == 0)
-		//	angle = rand() % 30 - 15;
-
-		//leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
-		//rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);
-
-		//roadVector.push_back(lastRoad);
-		//lastRoad += newRoad*length;
 	}
 
 	isNewRoad=true;
@@ -44,7 +33,15 @@ Road::~Road(void)
 
 void Road::DrawObject()
 {
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[24]);
+	if(WorldObject::isSummer)
+	{
+		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[24]);
+	}
+	if(WorldObject::isWinter)
+	{
+		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[28]);
+	}
+	
 	for(int i = 0; i < rightVector.size() - 1; i++)
 	{
 		/*for(unsigned j = 0; j<onRoadObjects.size();j++)
@@ -281,6 +278,7 @@ Point3D Road::GetOnRoadPosition(Point3D point, GLfloat obstacleWidth)
 	{
 		int g = 0;
 	}
+	return NULL;
 }
 
 void Road::AddRoadObject(OnRoadObject* object)
@@ -374,7 +372,7 @@ void Road::PutRoadPiece()
 	lastCurve = newRoad;
 
 	if(rand() % 6 == 5)
-		angle = rand() % 30 - 15;
+		angle = (rand() % 200 - 100)*0.1;;
 
 	leftVector.push_back(newRoad.RotateY(-90.0)*width + lastRoad);
     rightVector.push_back(newRoad.RotateY(90.0)*width + lastRoad);

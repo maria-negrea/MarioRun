@@ -10,6 +10,7 @@ Tree::Tree(void)
 	width=bigRadius*2;
 	length=bigRadius*2;
 	height=13.0;
+	textureIndex=9;
 
 	int i=0;
 	for(double t=0.0; t<2*PI; t+=0.785)
@@ -37,44 +38,44 @@ Tree::Tree(void)
 	for(i=0;i<m-1;i++)
 	{
 		countV=0.0;
-		triangles[j++]=Triangle(m+i, i, i+1, 9, countV+stepV, countU, countV, countU, countV, countU+stepU);
-		triangles[j++]=Triangle(m+i, i+1, m+i+1, 9, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
+		triangles[j++]=Triangle(m+i, i, i+1, textureIndex, countV+stepV, countU, countV, countU, countV, countU+stepU);
+		triangles[j++]=Triangle(m+i, i+1, m+i+1, textureIndex, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
 		countV+=stepV;
-		triangles[j++]=Triangle(2*m+i, m+i, m+i+1, 9, countV+stepV, countU, countV, countU, countV, countU+stepU);
-		triangles[j++]=Triangle(2*m+i, m+i+1, 2*m+i+1, 9, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
+		triangles[j++]=Triangle(2*m+i, m+i, m+i+1, textureIndex, countV+stepV, countU, countV, countU, countV, countU+stepU);
+		triangles[j++]=Triangle(2*m+i, m+i+1, 2*m+i+1, textureIndex, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
 		countV+=stepV;
-		triangles[j++]=Triangle(3*m+i, 2*m+i, 2*m+i+1, 9, countV+stepV, countU, countV, countU, countV, countU+stepU);
-		triangles[j++]=Triangle(3*m+i, 2*m+i+1, 3*m+i+1, 9, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
+		triangles[j++]=Triangle(3*m+i, 2*m+i, 2*m+i+1, textureIndex, countV+stepV, countU, countV, countU, countV, countU+stepU);
+		triangles[j++]=Triangle(3*m+i, 2*m+i+1, 3*m+i+1, textureIndex, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
 		countV+=stepV;
-		triangles[j++]=Triangle(4*m+i, 3*m+i, 3*m+i+1, 9, countV+stepV, countU, countV, countU, countV, countU+stepU);
-		triangles[j++]=Triangle(4*m+i, 3*m+i+1, 4*m+i+1, 9, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
+		triangles[j++]=Triangle(4*m+i, 3*m+i, 3*m+i+1, textureIndex, countV+stepV, countU, countV, countU, countV, countU+stepU);
+		triangles[j++]=Triangle(4*m+i, 3*m+i+1, 4*m+i+1, textureIndex, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
 		countV+=stepV;
-		triangles[j++]=Triangle(5*m+i, 4*m+i, 4*m+i+1, 9, countV+stepV, countU, countV, countU, countV, countU+stepU);
-		triangles[j++]=Triangle(5*m+i, 4*m+i+1, 5*m+i+1, 9, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
+		triangles[j++]=Triangle(5*m+i, 4*m+i, 4*m+i+1, textureIndex, countV+stepV, countU, countV, countU, countV, countU+stepU);
+		triangles[j++]=Triangle(5*m+i, 4*m+i+1, 5*m+i+1, textureIndex, countV+stepV, countU, countV, countU+stepU, countV+stepV, countU+stepU);
 		countU+=stepU;
 	}
 
 	i--;
 	countV=0.0;
 
-	triangles[j++]=Triangle(m+i+1, i+1, m, 9, countV+stepV, countU, countV, countU, countV+stepV, 1.0);
-	triangles[j++]=Triangle(m, i+1, 0, 9, countV+stepV, 1.0, countV, countU, countV, 0.0);
+	triangles[j++]=Triangle(m+i+1, i+1, m, textureIndex, countV+stepV, countU, countV, countU, countV+stepV, 1.0);
+	triangles[j++]=Triangle(m, i+1, 0, textureIndex, countV+stepV, 1.0, countV, countU, countV, 0.0);
 
 	countV+=stepV;
-	triangles[j++]=Triangle(2*m+i+1, m+i+1, 2*m, 9, countV+stepV, countU, countV, countU, countV+stepV, 1.0);
-	triangles[j++]=Triangle(2*m, m+i+1, m, 9, countV+stepV, 1.0, countV, countU, countV, 0.0);
+	triangles[j++]=Triangle(2*m+i+1, m+i+1, 2*m, textureIndex, countV+stepV, countU, countV, countU, countV+stepV, 1.0);
+	triangles[j++]=Triangle(2*m, m+i+1, m, textureIndex, countV+stepV, 1.0, countV, countU, countV, 0.0);
 
 	countV+=stepV;
-	triangles[j++]=Triangle(3*m+i+1, 2*m+i+1, 3*m, 9, countV+stepV, countU, countV, countU, countV+stepV, 1.0);
-	triangles[j++]=Triangle(3*m, 2*m+i+1, 2*m, 9, countV+stepV, 1.0, countV, countU, countV, 0.0);
+	triangles[j++]=Triangle(3*m+i+1, 2*m+i+1, 3*m, textureIndex, countV+stepV, countU, countV, countU, countV+stepV, 1.0);
+	triangles[j++]=Triangle(3*m, 2*m+i+1, 2*m, textureIndex, countV+stepV, 1.0, countV, countU, countV, 0.0);
 
 	countV+=stepV;
-	triangles[j++]=Triangle(4*m+i+1, 3*m+i+1, 4*m, 9, countV+stepV, countU, countV, countU, countV+stepV, 1.0);
-	triangles[j++]=Triangle(4*m, 3*m+i+1, 3*m, 9, countV+stepV, 1.0, countV, countU, countV, 0.0);
+	triangles[j++]=Triangle(4*m+i+1, 3*m+i+1, 4*m, textureIndex, countV+stepV, countU, countV, countU, countV+stepV, 1.0);
+	triangles[j++]=Triangle(4*m, 3*m+i+1, 3*m, textureIndex, countV+stepV, 1.0, countV, countU, countV, 0.0);
 
 	countV+=stepV;
-	triangles[j++]=Triangle(5*m+i+1, 4*m+i+1, 5*m, 9, countV+stepV, countU, countV, countU, countV+stepV, 1.0);
-	triangles[j++]=Triangle(5*m, 4*m+i+1, 4*m, 9, countV+stepV, 1.0, countV, countU, countV, 0.0);
+	triangles[j++]=Triangle(5*m+i+1, 4*m+i+1, 5*m, textureIndex, countV+stepV, countU, countV, countU, countV+stepV, 1.0);
+	triangles[j++]=Triangle(5*m, 4*m+i+1, 4*m, textureIndex, countV+stepV, 1.0, countV, countU, countV, 0.0);
 
 
 	/*triangles[j++]=Triangle(m+i+1, i+1, m, 9, countV+stepV, countU, countV, countU, countV+stepV, 0.0);
@@ -120,7 +121,6 @@ void Tree:: InitializeStemVertices(char* fileName, int i)
 	{
 		Point3D point;
 		file>>point;
-		cout<<point<<endl;
 		vertices[i++]=point;
 	}
 	
@@ -145,6 +145,21 @@ void Tree:: InitializeStemTriangles(int i, int j)
 	triangles[j++]=Triangle(m+i+k, i+k, i, 10, 1.0, countU, 0.0, countU, 0.0, 0.0);
 	triangles[j]=Triangle(m+i+k, i, m+i, 10, 1.0, countU, 0.0, 0.0, 1.0, 0.0);
 
+}
+
+void Tree:: Update()
+{
+	for(int i=0;i<trianglesCount;i++)
+	{
+		if(WorldObject::isSummer)
+		{
+			triangles[i].textureIndex=9;
+		}
+		if(WorldObject::isWinter)
+		{
+			triangles[i].textureIndex=29;
+		}		
+	}
 }
 
 Tree::~Tree(void)

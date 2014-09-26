@@ -247,6 +247,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Gameover.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GlobalScore.cpp"
 				>
 			</File>
@@ -264,6 +268,10 @@
 			</File>
 			<File
 				RelativePath=".\Hole.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Indexable.cpp"
 				>
 			</File>
 			<File
@@ -509,6 +517,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Gameover.h"
+				>
+			</File>
+			<File
 				RelativePath=".\GlobalScore.h"
 				>
 			</File>
@@ -526,6 +538,10 @@
 			</File>
 			<File
 				RelativePath=".\Hole.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Indexable.h"
 				>
 			</File>
 			<File

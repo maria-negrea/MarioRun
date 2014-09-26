@@ -1,10 +1,10 @@
 #pragma once
-
+#include "Indexable.h"
 #include "WorldObject.h"
 #include "Textures.h"
 #include "PlantTulip.h"
 
-class Pipe : public WorldObject
+class Pipe : public WorldObject, public Indexable
 {
 	PlantTulip* plant;
 public:

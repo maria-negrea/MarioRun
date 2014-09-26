@@ -23,6 +23,7 @@
 #include "FullMountain.h"
 #include "Sky.h"
 #include "Hole.h"
+
 #include "Pipe.h"
 #include "Environmental.h"
 
@@ -38,7 +39,7 @@ protected:
 	Scene *scene;
 	vector<Coin*> coins;
 	vector<WorldObject*> obstacles;
-	vector<WorldObject*> offRoadObjects;
+	vector<Indexable*> offRoadObjects;
 	vector<WorldObject*> blocks;
 	Camera* mainCamera;
 	Score* score;
@@ -60,5 +61,7 @@ public:
 	void AddQuestionBlock(Point3D initialPoint, double& lastZ);
 	void Update();
 	void GenerateEnvironment();
+	void ClearFiles();
+	void ClearFile(char* fileName);
 	~Environment(void);
 };

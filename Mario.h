@@ -14,7 +14,11 @@ enum MarioAnimations
 	Run,
 	Jump, 
 	Hit, 
-	Dead
+	Dead, 
+	SpecialRun,
+	Drown, 
+	Slide,
+	Wave
 };
 
 class Mario : public PhysicsObject, public OnRoadObject
@@ -28,11 +32,15 @@ class Mario : public PhysicsObject, public OnRoadObject
 	bool bleep;
 	bool invulnerable;
 	bool deadMario;
+	bool drown;
 
 	double dying;
 
 	double time;
 	double jumpForce;
+
+	bool startGame;
+
 
 	Box* pelvis;
 	Box* neck;
@@ -58,6 +66,10 @@ class Mario : public PhysicsObject, public OnRoadObject
 	void JumpAnimation();
 	void HitAnimation();
 	void DeadAnimation();
+	void SpecialRunAnimation();
+	void DrownAnimation();
+	void SlideAnimation();
+	void WaveAnimation();
 
 	MarioAnimations animation;
 	Environmental* environment;
@@ -86,6 +98,11 @@ public:
 
 	void SetDead();
 	bool IsDead();
+
+	void SetDrown();
+	void StartGame();
+	bool GameStatus();
+	bool IsDying();
 
 	void IncrementIndex();
 };

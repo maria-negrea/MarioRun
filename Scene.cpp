@@ -5,7 +5,7 @@
 
 Scene::Scene()
 {
-	predraw = 4;
+	predraw = 5;
 }
 
 Scene::~Scene()
@@ -41,11 +41,11 @@ void Scene::Render()
 	 //Draws the objects on screen
 	for(unsigned i = predraw; i<sceneObjects.size(); ++i)
 	{
-		 if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 1000)
+		if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 350)
 			sceneObjects[i]->Draw();
 	}
 
-	sort(cutouts.begin(), cutouts.end(), SortByDepth); 
+	sort(cutouts.begin(), cutouts.end(), SortByDepth);
 	//cout<<cutouts.size()<<endl;
 	for(unsigned i = 3; i<cutouts.size(); ++i)
 	{
@@ -70,8 +70,6 @@ void Scene::Update()
 void Scene::DeleteUntil(WorldObject* untilObject)
 {
 	OnRoadObject* mario = dynamic_cast<OnRoadObject*>(untilObject);
-
-	cout<<"ST"<<endl;
 	for(int i = predraw+1; i < sceneObjects.size(); i++)
 	{
 		OnRoadObject* obj = dynamic_cast<OnRoadObject*>(sceneObjects[i]);
@@ -84,7 +82,6 @@ void Scene::DeleteUntil(WorldObject* untilObject)
 			}
 		}
 	}
-	cout<<"END"<<endl;
 }
 
 void Scene::RemoveUpdatable(Updatable* object)

@@ -15,7 +15,16 @@ Ground::~Ground()
 
 void Ground::DrawObject()
 {
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[25]);
+	if(this->isSummer)
+	{
+		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[25]);
+	}
+
+	if(this->isWinter)
+	{
+		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[27]);
+	}
+	
 	glBegin(GL_QUADS);
 		glTexCoord2f(1000, 1000); glVertex3f( 10000,0.0,10000);
 		glTexCoord2f(0, 1000); glVertex3f( 10000,0.0,-10000);

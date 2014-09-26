@@ -2,8 +2,9 @@
 #include"WorldObject.h"
 #include"FencePart.h"
 #include<vector>
+#include "Indexable.h"
 
-class Fence:public WorldObject
+class Fence:public WorldObject, public Indexable
 {
 private:
 	

@@ -2,21 +2,20 @@
 #include "Particles.h"
 
 #define PI 3.14
-PlantTulip::PlantTulip(GLfloat width, GLfloat height, GLfloat size)
+PlantTulip::PlantTulip(GLfloat width, GLfloat height, GLfloat length)
 {
-	
-	this->height=height;
-	this->size=size;
-	this->target=NULL;
-	contor=0;
-	head=new PlantHead(width, height, size);
-	leaf=new PlantLeaf(width, height, size);
-	this->width=leaf->width;
-	head->Translate(Point3D(0.5, height,0.4));
-	head->Rotate(Point3D(180, -20, 0));
-	leaf->Translate(Point3D(0, 0, -0.4));
-	this->AddChild(head);
-	this->AddChild(leaf);
+	 this->width=width;
+	 this->height=height;
+	 this->length=length;
+	 this->target=NULL;
+	 contor=0;
+	 head=new PlantHead(width, height, length);
+	 leaf=new PlantLeaf(width, height, length);
+	 head->Translate(Point3D(width*0.3,length*1.5,0 ));
+	 head->Rotate(Point3D(180, -90, 0));
+	 leaf->Translate(Point3D(0, 0, -0.2*height));
+	 this->AddChild(head);
+	 this->AddChild(leaf);
 	
 }
 
@@ -48,7 +47,7 @@ void PlantTulip::DrawTulip()
 	    base.push_back(Point3D(radius*0.5*cos(0.),initialsize, 0));
 	
 	double pass=0;
-    double sizepass=0.5*size;
+    double sizepass=0.5*length;
 	for(int i=0;i<2;i++)
 	{
 

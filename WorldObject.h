@@ -36,8 +36,9 @@ protected:
 	bool hardCollider;
 
 	Scene *scene;
-	bool visible;
 public:
+	bool visible;
+
 	static bool isSummer, isAutumn, isWinter;
 	GLfloat length, width, height; // OZ, OX and OY
 	WorldObject(GLfloat W = 0.0, GLfloat H = 0.0,GLfloat X = 0.0, GLfloat Y = 0.0, GLfloat Z = 0.0);

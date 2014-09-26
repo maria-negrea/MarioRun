@@ -55,6 +55,7 @@ Torso* bone3 = new Torso();
 void Timer(int value)
 {
 	environment->GetScene()->Update();
+	
 	if(particles ==NULL)
 	{	
 		particles = new Particles(RainDirection, RainTranslation, RainGenerator,Point3D(0.5,1,0.5),Point3D(0.5,1,0.5), angleG, AfterEff,ConstantSpeed, 20);//19	
@@ -75,12 +76,12 @@ void Timer(int value)
 	glutPostRedisplay();
 	
 	if(environment->GetMario()->IsDead() == false)
-		glutTimerFunc(1, Timer, 0);
+		glutTimerFunc(20, Timer, 0);
 }
 
 void Initialize()
-{	
-	
+{
+	particles=NULL;
 	bool isDead = false;
 	if(environment)
 		isDead = environment->GetMario()->IsDead();

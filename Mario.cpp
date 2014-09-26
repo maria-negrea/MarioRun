@@ -983,16 +983,19 @@ void Mario::Update()
 		if(invulnerable == false && time < 3)
 		{
 			visible = !visible;
+			mesh->visible = !mesh->visible;
 			time += 0.05;
 		}
 		else if(invulnerable == true && time <	10)
 		{
 			visible = !visible;
+			mesh->visible = !mesh->visible;
 			time += 0.05;
 		}
 		else
 		{
 			visible = true;
+			mesh->visible = true;
 			time = 0;
 			bleep = false;
 			invulnerable = false;

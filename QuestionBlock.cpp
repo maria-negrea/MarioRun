@@ -20,9 +20,9 @@ QuestionBlock::~QuestionBlock(void)
 #include "Star.h"
 void QuestionBlock::Hit()
 {
-	if(textureIndex==2)
+	if(textureIndex==2 || textureIndex==33)
 	{
-		insideObject->AddCollider();
+   		insideObject->AddCollider();
 		
 		insideObject->Rotate(rotate);
 		insideObject->Translate(translate);
@@ -45,14 +45,8 @@ void QuestionBlock::SetIndex(int newIndex)
 
 void QuestionBlock::DrawObject()
 {
-	if(WorldObject::isSummer)
-	{
-		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[2]);
-	}
-	if(WorldObject::isWinter)
-	{
-		glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[33]);
-	}
+
+	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
   glBegin(GL_QUADS);
  // front face
   glTexCoord2f(1,1);glVertex3f(0. ,length*0.75, 0);
@@ -91,9 +85,18 @@ void QuestionBlock::DrawObject()
   glTexCoord2f(1, 1);glVertex3f(width ,0., 0);
   glTexCoord2f(1, 0);glVertex3f(width, 0., height);
   glTexCoord2f(0, 0);glVertex3f(0., 0., height);
- glEnd();
-
-
+ glEnd();  
   
-  
+}
+
+void QuestionBlock::Update()
+{
+	if(WorldObject::isSummer && textureIndex!=3)
+	{
+		textureIndex=2;
+	}
+	if(WorldObject::isWinter && textureIndex!=3)
+	{
+		textureIndex=33;
+	}
 }

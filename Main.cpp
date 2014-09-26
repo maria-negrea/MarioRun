@@ -49,6 +49,7 @@ void AfterEff(Point3D p)
 void Timer(int value)
 {
 	environment->GetScene()->Update();
+	
 	if(particles ==NULL)
 	{	
 		cout<<"HERE";
@@ -74,8 +75,8 @@ void Timer(int value)
 }
 
 void Initialize()
-{	
-	
+{
+	particles=NULL;
 	bool isDead = false;
 	if(environment)
 		isDead = environment->GetMario()->IsDead();

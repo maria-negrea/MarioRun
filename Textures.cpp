@@ -329,7 +329,7 @@ void Textures::LoadGLTextures()
 
 	textures[25] = SOIL_load_OGL_texture
         (
-         "Assets/ground.bmp",
+         "Assets/grass.bmp",
         SOIL_LOAD_AUTO,
         SOIL_CREATE_NEW_ID,
         SOIL_FLAG_INVERT_Y

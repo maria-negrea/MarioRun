@@ -2,8 +2,9 @@
 #include"Textures.h"
 #include"Mushroom.h"
 #include "Road.h"
+#include "Updatable.h"
 
-class QuestionBlock : public OnRoadObject
+class QuestionBlock : public OnRoadObject, public Updatable
 {
 	int textureIndex;
 	Road* road;
@@ -13,6 +14,7 @@ public:
 	~QuestionBlock(void);
 	void DrawObject();
 	void Hit();
+	void Update();
 	void SetIndex(int newIndex);
 };
 

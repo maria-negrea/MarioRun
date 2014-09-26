@@ -1,15 +1,22 @@
 #include "Scene.h"
 #include "Collider.h"
 #include "OnRoadObject.h"
+#include "Skin.h"
 #include <algorithm> 
 
 Scene::Scene()
 {
-	predraw = 4;
+	predraw = 5;
+	marioSkin = NULL;
 }
 
 Scene::~Scene()
 {
+}
+
+void Scene::SetMarioSkin(WorldObject* skin)
+{
+	marioSkin = skin;
 }
 
 bool SortByDepth(Cutout* a,Cutout* b)
@@ -35,17 +42,20 @@ void Scene::Render()
 		lightSources[i]->Illuminate();
 	}*/
 
+	if(marioSkin != NULL)
+		marioSkin->Draw();
+
 	for(unsigned i = 0; i < predraw; i++)
 		sceneObjects[i]->Draw();
 
 	 //Draws the objects on screen
 	for(unsigned i = predraw; i<sceneObjects.size(); ++i)
 	{
-		 if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 1000)
+		if((mainCamera->GetTranslate() - sceneObjects[i]->GetTranslate()).Magnitude() < 350)
 			sceneObjects[i]->Draw();
 	}
 
-	sort(cutouts.begin(), cutouts.end(), SortByDepth); 
+	sort(cutouts.begin(), cutouts.end(), SortByDepth);
 	//cout<<cutouts.size()<<endl;
 	for(unsigned i = 3; i<cutouts.size(); ++i)
 	{
@@ -70,7 +80,6 @@ void Scene::Update()
 void Scene::DeleteUntil(WorldObject* untilObject)
 {
 	OnRoadObject* mario = dynamic_cast<OnRoadObject*>(untilObject);
-
 	for(int i = predraw+1; i < sceneObjects.size(); i++)
 	{
 		OnRoadObject* obj = dynamic_cast<OnRoadObject*>(sceneObjects[i]);
@@ -177,35 +186,43 @@ void Scene::AddSpecialObject(WorldObject* object)
 
 void Scene::RemoveObject(WorldObject* object)
 {
-	Cutout* cutout = dynamic_cast<Cutout*>(object);
-	if(cutout == NULL)
+	if(dynamic_cast<Skin*>(object) == NULL)
 	{
-		for (unsigned i=0; i<sceneObjects.size(); ++i)
+		Cutout* cutout = dynamic_cast<Cutout*>(object);
+		if(cutout == NULL)
 		{
-			if(sceneObjects[i] == object)
+			for (unsigned i=0; i<sceneObjects.size(); ++i)
 			{
-				sceneObjects.erase(sceneObjects.begin()+i);
-				break;
+				if(sceneObjects[i] == object)
+				{
+					sceneObjects.erase(sceneObjects.begin()+i);
+					break;
+				}
 			}
+		}
+		else
+		{
+			RemoveCutout(cutout);
+		}
+		Updatable* updatableObject = dynamic_cast<Updatable*>(object);
+		if(updatableObject != NULL)
+		{
+			RemoveUpdatable(updatableObject);
+		}
+
+		if(object->HasCollider())
+		{
+			RemoveCollider(object);
 		}
 	}
 	else
 	{
-		RemoveCutout(cutout);
-	}
-	Updatable* updatableObject = dynamic_cast<Updatable*>(object);
-	if(updatableObject != NULL)
-	{
-		RemoveUpdatable(updatableObject);
-	}
-
-	if(object->HasCollider())
-	{
-		RemoveCollider(object);
+		int q= 0;
 	}
 }
 
-Camera* Scene::GetCamera() {
+Camera* Scene::GetCamera() 
+{
 	return mainCamera;
 }
 

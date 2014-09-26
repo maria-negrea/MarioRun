@@ -39,16 +39,17 @@ int gen() {
 	return 0;
 }
 
-FireBall::FireBall(GLfloat radius)
+FireBall::FireBall(Scene* scene, GLfloat radius)
 {
+	this->scene=scene;
 	Translate(Point3D(0,5,0));
 	width  = 1;
 	height = 1;
 	length = 1;
 	this->radius=radius;
-	particles = NULL;
+	//particles = NULL;
 	distanceTravelled = 0;
-	particles = NULL;
+	//particles = NULL;
 }
 
 FireBall::~FireBall(void)
@@ -56,13 +57,13 @@ FireBall::~FireBall(void)
 }
 void FireBall::DrawObject()
 {   
-	//glColor3f(1,1,1);
-	//GLUquadricObj *quadratic;
-    //quadratic = gluNewQuadric();
-	//gluQuadricDrawStyle(quadratic, GLU_FILL);
-	//gluQuadricNormals(quadratic, GLU_SMOOTH);
-    //gluSphere(quadratic,radius,5,5);
-	//gluQuadricTexture(quadratic, GL_TRUE);
+	glColor3f(1,1,1);
+	GLUquadricObj *quadratic;
+    quadratic = gluNewQuadric();
+	gluQuadricDrawStyle(quadratic, GLU_FILL);
+	gluQuadricNormals(quadratic, GLU_SMOOTH);
+    gluSphere(quadratic,radius,5,5);
+	gluQuadricTexture(quadratic, GL_TRUE);
 }
 
 int angleGen() {
@@ -74,13 +75,13 @@ void AfterE(Point3D p) {
 
 void FireBall::Update()
 {
-	if(particles == NULL)
-	{
-		//particles = new Particles(AllDirections, BoxPosition, false, gen, Point3D(3.0, 3.0, 3.0), angleGen, AfterE, 14);
-		//scene->AddObject(particles);
-	}
+	//if(particles == NULL)
+	//{
+	//	/*particles = new Particles(AllDirections, BoxPosition, false, gen, Point3D(3.0, 3.0, 3.0), angleGen, AfterE, 14, 9);
+	//	scene->AddObject(particles);*/
+	//}
 	Translate(GetForward()*5);
-	particles->Translate(Point3D(-particles->GetTranslate().x+translate.x, 0.0, -particles->GetTranslate().z+translate.z));
+	//particles->Translate(Point3D(-particles->GetTranslate().x+translate.x, 0.0, -particles->GetTranslate().z+translate.z));
 }
 
 bool FireBall::Function(Mario *mario)

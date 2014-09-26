@@ -14,12 +14,12 @@ void Hole:: DrawObject()
 {
 	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[textureIndex]);
 	glBegin(GL_TRIANGLES);
-		glTexCoord2f(0, 1); glVertex3f( p2.x, p2.y+0.2, p2.z);
-		glTexCoord2f(0, 0); glVertex3f( p1.x, p1.y+0.2, p1.z);
-		glTexCoord2f(1, 0); glVertex3f( p4.x, p4.y+0.2, p4.z);
-		glTexCoord2f(0, 1); glVertex3f( p2.x, p2.y+0.2, p2.z);
-		glTexCoord2f(1, 0); glVertex3f( p4.x, p4.y+0.2, p4.z);
-		glTexCoord2f(1, 1); glVertex3f( p3.x, p3.y+0.2, p3.z);
+		glTexCoord2f(0, 1); glVertex3f( p2.x, p2.y+0.5, p2.z);
+		glTexCoord2f(0, 0); glVertex3f( p1.x, p1.y+0.5, p1.z);
+		glTexCoord2f(1, 0); glVertex3f( p4.x, p4.y+0.5, p4.z);
+		glTexCoord2f(0, 1); glVertex3f( p2.x, p2.y+0.5, p2.z);
+		glTexCoord2f(1, 0); glVertex3f( p4.x, p4.y+0.5, p4.z);
+		glTexCoord2f(1, 1); glVertex3f( p3.x, p3.y+0.5, p3.z);
 
 	glEnd();
 }
@@ -84,7 +84,8 @@ void Hole:: Update()
 {
 	if(mario->GetTranslate().y==0 && CheckInPoly(p1, p2, p3, p4, mario->GetTranslate(), View::Up))
 	{
-		cout<<"Dead Mario!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"<<endl;
+		mario->SetDrown();
+		mario->SetDead();
 	}
 }
 

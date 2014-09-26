@@ -7,15 +7,14 @@
 class PlantTulip:public WorldObject, public Updatable
 {
 private:
-	GLfloat size;
 	WorldObject *target;
 	int contor;
 	PlantHead *head;
 	PlantLeaf *leaf;
-
+	Scene* scene;
 	
 public:
-	PlantTulip(GLfloat width, GLfloat height, GLfloat size);
+	PlantTulip(Scene* scene, GLfloat width, GLfloat height, GLfloat length);
 	~PlantTulip(void);
 	void DrawObject();
 	void DrawTulip();

@@ -231,6 +231,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Environmental.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Fence.cpp"
 				>
 			</File>
@@ -251,6 +255,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Gameover.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\GlobalScore.cpp"
 				>
 			</File>
@@ -268,6 +276,10 @@
 			</File>
 			<File
 				RelativePath=".\Hole.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Indexable.cpp"
 				>
 			</File>
 			<File
@@ -403,6 +415,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SnowManHead.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SplitBox.cpp"
 				>
 			</File>
@@ -497,6 +513,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Environmental.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Fence.h"
 				>
 			</File>
@@ -517,6 +537,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Gameover.h"
+				>
+			</File>
+			<File
 				RelativePath=".\GlobalScore.h"
 				>
 			</File>
@@ -534,6 +558,10 @@
 			</File>
 			<File
 				RelativePath=".\Hole.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Indexable.h"
 				>
 			</File>
 			<File
@@ -662,6 +690,10 @@
 			</File>
 			<File
 				RelativePath=".\SnowMan.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SnowManHead.h"
 				>
 			</File>
 			<File

@@ -14,6 +14,7 @@ class Scene
 {
 	/*!The camera from wich perspective the scene gets rendered*/
 	Camera* mainCamera;
+	WorldObject* marioSkin;
 	
 	/*!Objects in the scene */
 	vector<WorldObject*> sceneObjects;	
@@ -32,6 +33,7 @@ class Scene
 	void RemoveCutout(Cutout* cutout);
 	void AddSpecialObject(WorldObject* object);
 	int predraw ;
+
 public:
 	Scene();
 	~Scene();
@@ -54,6 +56,8 @@ public:
 	void RemoveObject(WorldObject* object);
 
 	void CollisionCheck(WorldObject* object,Point3D previousPosition);
+
+	void SetMarioSkin(WorldObject* skin);
 };
 
 #include "Camera.h"

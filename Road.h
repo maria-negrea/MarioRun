@@ -2,6 +2,7 @@
 
 #include "Updatable.h"
 #include "OnRoadObject.h"
+#include "Textures.h"
 
 class Road : public WorldObject, public Updatable
 { 
@@ -25,6 +26,7 @@ private:
     double angle;
 	void PutRoadPiece();
 public:
+	bool isNewRoad;
 	Road(void);
 	~Road(void);
 	void DrawObject();

@@ -1,7 +1,12 @@
 #include "WorldObject.h"
 
+bool WorldObject::isSummer=true;
+bool WorldObject::isWinter=false;
+bool WorldObject::isAutumn=false;
+
 WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
 {
+	
     translate = Point3D(X, Y, Z);
     width = W;
     height = H;
@@ -13,6 +18,8 @@ WorldObject::WorldObject(GLfloat W, GLfloat H,GLfloat X, GLfloat Y, GLfloat Z)
 
 	visible = true;
 	hardCollider = false;
+
+	
 }
 
 WorldObject::WorldObject(bool hasCollider)
@@ -285,3 +292,4 @@ void WorldObject::SetRotate(Point3D rotate)
 {
 	this->rotate = rotate;
 }
+

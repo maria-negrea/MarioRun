@@ -89,6 +89,8 @@ Skin::~Skin(void)
 
 void Skin::DrawObject()
 {
+	cout<<"QLLLO"<<endl;
+
 	Point3D* originPoints = new Point3D[verticesCount];
 	for(int i=0;i<verticesCount;i++)
 	{
@@ -106,7 +108,7 @@ void Skin::DrawObject()
 
 	for(int i=0;i<verticesCount;i++)
 	{
-		printVertices[i] = printVertices[i]-GetFullTranslate();//.RotateZ(rotate.z).RotateX(rotate.x).RotateY(rotate.y);
+		printVertices[i] = printVertices[i]-GetFullTranslate();
 	}
 
 	int currentTextureIndex=triangles[0].textureIndex;

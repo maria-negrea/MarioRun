@@ -1,23 +1,36 @@
 #include "Environment.h"
 #include "Skin.h"
+#include "Coin.h"
+#include "QuestionBlock.h"
+#include<fstream>
 
-Environment::Environment(void)
+Environment::Environment()
 {
-	sky=new Sky(3000);
+	count=0;
+	sky=new Sky(30000);
 	score=new Score();
-	mario = new Mario();
+	mario = new Mario(this);
 
 	snowMan=new SnowMan();
 	snowMan->Translate(Point3D(0, 0, 10));	
 
 	road = new Road();
+	road->AddRoadObject(mario);
 
 	scene = new Scene();
 	mainCamera = new MarioCamera(mario);
 	scene->SetMainCamera(mainCamera);
 
-	InitializeObstacles();
-	InitializeOffRoadObjects();
+	scene->AddObject(score);
+	scene->AddObject(road);
+	scene->AddObject(new Ground);
+	scene->AddObject(sky);
+	//scene->AddObject(particles);
+	scene->AddObject(mario);
+
+	ClearFiles();
+	InitializeObstacles(2.0, 29);
+	InitializeOffRoadObjects(2.0, 29);
 }
 
 void Environment:: InitializeCoins(double& lastZ)
@@ -28,13 +41,13 @@ void Environment:: InitializeCoins(double& lastZ)
 
 	double step=PI/10.0;
 	int value=rand()%2;
-	if(lastZ+1.5<road->GetRoadSize()-2)
+	if(lastZ + (1.5 / 20)<road->GetRoadSize())
 	{
 		for(int i = 0; i < 10; i++)
 		{
-			Coin *newCoin = new Coin;
-			initialPoint.z=lastZ+ 0.15;
-			lastZ=initialPoint.z+newCoin->length/40.0;
+			Coin *newCoin = new Coin(0.5, 0.5, 0.1);
+			initialPoint.z=lastZ + 1.5 / 20;
+			lastZ=initialPoint.z+newCoin->width/40.0;
 			initialPoint.y+=0.5;
 			Point3D currentPosition=road->GetOnRoadPosition(initialPoint, newCoin->width);			
 			if(value==0)
@@ -47,18 +60,20 @@ void Environment:: InitializeCoins(double& lastZ)
 					currentPosition.y+= 3.0;
 
 				}
-				else
-				{
-					/*currentPosition.y+=cos(step)* 5.0;*/
-				}
+
+			std::ofstream outfile;
+			outfile.open("CoinsCoordinates.cpp", std::ios_base::app);
+			outfile << initialPoint<<"              "<<count<<endl;
+			outfile.close();
 			
 			newCoin->Translate(currentPosition);
 			newCoin->Scale(Point3D(5.0, 5.0, 5.0));
 			newCoin->AddCollider();
 			road->AddRoadObject(newCoin);
-			obstacles.push_back(newCoin);
+			scene->AddObject(newCoin);
+			//obstacles.push_back(newCoin);
 			step+=PI/10.0;
-		}
+		} 
 	}
 }
 
@@ -71,7 +86,7 @@ void Environment:: InitializeRandomBlocks(double& lastZ)
 
 	double stepZ=2.5/20;
 	
-	if(lastZ+stepZ<road->GetRoadSize()-2)
+	if(lastZ+stepZ<road->GetRoadSize())
 	{
 		for(int i = 0; i < 4; i++)
 		{
@@ -80,8 +95,9 @@ void Environment:: InitializeRandomBlocks(double& lastZ)
 			if(value==0)
 			{
 				AddQuestionBlock(initialPoint, lastZ);
-				lastZ=initialPoint.z+stepZ;
+				lastZ+=stepZ;
 			}
+
 			else
 			{
 				SplitBox* splitBox=new SplitBox(5, 5, 5);
@@ -89,9 +105,10 @@ void Environment:: InitializeRandomBlocks(double& lastZ)
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, splitBox->width);
 				currentPosition.y=12.0;
 				splitBox->Translate(currentPosition);
-				lastZ=initialPoint.z+stepZ;
+				lastZ+=stepZ;
 				road->AddRoadObject(splitBox);
-				obstacles.push_back(splitBox);
+				scene->AddObject(splitBox);
+				//obstacles.push_back(splitBox);
 			}
 		}
 		
@@ -102,32 +119,87 @@ void Environment::AddObject(WorldObject *obj) {
 	scene->AddObject(obj);
 }
 
-void Environment:: InitializeObstacles()
+void Environment::InitializeObstacles(double firstLimit, double lastLimit)
 {
-	GLfloat i=0;
-	double lastZ=0.0;
-	while(i<road->GetRoadSize()-2)
+	//obstacles.clear();
+	double lastZ=firstLimit;
+
+	while(firstLimit<lastLimit)
 	{
-		double type=rand()%35;
+		double type = rand() % 48 + 1;
 		//cout<<type<<endl;
 		Point3D initialPoint; 
-		initialPoint.x=GetRandomGLfloat(0.0, 1.0);
-		initialPoint.z=lastZ+rand()%3+0.1;
+		initialPoint.x = GetRandomGLfloat(0.0, 1.0);
+		initialPoint.z = lastZ+ 0.9;
+
 		switch((int)sqrt(type))
 		{
 			case 1:
 			{
-				Point3D p1=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z), 0.0);
-				Point3D p2=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z+0.3), 0.0);
-				Point3D p3=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z+0.3), 0.0);
-				Point3D p4=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z), 0.0);
-				Hole* hole=new Hole(mario, p1, p2, p3, p4);
-				lastZ=initialPoint.z+0.3;
-				obstacles.push_back(hole);
+				//if((int)type%2==0)
+				//{
+				//	Point3D p1=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z), 0.0);
+				//	Point3D p2=road->GetOnRoadPosition(Point3D(-1, 0, initialPoint.z+0.3), 0.0);
+				//	Point3D p3=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z+0.3), 0.0);
+				//	Point3D p4=road->GetOnRoadPosition(Point3D(1, 0, initialPoint.z), 0.0);
+				//	Hole* hole=new Hole(mario, p1, p2, p3, p4);
+				//	lastZ=initialPoint.z+0.4;
+				//	scene->AddObject(hole);
+				//	road->AddRoadObject(hole);
+				//	//obstacles.push_back(hole);
 
+				//	std::ofstream outfile;
+				//	outfile.open("HoleCoordinates.cpp", std::ios_base::app);
+				//	outfile << initialPoint<<"           "<<count<<endl;	
+				//	outfile.close();
+				//}
 				break;
 			}
 			case 2:
+			{
+				InitializeRandomBlocks(lastZ);				
+				break;
+			}
+			case 3:
+			{
+				if((int)type%2==0)
+				{
+					Goomba* goomba=new Goomba();
+					goomba->SetTarget(mario);
+					Point3D currentPosition=road->GetOnRoadPosition(initialPoint, goomba->width);				
+					goomba->Translate(currentPosition);
+					lastZ=initialPoint.z+goomba->length/20.0;
+					road->AddRoadObject(goomba);
+					scene->AddObject(goomba);
+					//obstacles.push_back(goomba);
+					break;
+				}
+				
+			}
+			case 4:
+			{
+ 				InitializeCoins(lastZ);
+				break;
+			}
+			case 5:
+			{
+				GLfloat size=5.0;
+				SplitBox* splitBox=new SplitBox(size, 5, size);
+				splitBox->AddCollider();
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, splitBox->width);
+				splitBox->Translate(currentPosition);
+				lastZ = initialPoint.z+splitBox->length/20.0;
+				road->AddRoadObject(splitBox);
+				scene->AddObject(splitBox);
+
+				std::ofstream outfile;
+				outfile.open("SplitBoxCoordinates.cpp", std::ios_base::app);
+				outfile << initialPoint<<"           "<<count<<endl;				
+				outfile.close();
+				//obstacles.push_back(splitBox);
+				break;				
+			}
+			case 6:
 			{
 				AddQuestionBlock(initialPoint, lastZ);
 				if(initialPoint.x-5.0/20 > -1.0)
@@ -135,91 +207,112 @@ void Environment:: InitializeObstacles()
 					initialPoint.x-=5.0/20;
 					AddQuestionBlock(initialPoint, lastZ);
 				}
-				/*else
-					if(initialPoint.x+5.0/20 < 1.0)
-					{
-						initialPoint.x+=5.0/20;
-						AddQuestionBlock(initialPoint);
-					}*/
-				break;
-			}
-			case 3:
-			{
-				Goomba* goomba=new Goomba();
-				goomba->SetTarget(mario);
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, goomba->width);				
-				goomba->Translate(currentPosition);
-				lastZ=initialPoint.z+goomba->length/20.0;
-				road->AddRoadObject(goomba);
-				obstacles.push_back(goomba);
-				break;
-			}
-			case 4:
-			{
-				InitializeCoins(lastZ);
-				break;
-			}
-			case 5:
-			{
-				SplitBox* splitBox=new SplitBox(5, 5, 5);
-				splitBox->AddCollider();
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, splitBox->width);
-				splitBox->Translate(currentPosition);
-				lastZ=initialPoint.z+splitBox->length/20.0;
-				road->AddRoadObject(splitBox);
-				obstacles.push_back(splitBox);
-				break;				
-			}
-			case 6:
-			{
-				InitializeRandomBlocks(lastZ);
 				break;
 			}
 		}
-		i=lastZ;
-
+		firstLimit=lastZ;
 	}
 }
 
-void Environment:: InitializeOffRoadObjects()
+void Environment:: InitializeOffRoadObjects(double firstLimit, double lastLimit)
 {
-	GLfloat i=0;
-	double lastZ=0.0;
+	double lastZ=firstLimit;
 	int fenceIndex=rand()%3;
-	while(i<road->GetRoadSize()-2)
+	while(firstLimit<lastLimit)
 	{
-		double type=rand()%25+1.0;
+		double type=rand()%49+1.0;
 		//cout<<"*******************************************"<<endl;
 		Point3D initialPoint; 
-		initialPoint.x=GetRandomGLfloat(1.0, 3.0);
-		initialPoint.z=lastZ+rand()%2+0.1;
+		
+		initialPoint.z=lastZ+0.3;
 		//cout<<type<<endl;
 		switch((int)sqrt(type))
 		{
 			case 1:
 			{
-				PlantTulip* plant=new PlantTulip(2,2,2);
+				initialPoint.x=GetRandomGLfloat(1.0, 3.0);
+				Pipe* pipe=new Pipe(scene, 1,3,1);
+				pipe->Scale(Point3D(1, 1, 1));
 				if(initialPoint.x<0)
 				{
-					initialPoint.x-=plant->width;
-					/*initialPoint.x=-1-plant->width/20.0;*/
+					initialPoint.x=-1-pipe->width/20.0;
 				}
 				else
 				{
-					initialPoint.x+=plant->width;
-					/*initialPoint.x=1+plant->width/20.0;*/
+					initialPoint.x=1+pipe->width/20.0;
 				}
-				//plant->SetTarget(mario);
+				pipe->SetTarget(mario);
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
-				plant->Translate(currentPosition);
-				plant->Scale(Point3D(3, 3, 3));
-				lastZ=initialPoint.z/*+plant->length/20*/;
-				offRoadObjects.push_back(plant);
-				//cout<<"PLANT"<<endl;
+				pipe->Translate(currentPosition);
+				
+				lastZ=initialPoint.z+pipe->length/20.0;
+				pipe->index=initialPoint.z;
+				scene->AddObject(pipe);
+				offRoadObjects.push_back(pipe);
+				cout<<"PLANT"<<endl;
+				std::ofstream outfile;
+				outfile.open("PipeCoordinates.cpp", std::ios_base::app);
+				outfile << initialPoint<<"           "<<count<<endl;	
+				outfile.close();
 				break;				
 			}
 			case 2:
 			{
+				initialPoint.x=GetRandomGLfloat(2.5, 3.5);
+				FullMountain* mountain=new FullMountain(100, 100, 100);
+				if(initialPoint.x<0)
+				{
+					initialPoint.x-=mountain->width/20.0;
+				}
+				else
+				{
+					initialPoint.x+=mountain->width/20.0;
+				}
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
+				
+				mountain->Translate(currentPosition);
+				mountain->Rotate(Point3D(0, 180, 0));
+				lastZ=initialPoint.z+ mountain->length/20.0;
+				scene->AddObject(mountain);
+				mountain->index=initialPoint.z;
+				offRoadObjects.push_back(mountain);
+				std::ofstream outfile;
+				outfile.open("MountainCoordinates.cpp", std::ios_base::app);
+				outfile << initialPoint<<"           "<<count<<endl;	
+				outfile.close();
+				//cout<<"MOUNTAIN"<<endl;
+				break;
+
+			}
+			case 3:
+			{
+				initialPoint.x=GetRandomGLfloat(1.5, 2.0);
+				Tree*tree=new Tree();
+				if(initialPoint.x<0)
+				{
+					initialPoint.x-=tree->width/20;
+				}
+				else
+				{
+					initialPoint.x+=tree->width/20;
+				}
+				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
+				tree->Scale(Point3D(2,2,2));
+				tree->Translate(currentPosition);
+				lastZ=initialPoint.z+tree->length/20.0;
+				scene->AddObject(tree);
+				tree->index=initialPoint.z;
+				offRoadObjects.push_back(tree);
+				std::ofstream outfile;
+				outfile.open("TreeCoordinates.cpp", std::ios_base::app);
+				outfile << initialPoint<<"           "<<count<<endl;	
+				outfile.close();
+				//cout<<"TREE"<<endl;
+				break;
+			}
+			case 4:
+			{
+				initialPoint.x=GetRandomGLfloat(1.0, 3.0);
 				int value=rand()%2;
 				Point3D currentPosition;
 				Point3D fenceDirection;
@@ -234,11 +327,11 @@ void Environment:: InitializeOffRoadObjects()
 					currentPosition=road->GetRight()[fenceIndex]+(road->GetRight()[fenceIndex]-road->GetLeft()[fenceIndex])*0.075;
 				}
 
-				GLfloat fenceWidth=2;
-
+				GLfloat fenceWidth=1;
 				GLfloat fenceSize=fenceDirection.Magnitude()/(fenceWidth+0.8);
+				GLfloat fenceLength=3;
 
-				Fence* fence=new Fence(fenceWidth, 10 , 3, fenceSize);
+				Fence* fence=new Fence(fenceWidth, 10 , fenceLength, fenceSize);
 
 				fence->Translate(currentPosition);
 				GLfloat angle= fenceDirection.AngleBetween(Point3D(0, 0, 1));                                                              
@@ -249,57 +342,25 @@ void Environment:: InitializeOffRoadObjects()
 
 				fence->Rotate(Point3D(0, angle-90, 0));
 
-				lastZ=initialPoint.z/*+fence->length/20*/;
+				lastZ=initialPoint.z+(fence->width*fenceSize)/20.0;
+				scene->AddObject(fence);
+				fence->index=initialPoint.z;
 				offRoadObjects.push_back(fence);
+				std::ofstream outfile;
+				outfile.open("FenceCoordinates.cpp", std::ios_base::app);
+				outfile << initialPoint<<"           "<<count<<endl;	
+				outfile.close();
 				//cout<<"FENCE"<<endl;
 				fenceIndex+=rand()%4;
 				break;
-
 			}
-			case 3:
+			default:
 			{
-				
-				Tree*tree=new Tree();
-				if(initialPoint.x<0)
-				{
-					initialPoint.x-=tree->width/20;
-				}
-				else
-				{
-					initialPoint.x+=tree->width/20;
-				}
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
-				tree->Scale(Point3D(2,2,2));
-				tree->Translate(currentPosition);
-				lastZ=initialPoint.z/*+tree->length/20*/;
-				offRoadObjects.push_back(tree);
-				//cout<<"TREE"<<endl;
-				break;
-			}
-			case 4:
-			{
-				FullMountain* mountain=new FullMountain(200, 200, 200);
-				if(initialPoint.x<0)
-				{
-					initialPoint.x-=mountain->length/20.0+5;
-				}
-				else
-				{
-					initialPoint.x+=mountain->length/20.0+5;
-				}
-				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, 0.0);
-				
-				mountain->Translate(currentPosition);
-				mountain->Rotate(Point3D(0, 180, 0));
-				lastZ=initialPoint.z+ mountain->length/20.0;
-				offRoadObjects.push_back(mountain);
-				//cout<<"MOUNTAIN"<<endl;
-				break;
+				lastZ+=0.6;
 			}
 		}
 
-		i=lastZ;
-
+		firstLimit=lastZ;
 	}
 }
 
@@ -320,9 +381,16 @@ void Environment:: AddQuestionBlock(Point3D initialPoint, double& lastZ)
 	}
 	Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
 	currentPosition.y=12;
-	questionBlock->Translate(currentPosition);	
-	obstacles.push_back(questionBlock);
-	lastZ=initialPoint.z+questionBlock->length/20;
+	questionBlock->SetTranslate(currentPosition);
+	scene->AddObject(questionBlock);
+	//obstacles.push_back(questionBlock);
+	/*lastZ += 0.1;*/
+	lastZ=initialPoint.z+questionBlock->length/20.0;
+
+	std::ofstream outfile;
+	outfile.open("QuestionBlockCoordinates.cpp", std::ios_base::app);
+	outfile << initialPoint<<"           "<<count<<endl;	
+	outfile.close();
 }
 
 vector<WorldObject*> Environment:: GetObstacles()
@@ -336,21 +404,23 @@ vector<Coin*> Environment:: GetCoins()
 }
 
 void Environment:: AddObjectsToScene()
-{	
-	scene->AddObject(score);
-	scene->AddObject(road);
-	scene->AddObject(new Ground);
-	scene->AddObject(sky);
+{
+	//scene->AddObject(game);
+	//scene->AddObject(score);
+	//scene->AddObject(road);
+	//scene->AddObject(new Ground);
+	//scene->AddObject(sky);
 	//scene->AddObject(particles);
-	scene->AddObject(mario);
+	//scene->AddObject(mario);
+    //scene->AddObject(goomba);
 //	scene->AddObject(goomba);
 
-	for(int i = 0; i < obstacles.size(); i++)
+	/*for(int i = 0; i < obstacles.size(); i++)
 		scene->AddObject(obstacles[i]);
 	for(int i = 0; i < offRoadObjects.size(); i++)
-		scene->AddObject(offRoadObjects[i]);
+		scene->AddObject(offRoadObjects[i]);*/
 
-	road->AddRoadObject(mario);
+
 }
 
 Mario* Environment:: GetMario()
@@ -364,9 +434,51 @@ Scene* Environment:: GetScene()
 }
 
 void Environment:: Update()
+{	
+}
+
+void Environment:: GenerateEnvironment()
 {
+	count++;
+	cout<<"**************************************************************"<<count<<endl;
+	cout<<"-----------------------------------------------"<<offRoadObjects.size()<<endl;
+	InitializeObstacles(29, 30);
+	InitializeOffRoadObjects(29, 30);
+	for(int i=0;i<offRoadObjects.size();i++)
+	{
+		offRoadObjects[i]->index--;
+		if(offRoadObjects[i]->index==0)
+		{
+			offRoadObjects.erase(offRoadObjects.begin()+i);
+			cout<<"Q"<<endl;
+			i--;
+		}
+	}
+}
+
+void Environment:: ClearFile(char* fileName)
+{
+	std::ofstream outfile;
+	outfile.open(fileName, std::fstream::out);
+	outfile <<"";
+	outfile.close();
+}
+
+void Environment:: ClearFiles()
+{
+	ClearFile("TreeCoordinates.cpp");
+	ClearFile("MountainCoordinates.cpp");
+	ClearFile("FenceCoordinates.cpp");
+	ClearFile("QuestionBlockCoordinates.cpp");
+	ClearFile("SplitBoxCoordinates.cpp");
+	ClearFile("PipeCoordinates.cpp");
+	ClearFile("CoinsCoordinates.cpp");
+	ClearFile("HoleCoordinates.cpp");
 }
 
 Environment::~Environment(void)
 {
+
 }
+
+

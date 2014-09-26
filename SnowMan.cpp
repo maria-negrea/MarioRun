@@ -7,8 +7,8 @@ SnowMan::SnowMan(void)
 	gluQuadricNormals(quadratic, GLU_SMOOTH);
 	gluQuadricTexture(quadratic, GL_TRUE);
 
-	Foot *leftFoot = new Foot(11);
-	Foot *rightFoot = new Foot(11);
+	Foot *leftFoot = new Foot(0.8, 0.5, 0.4, 11);
+	Foot *rightFoot = new Foot(0.8, 0.5, 0.4, 11);
 
 	/*Pivot *pivotLeftFoot = new Pivot();
 	pivotLeftFoot->AddChild(leftFoot);

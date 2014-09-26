@@ -8,6 +8,7 @@
 #include <vector>
 #include "Point3D.h"
 #include "Collider.h"
+#include "Textures.h"
 
 using namespace std;
 
@@ -37,6 +38,7 @@ protected:
 	Scene *scene;
 	bool visible;
 public:
+	static bool isSummer, isAutumn, isWinter;
 	GLfloat length, width, height; // OZ, OX and OY
 	WorldObject(GLfloat W = 0.0, GLfloat H = 0.0,GLfloat X = 0.0, GLfloat Y = 0.0, GLfloat Z = 0.0);
 	WorldObject(bool hasCollider);

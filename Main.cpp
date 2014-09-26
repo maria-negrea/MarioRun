@@ -1,3 +1,4 @@
+#include "MarioCamera.h"
 #include "Environment.h"
 #include "Skin.h"
 
@@ -41,7 +42,7 @@ float ConstantSpeed()
 
 void AfterEff(Point3D p) 
 {
-	Pond *pond = new Pond();
+	Pond *pond = new Pond(particles->textureIndex);
 	pond->Translate(Point3D(p.x, p.y+rand()%100*0.001, p.z));
 	environment->AddObject(pond);
 }
@@ -51,60 +52,48 @@ Torso* bone1 = new Torso();
 Torso* bone2 = new Torso();
 Torso* bone3 = new Torso();
 
-void Initialize()
+void Timer(int value)
 {
-	environment=new Environment();
-	environment->AddObjectsToScene();
+	environment->GetScene()->Update();
+	if(particles ==NULL)
+	{	
+		particles = new Particles(RainDirection, RainTranslation, RainGenerator,Point3D(0.5,1,0.5),Point3D(0.5,1,0.5), angleG, AfterEff,ConstantSpeed, 20);//19	
+		environment->AddObject(particles);
+	}
+	if(WorldObject::isSummer==true)
+	{
+		particles->textureIndex=20;
+		
+	}
+	if(WorldObject::isWinter==true)
+	{
+		particles->textureIndex=34;
+	}
 	
-	particles = new Particles(RainDirection, RainTranslation, RainGenerator,Point3D(0.2,1,0.2),Point3D(0.2,1,0.2), angleG, AfterEff,ConstantSpeed, 20);//19
+	particles->Translate(-particles->GetTranslate());
+	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 100.0, 0.0));
+	glutPostRedisplay();
+	
+	if(environment->GetMario()->IsDead() == false)
+		glutTimerFunc(1, Timer, 0);
+}
 
+void Initialize()
+{	
+	
+	bool isDead = false;
+	if(environment)
+		isDead = environment->GetMario()->IsDead();
+
+	environment=new Environment();
+
+	environment->AddObjectsToScene();	
+	
 	GlobalScore::GetInstance()->SetScore(0);
+	WorldObject::isSummer=true;
+	WorldObject::isWinter=false;
 
-	Skin* skinTest = new Skin("skinTest.txt",false);
-
-	bone1->AddChild(bone2);
-	bone2->AddChild(bone3);
-
-	bone2->Translate(Point3D(3.5,0,0));
-	bone3->Translate(Point3D(3.5,0,0));
-
-	bone1->Translate(Point3D(0,19,1));
-	skinTest->Translate(Point3D(0,18,0));
-	environment->AddObject(skinTest);
-	environment->AddObject(bone1);
-
-	vector<int> skinPoints1;
-	skinPoints1.push_back(0);
-	skinPoints1.push_back(1);
-	skinPoints1.push_back(4);
-	skinPoints1.push_back(5);
-	skinPoints1.push_back(8);
-	skinPoints1.push_back(9);
-	skinPoints1.push_back(12);
-	skinPoints1.push_back(13);
-	skinTest->AddBind(bone1,skinPoints1);
-
-	vector<int> skinPoints2;
-	skinPoints2.push_back(2);
-	skinPoints2.push_back(3);
-	skinPoints2.push_back(7);
-	skinPoints2.push_back(6);
-	skinPoints2.push_back(10);
-	skinPoints2.push_back(11);
-	skinPoints2.push_back(14);
-	skinPoints2.push_back(15);
-	skinTest->AddBind(bone2,skinPoints2);
-
-	vector<int> skinPoints3;
-	skinPoints3.push_back(16);
-	skinPoints3.push_back(17);
-	skinPoints3.push_back(18);
-	skinPoints3.push_back(19);
-	skinPoints3.push_back(20);
-	skinPoints3.push_back(21);
-	skinPoints3.push_back(22);
-	skinPoints3.push_back(23);
-	skinTest->AddBind(bone3,skinPoints3);
+	particles = new Particles(RainDirection, RainTranslation, RainGenerator,Point3D(0.2,1,0.2),Point3D(0.2,1,0.2), angleG, AfterEff,ConstantSpeed, 20);//19
 
 	environment->AddObject(particles);
 
@@ -145,6 +134,8 @@ void Initialize()
 	////glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, spec);
 	////glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION, em);
 	//glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+	if(isDead == true)
+		glutTimerFunc(20, Timer, 0);
 }
 
 void Draw()
@@ -152,23 +143,12 @@ void Draw()
 	environment->GetScene()->Render();
 }
 
-void Timer(int value)
-{
-	environment->GetScene()->Update();
-	particles->Translate(-particles->GetTranslate());
-	particles->Translate(environment->GetMario()->GetTranslate() + Point3D(0.0, 100.0, 0.0));
-	glutPostRedisplay();
-	
-	if(environment->GetMario()->IsDead() == false)
-		glutTimerFunc(30, Timer, 0);
-}
-
 void reshape(int w, int h)
 {
 	glViewport(0, 0, (GLsizei) w, (GLsizei) h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(60.0, (GLfloat) w/(GLfloat) h, 0.1, 10000.0);
+	gluPerspective(60.0, (GLfloat) w/(GLfloat) h, 0.1, 1000000.0);
 }
 
 void specialKey(int key, int x, int y)
@@ -221,64 +201,32 @@ void keyPressed(unsigned char key, int x, int y)
 	switch(key)
 	{
 	case (char)13 :
-			//if(!environment)
-			//{
-				Initialize();
-				glutDisplayFunc(Draw);
-				glutTimerFunc(30, Timer, 0);
-
-				glutSpecialFunc(specialKey);
-				glutSpecialUpFunc(specialUpKey);
-			//}
+			environment->GetMario()->StartGame();
 			break;
-	case (char)32:
-			if(environment != NULL) environment->GetMario()->Jump();
-			bone1->Translate(Point3D(0,1,0));
+	case (char)32 :
+			if(environment->GetMario()->GameStatus()
+				&& !environment->GetMario()->IsDying()) environment->GetMario()->Jump();
 			break;
 	case 'r' :
-			if(environment != NULL)
-			{
-				bool isDead = environment->GetMario()->IsDead();
-				Initialize();
-
-				if(isDead == true)
-					glutTimerFunc(30, Timer, 0);
-			}
+			Initialize();
 			break;
 	}
-}  
-
-void DrawTitleScreen()
-{
-	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	glPushMatrix();
-	glTranslatef(0, 0, -2);
-	glBindTexture(GL_TEXTURE_2D, Textures::GetInstance()->GetTextures()[11]);
-	glBegin(GL_QUADS);
-		glTexCoord2f(0, 1); glVertex3f(-1, 1, 0);
-		glTexCoord2f(1, 1); glVertex3f(1, 1, 0);
-		glTexCoord2f(1, 0); glVertex3f(1, -1, 0);
-		glTexCoord2f(0, 0); glVertex3f(-1, -1, 0);
-	glEnd();
-
-	glPopMatrix();
-
-	glFlush();
 }
 
-void InitializeTitleScreen()
+void InitialState()
 {
 	glEnable(GL_TEXTURE_2D);
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	//glEnable(GL_BLEND);
 
 	glEnable(GL_DEPTH_TEST);
 
 	Textures::GetInstance()->LoadGLTextures();
+
+	Initialize();
+	glutTimerFunc(20, Timer, 0);
 }
 
 
@@ -290,9 +238,11 @@ int main(int argc, char** argv)
 	glutInitWindowPosition(200, 200);
 	glutCreateWindow("Mario");
 
-	InitializeTitleScreen();
-	glutDisplayFunc(DrawTitleScreen);
+	InitialState();
+	glutDisplayFunc(Draw);
 
+	glutSpecialFunc(specialKey);
+	glutSpecialUpFunc(specialUpKey);
 	glutKeyboardFunc(keyPressed);
 
 	glutReshapeFunc(reshape);

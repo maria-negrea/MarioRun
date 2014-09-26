@@ -37,4 +37,11 @@ void Score::Update()
 {
 	this->translate = scene->GetCamera()->GetTranslate() + scene->GetCamera()->GetForward() * 5 + Point3D(0, 2.5, 0) + scene->GetCamera()->GetRight() * 3;
 	this->rotate = scene->GetCamera()->GetRotate();
+
+	if(GlobalScore::GetInstance()->GetScore()>1000)
+	{
+		WorldObject::isWinter=true;
+		WorldObject::isSummer=false;
+		
+	}
 }

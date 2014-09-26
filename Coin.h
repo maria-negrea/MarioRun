@@ -11,7 +11,7 @@
 class Coin : public OnRoadObject, public Updatable, public Item
 {
 public:
-	Coin(void);
+	Coin(GLfloat width, GLfloat height, GLfloat length);
 	~Coin(void);
 	void DrawObject();
 	void Update();

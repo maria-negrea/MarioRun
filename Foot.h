@@ -7,7 +7,7 @@ class Foot: public Mesh
 protected:
 	int mainTextureIndex;
 public:
-	Foot(int mainTextureIndex);
+	Foot(GLfloat width, GLfloat height, GLfloat length, int mainTextureIndex);
 	/*void DrawObject();*/
 	~Foot(void);
 };

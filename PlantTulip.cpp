@@ -2,20 +2,21 @@
 #include "Particles.h"
 
 #define PI 3.14
-PlantTulip::PlantTulip(GLfloat width, GLfloat height, GLfloat size)
+PlantTulip::PlantTulip(Scene* scene, GLfloat width, GLfloat height, GLfloat length)
 {
-	this->width=width;
-	this->height=height;
-	this->size=size;
-	this->target=NULL;
-	contor=0;
-	head=new PlantHead(width, height, size);
-	leaf=new PlantLeaf(width, height, size);
-	head->Translate(Point3D(0.5, 3.3,0.4));
-	head->Rotate(Point3D(180, -20, 0));
-	leaf->Translate(Point3D(0, 0, -0.4));
-	this->AddChild(head);
-	this->AddChild(leaf);
+	 this->scene=scene;
+	 this->width=width;
+	 this->height=height;
+	 this->length=length;
+	 this->target=NULL;
+	 contor=0;
+	 head=new PlantHead(width, height, length);
+	 leaf=new PlantLeaf(width, height, length);
+	 head->Translate(Point3D(width*0.3,length*1.5,0 ));
+	 head->Rotate(Point3D(180, -90, 0));
+	 leaf->Translate(Point3D(0, 0, -0.2*height));
+	 this->AddChild(head);
+	 this->AddChild(leaf);
 	
 }
 
@@ -33,8 +34,7 @@ void PlantTulip::SetTarget(WorldObject *newtarget)
 void PlantTulip::DrawTulip()
 {
 	GLfloat radius=sqrt(width*width+height*height)/8;
-    vector<Point3D>base; 
-	
+    vector<Point3D>base; 	
 
 	double initialsize=0;
 	
@@ -43,21 +43,18 @@ void PlantTulip::DrawTulip()
     double j=0;
     glColor4f(0,1,0,1);	
 
-
-
 	for (double t = 0; t < 2 * PI; t = t + 1.0)
 		base.push_back(Point3D(radius*0.5*cos(t), initialsize,  radius*0.5*sin(t)));
 	    base.push_back(Point3D(radius*0.5*cos(0.),initialsize, 0));
 	
 	double pass=0;
-    double sizepass=0.5*size;
+    double sizepass=0.5*length;
 	for(int i=0;i<2;i++)
 	{
 
    	for( k=0;k<base.size()-1;k++)
 	{
 		//body
-
 
 		glBegin(GL_TRIANGLES);
 		//	glTexCoord2f(j, 0.0f); 
@@ -108,7 +105,7 @@ void PlantTulip::Update()
 
 		  if(contor==30)
 		  {
-			  FireBall *fireBall=new FireBall(0.5);
+			  FireBall *fireBall=new FireBall(scene, 0.5);
 			  fireBall->AddCollider();
 			  scene->AddObject(fireBall);
 			  fireBall->Translate(GetRight()*0.5+GetForward()*1);

@@ -64,6 +64,7 @@ public:
 
 	Point3D GetRotate();
 	Point3D GetFullRotate();
+	float GetFullScale();
 	void SetRotateY(GLfloat rotateY);
 	void SetRotate(Point3D rotate);
 

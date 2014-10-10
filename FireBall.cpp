@@ -50,6 +50,8 @@ FireBall::FireBall(Scene* scene, GLfloat radius)
 	//particles = NULL;
 	distanceTravelled = 0;
 	//particles = NULL;
+
+	Scale(Point3D(1,1,1));
 }
 
 FireBall::~FireBall(void)
@@ -87,8 +89,8 @@ void FireBall::Update()
 bool FireBall::Function(Mario *mario)
 {
 	scene->RemoveObject(this);
-	if(mario->GetBleep() == false && mario->IsBig() == true)
-		mario->SetSize();
+	if(mario->GetBleep() == false && mario->IsBig() == false && mario->GetInvulnerable() == false)
+		mario->SetDead();
 
 	return true;
 }

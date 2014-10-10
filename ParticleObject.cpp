@@ -10,8 +10,8 @@ ParticleObject::ParticleObject(Point3D direction,Point3D position, Point3D emitt
 	this->direction = direction;
 	alpha = rand() % 10 / 10 + 0.6;
 	
-	//this->step = 0.04;
-	this->step = (rand()%10) / 100.0 + 0.1;
+	this->step = 0.04;
+	//this->step = (rand()%10) / 100.0 + 0.1;
 	life = 0.0;
 
 	this->initialScale = initialScale;

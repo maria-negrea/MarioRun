@@ -7,6 +7,7 @@ Pipe::Pipe(Scene* scene, GLfloat width, GLfloat height, GLfloat length)
 	this->length=length;
 	plant=new PlantTulip(scene, 1,1,1);
 	plant->Scale(Point3D(2, 2, 2));
+	
 	plant->Translate(Point3D(0, height, 0));
 	AddChild(plant);
 }

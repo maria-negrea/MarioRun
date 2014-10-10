@@ -9,7 +9,6 @@ PlantTulip::PlantTulip(Scene* scene, GLfloat width, GLfloat height, GLfloat leng
 	 this->height=height;
 	 this->length=length;
 	 this->target=NULL;
-	 contor=0;
 	 head=new PlantHead(width, height, length);
 	 leaf=new PlantLeaf(width, height, length);
 	 head->Translate(Point3D(width*0.3,length*1.5,0 ));
@@ -17,6 +16,8 @@ PlantTulip::PlantTulip(Scene* scene, GLfloat width, GLfloat height, GLfloat leng
 	 leaf->Translate(Point3D(0, 0, -0.2*height));
 	 this->AddChild(head);
 	 this->AddChild(leaf);
+
+	 contor = 28;
 	
 }
 
@@ -96,21 +97,21 @@ void PlantTulip::DrawObject()
 
 void PlantTulip::Update()
 {	
-	if(target != NULL)
+	if(target != NULL && (target->GetTranslate()-parent->GetTranslate()).Magnitude() < 120)
 	 {  
-		  Point3D point = target->GetTranslate()-GetTranslate();
+		  Point3D point = target->GetTranslate()-parent->GetTranslate();
 		  point.y = 0;
 		  GLfloat angleToTarget = AngleBetween(point);
 		  Rotate(Point3D(0.0,angleToTarget, 0.0));
 
-		  if(contor==30)
+		  if(contor == 70)
 		  {
 			  FireBall *fireBall=new FireBall(scene, 0.5);
 			  fireBall->AddCollider();
 			  scene->AddObject(fireBall);
-			  fireBall->Translate(GetRight()*0.5+GetForward()*1);
+			  fireBall->Translate(Point3D(0,5,0));
 			  fireBall->Rotate(rotate);
-			  fireBall->Translate(translate);
+			  fireBall->Translate(parent->GetTranslate());
 			  contor=0;
 		  }
 		  contor++;

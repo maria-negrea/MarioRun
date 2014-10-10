@@ -89,8 +89,7 @@ Skin::~Skin(void)
 
 void Skin::DrawObject()
 {
-	cout<<"QLLLO"<<endl;
-
+	
 	Point3D* originPoints = new Point3D[verticesCount];
 	for(int i=0;i<verticesCount;i++)
 	{

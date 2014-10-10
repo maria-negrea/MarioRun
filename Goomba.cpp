@@ -96,7 +96,7 @@ void Goomba::Update()
 		{
 			Point3D point = target->GetTranslate()-GetTranslate();
 			point.y = 0;
-			if(point.Magnitude()<15)
+			if(point.Magnitude()<60)
 			{
 				Translate(GetForward()*speed);			
 				GLfloat angleToTarget = AngleBetween(point);

@@ -150,12 +150,21 @@ Point3D WorldObject::GetTranslate()
 	return translate;
 }
 
+float WorldObject::GetFullScale()
+{
+	if(parent != NULL)
+	{
+		return parent->GetFullScale()*scale.x;
+	}
+	return scale.x;
+}
+
 Point3D WorldObject::GetFullTranslate()
 {
 	if(parent != NULL)
 	{
 		Point3D rot = parent->GetFullRotate();
-		return parent->GetFullTranslate()+translate.RotateZ(rot.z).RotateX(rot.x).RotateY(rot.y);
+		return parent->GetFullTranslate()+translate.RotateZ(rot.z).RotateX(rot.x).RotateY(rot.y)*GetFullScale();
 	}
 	return translate;
 }

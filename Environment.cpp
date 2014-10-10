@@ -103,7 +103,7 @@ void Environment:: InitializeRandomBlocks(double& lastZ)
 				SplitBox* splitBox=new SplitBox(5, 5, 5);
 				splitBox->AddCollider();
 				Point3D currentPosition=road->GetOnRoadPosition(initialPoint, splitBox->width);
-				currentPosition.y=12.0;
+				currentPosition.y=16.0;
 				splitBox->Translate(currentPosition);
 				lastZ+=stepZ;
 				road->AddRoadObject(splitBox);
@@ -127,7 +127,6 @@ void Environment::InitializeObstacles(double firstLimit, double lastLimit)
 	while(firstLimit<lastLimit)
 	{
 		double type = rand() % 48 + 1;
-		//cout<<type<<endl;
 		Point3D initialPoint; 
 		initialPoint.x = GetRandomGLfloat(0.0, 1.0);
 		initialPoint.z = lastZ+ 0.9;
@@ -249,7 +248,7 @@ void Environment:: InitializeOffRoadObjects(double firstLimit, double lastLimit)
 				pipe->index=initialPoint.z;
 				scene->AddObject(pipe);
 				offRoadObjects.push_back(pipe);
-				cout<<"PLANT"<<endl;
+				//cout<<"PLANT"<<endl;
 				std::ofstream outfile;
 				outfile.open("PipeCoordinates.cpp", std::ios_base::app);
 				outfile << initialPoint<<"           "<<count<<endl;	
@@ -380,7 +379,7 @@ void Environment:: AddQuestionBlock(Point3D initialPoint, double& lastZ)
 		questionBlock=new QuestionBlock(star, road, 5,5,5);
 	}
 	Point3D currentPosition=road->GetOnRoadPosition(initialPoint, questionBlock->width);
-	currentPosition.y=12;
+	currentPosition.y=16;
 	questionBlock->SetTranslate(currentPosition);
 	scene->AddObject(questionBlock);
 	//obstacles.push_back(questionBlock);
@@ -440,8 +439,8 @@ void Environment:: Update()
 void Environment:: GenerateEnvironment()
 {
 	count++;
-	cout<<"**************************************************************"<<count<<endl;
-	cout<<"-----------------------------------------------"<<offRoadObjects.size()<<endl;
+	//cout<<"**************************************************************"<<count<<endl;
+	//cout<<"-----------------------------------------------"<<offRoadObjects.size()<<endl;
 	InitializeObstacles(29, 30);
 	InitializeOffRoadObjects(29, 30);
 	for(int i=0;i<offRoadObjects.size();i++)
@@ -450,7 +449,7 @@ void Environment:: GenerateEnvironment()
 		if(offRoadObjects[i]->index==0)
 		{
 			offRoadObjects.erase(offRoadObjects.begin()+i);
-			cout<<"Q"<<endl;
+			//cout<<"Q"<<endl;
 			i--;
 		}
 	}
